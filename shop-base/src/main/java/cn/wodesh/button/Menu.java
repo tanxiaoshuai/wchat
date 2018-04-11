@@ -1,7 +1,7 @@
-package cn.wodesh.bean;
+package cn.wodesh.button;
 
 public class Menu {
-	//һ���˵�
+
 	private Button[] button;
 
 	public Button[] getButton() {

@@ -1,8 +1,8 @@
 package cn.wodesh.util;
 import java.io.IOException;
-import cn.wodesh.bean.Button;
-import cn.wodesh.bean.Menu;
-import cn.wodesh.bean.ViewButton;
+import cn.wodesh.button.Button;
+import cn.wodesh.button.Menu;
+import cn.wodesh.button.ViewButton;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,23 +22,9 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
  * @create 2017-05-08 23:25
  */
 public class WeiXinToken {	
-	
-	//获取token
-	public static final String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-	//创建菜单
-	public static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-		
-	public static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
-	//生产
-//	public static final String SC_FW_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx4b2f6604038f2a25&secret=f27811ea6d4a27073e973b7d393e2766&code=Code&grant_type=authorization_code";
-	//测试
-	public static final String SC_FW_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxace6b87996d2fe13&secret=6e45640b7d6a09c26ec1a4ca34887703&code=Code&grant_type=authorization_code";
 
-	public static String RE_USER_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=Token&openid=Openid&lang=zh_CN&lang=zh_CN";
-	//微信跳转主界面 生产
-	public static final String RE_BTN_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxace6b87996d2fe13&redirect_uri=http://www.wodesh.cn/myWeiXin/token/openid.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
-	//微信跳转主界面 测试
-//	public static final String RE_BTN_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8475ec94229a2017&redirect_uri=http://txs.viphk.ngrok.org/myWeiXin/token/openid.do&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+	public static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+	public static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 
 	/**
 	 * get請求
@@ -49,12 +35,9 @@ public class WeiXinToken {
 	 */
 	public static JSONObject doGetStr(String url) throws ClientProtocolException, IOException{
 		DefaultHttpClient client = new DefaultHttpClient();
-		
 		HttpGet doGet = new HttpGet(url);
 		JSONObject jsonObject = null;
-		
 		HttpResponse httpResponse = client.execute(doGet);
-		
 		HttpEntity entity = httpResponse.getEntity();
 		if(entity != null){
 			String reuslt = EntityUtils.toString(entity,"utf-8");
@@ -99,7 +82,7 @@ public class WeiXinToken {
 		ViewButton button21 = new ViewButton();
 		button21.setName("我的商城");
 		button21.setType("view");
-		button21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxace6b87996d2fe13&redirect_uri=http://wodesh.cn/shop-mserver/rest/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+		button21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxace6b87996d2fe13&redirect_uri=http://tl.wodesh.cn/shop-mserver/rest/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
 		
 //		ClickButton button31 = new ClickButton();
 //		button31.setName("扫码事件");
@@ -145,7 +128,7 @@ public class WeiXinToken {
 	
 	
 	public static void main(String[] args) throws Exception {
-		String token = "8_tqIBWSDMLOvopb-a4G34K7dLTXR7kJ919W9gGXQhavrkRto_235i7WQV0K0fFJ6JvxH1FEcWJFb5KeVpb1kvBPftaHPtQGvxongTS3IfBEso-koqaUEe_3rBz01xOC8o-i6WSuGDHF-guQ_mSTLiACAXYQ";
+		String token = "8_CVLrWYrY9MmOakkk0dXl1ULJjNM7kg8Hm4DywfZWVut1JkRU6OjV5MQAzc6YmZUl48Fmtz5_0C0-VzjmU-1Y77tCFr2VJ64f8AurdDjsNAFq4yfa5ezmDMLxEEmxLhpJ4Wpwvuh9bkksp5PGDAYfAEAWTR";
 
 		int b = createMenu(token, JSONObject.toJSON(initMenu()).toString());
 		if(b == 0){
