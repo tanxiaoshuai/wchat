@@ -32,7 +32,7 @@ public interface TemplateDao<T> {
     T findBySQLRequireToBean(String sql, Class<T> c) throws Exception;
 
     @SelectProvider(type = TemplateSQL.class , method = "findBySQLRequireToNumber")
-    Long findBySQLRequireToNumber(String sql, Class<T> c) throws Exception;
+    long findBySQLRequireToNumber(String sql, Class<T> c) throws Exception;
 
     @SelectProvider(type = TemplateSQL.class , method = "findBySQLRequire")
     List<T> findBySQLRequireToList(String sql, Class<T> c) throws Exception;

@@ -1,7 +1,7 @@
-package cn.wodesh.bean;
+package cn.wodesh.button;
 
 public class ClickButton extends Button{
-	//Click���Ͳ˵�key
+
 	private String key;
 
 	public String getKey() {

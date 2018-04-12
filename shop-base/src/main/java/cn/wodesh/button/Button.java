@@ -1,11 +1,11 @@
-package cn.wodesh.bean;
+package cn.wodesh.button;
 
 public class Button {
-	//�˵�����
+
 	private String type;
-	//�˵����
+
 	private String name;
-	//�����˵�
+
 	private Button[] sub_button;
 	public String getType() {
 		return type;

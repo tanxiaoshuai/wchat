@@ -83,6 +83,13 @@ public class HttpClientUtil {
             return EntityUtils.toString(entity, "utf-8");
         }
 
+    /**
+     * https
+     * @param url
+     * @param map
+     * @return
+     * @throws Exception
+     */
         public static String getHttps(String url , Map<String , String> map) throws Exception{
             DefaultHttpClient httpClient = new SSLClient();
             HttpGet httpGet = new HttpGet(url);

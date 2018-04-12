@@ -1,7 +1,7 @@
-package cn.wodesh.bean;
+package cn.wodesh.button;
 
 public class ViewButton extends Button{
-	//view���Ͳ˵�url
+
 	private String url;
 
 	public String getUrl() {
