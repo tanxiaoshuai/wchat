@@ -24,10 +24,10 @@ public class UserServiceImpl implements IUserService{
     private UserDao userDao;
 
     @Override
-    public Object login(String code , String token) throws Exception {
+    public Object login(String code , String token , String mac) throws Exception {
         User user = null;
         if (RegexUtil.isNotNull(token))
-            user = (User) redisUtil.get(token);
+            user = (User) redisUtil.get((String) TokenUtil.tokenParam(token).get(0));
         if (user != null)
             return ResultUtil.success(user);
         String openid = WchatUtil.getOpenId(code);
@@ -43,7 +43,8 @@ public class UserServiceImpl implements IUserService{
             userDao.updateById(use);
             user = use;
         }
-        redisUtil.set(openid , user , AppConfig.REDIS_TOKEN_OUT_TIME);
+        user.setToken(TokenUtil.createToken(user.getUserid() , mac));
+        redisUtil.set(user.getUserid() , user , AppConfig.REDIS_TOKEN_OUT_TIME);
         return ResultUtil.success(user);
     }
 }

@@ -5,6 +5,6 @@ package cn.wodesh.service;
  */
 public interface IUserService {
 
-    public Object login(String code , String token) throws Exception;
+    public Object login(String code , String token , String mac) throws Exception;
 
 }
