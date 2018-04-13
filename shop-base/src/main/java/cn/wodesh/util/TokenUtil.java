@@ -1,12 +1,11 @@
 package cn.wodesh.util;
-
-
+import cn.wodesh.bean.User;
+import cn.wodesh.config.AppConfig;
 import cn.wodesh.config.ResultInfo;
 import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.util.Base64Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,18 +45,18 @@ public class TokenUtil {
     }
 
     public static boolean checkToken(String token){
-//        List list = tokenParam(token);
-//        RedisUtil redisUtil = BeanFactoryUtil.getBeanByClass(RedisUtil.class);
-//        redisUtil.setExpire((String) list.get(0), AppConfig.REDIS_TOKEN_OUT_TIME);
-//        if(!redisUtil.exists((String) list.get(0)))
-//            throw new FinalException(ResultInfo.LOGINOUTTIME);
-//        UserBean user = (UserBean) redisUtil.get((String) list.get(0));
-//        if(!user.getToken().equals(token)){
-//            if (!user.getDeviceId().equals(list.get(2)))
-//                throw new FinalException(ResultInfo.ANOTHERdDEVICELOGIN);
-//            else
-//                throw new FinalException(ResultInfo.TOKENCHECKERROR);
-//        }
+        List list = tokenParam(token);
+        RedisUtil redisUtil = BeanFactoryUtil.getBeanByClass(RedisUtil.class);
+        redisUtil.setExpire((String) list.get(0), AppConfig.REDIS_TOKEN_OUT_TIME);
+        if(!redisUtil.exists((String) list.get(0)))
+            throw new FinalException(ResultInfo.LOGINOUTTIME);
+        User user = (User) redisUtil.get((String) list.get(0));
+        if(!user.getToken().equals(token)){
+            if (!user.getMac().equals(list.get(2)))
+                throw new FinalException(ResultInfo.ANOTHERdDEVICELOGIN);
+            else
+                throw new FinalException(ResultInfo.TOKENCHECKERROR);
+        }
         return true;
     }
 

@@ -82,7 +82,7 @@ public class WeiXinToken {
 		ViewButton button21 = new ViewButton();
 		button21.setName("我的商城");
 		button21.setType("view");
-		button21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxace6b87996d2fe13&redirect_uri=http://tl.wodesh.cn/shop-mserver/rest/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+		button21.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxace6b87996d2fe13&redirect_uri=http://wodesh.cn/shop-mserver/rest/index&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
 		
 //		ClickButton button31 = new ClickButton();
 //		button31.setName("扫码事件");
@@ -128,7 +128,7 @@ public class WeiXinToken {
 	
 	
 	public static void main(String[] args) throws Exception {
-		String token = "8_CVLrWYrY9MmOakkk0dXl1ULJjNM7kg8Hm4DywfZWVut1JkRU6OjV5MQAzc6YmZUl48Fmtz5_0C0-VzjmU-1Y77tCFr2VJ64f8AurdDjsNAFq4yfa5ezmDMLxEEmxLhpJ4Wpwvuh9bkksp5PGDAYfAEAWTR";
+		String token = "8_OSdknwsHOn85YGvD74n02Rkx5SMPLWFpFGI48esz9w-JRtZXxwOQ8fTiaM6XDVUQkP9lTOmQ8_FBbkZoP5Kxk00V6Zhlob3rp2-3q3k2mV7O3OsNmQgLtHL_8k3rQGubg3eJQDplXDw6pk49PYEcAJAWFL";
 
 		int b = createMenu(token, JSONObject.toJSON(initMenu()).toString());
 		if(b == 0){
@@ -137,7 +137,7 @@ public class WeiXinToken {
 		else {
 			System.out.println("创建失败！"+b);
 		}
-	
+//
 //		if(deleteMenu(token) == 0){
 //			System.out.println("菜单删除SB成功！");
 //		}

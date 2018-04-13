@@ -102,10 +102,12 @@ public class TemplateSQL {
      */
     public static <T> String findById(Object id , Class<T> c){
         StringBuffer sb = new StringBuffer();
-        Field f = fieldId(c);
-        String name = f.getAnnotation(Column.class).name();
-        String idName = !"default".equals(name) ? name : f.getName();
-        sb.append("select * from ");
+        Field fs = fieldId(c);
+        String name = fs.getAnnotation(Column.class).name();
+        String idName = !"default".equals(name) ? name : fs.getName();
+        sb.append("select ");
+        sb.append(propertyForColumn(c));
+        sb.append(" from ");
         sb.append(tableName(c));
         sb.append(" where ");
         sb.append(idName);
@@ -124,7 +126,9 @@ public class TemplateSQL {
      */
     public static <T> String findBySQLRequire(String sql , Class<T> c){
         StringBuffer sb = new StringBuffer();
-        sb.append("select * from ");
+        sb.append("select ");
+        sb.append(propertyForColumn(c));
+        sb.append(" from ");
         sb.append(tableName(c));
         sb.append(" where ");
         sb.append(sql);
@@ -158,7 +162,9 @@ public class TemplateSQL {
      */
     public static <T> String findByList(Class<T> c){
         StringBuffer sb = new StringBuffer();
-        sb.append("select * from ");
+        sb.append("select ");
+        sb.append(propertyForColumn(c));
+        sb.append(" from ");
         sb.append(tableName(c));
         return sb.toString();
     }
@@ -272,5 +278,27 @@ public class TemplateSQL {
             throw new NullPointerException("实体类" + c.getSimpleName() + "未定义ID注解");
         }
         return null;
+    }
+
+    /**
+     * 查询返回 字段映射
+     * @param c
+     * @return
+     */
+    public static String propertyForColumn(Class c){
+        StringBuffer sbv = new StringBuffer();
+        Field[] fields = c.getDeclaredFields();
+        for(Field f : fields){
+            boolean fieldAnn = f.isAnnotationPresent(Column.class);
+            if(fieldAnn){
+                String na = f.getAnnotation(Column.class).name();
+                if("default".equals(na)){
+                    sbv.append(f.getName()).append(",");
+                }else {
+                    sbv.append(na).append(" ").append(f.getName()).append(",");
+                }
+            }
+        }
+        return sbv.substring(0 , sbv.length() - 1);
     }
 }

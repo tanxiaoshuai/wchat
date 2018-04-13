@@ -1,6 +1,7 @@
 package cn.wodesh.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,13 +11,14 @@ import org.springframework.util.StringUtils;
 @EnableScheduling
 public class TokenThread {
 
-    private Logger LOGGER = LoggerFactory.getLogger(TokenThread.class);
+    @Value("${default.wchat_token_open}")
+    private boolean token_open;
 
 	public static String access_token = null;
 
     @Scheduled(fixedRate = 1000*60*58*2)
     public void run() throws Exception {
-        while(true){
+        while(token_open){
             access_token = WchatUtil.getToken();
             if(!StringUtils.isEmpty(access_token)){
                 break;

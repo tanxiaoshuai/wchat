@@ -36,3 +36,4 @@ spring:
 
 default:
   redirect_url: https://www.wodesh.cn:8088/pay.html
+  wchat_token_open: true

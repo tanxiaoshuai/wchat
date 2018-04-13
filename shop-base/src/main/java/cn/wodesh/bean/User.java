@@ -40,6 +40,9 @@ public class User {
     @Column
     private String city;
 
+    @Column
+    private String mac;
+
     private String token;
 
     public String getUserid() {
@@ -114,6 +117,14 @@ public class User {
         this.token = token;
     }
 
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -133,6 +144,8 @@ public class User {
                 .append(country).append('\"');
         sb.append(",\"city\":\"")
                 .append(city).append('\"');
+        sb.append(",\"mac\":\"")
+                .append(mac).append('\"');
         sb.append(",\"token\":\"")
                 .append(token).append('\"');
         sb.append('}');
