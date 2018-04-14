@@ -21,6 +21,7 @@ public class TokenThread {
             if(!StringUtils.isEmpty(access_token)){
                 break;
             }
+            Thread.sleep(30 * 1000);
         }
     }
 }
