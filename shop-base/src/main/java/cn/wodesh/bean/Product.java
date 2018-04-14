@@ -23,10 +23,10 @@ public class Product {
     private String prodescribe;
     @Column(name = "p_imgs")
     private String imgs;
-    @Column(name = "p_price")
-    private Integer price;
     @Column(name = "p_createtime")
     private String createtime;
+    @Column(name = "p_keywords")
+    private String keywords;
     @Column(name = "p_status")
     private Integer prostatus;
     @Column(name = "p_type")
@@ -68,12 +68,12 @@ public class Product {
         this.imgs = imgs;
     }
 
-    public Integer getPrice() {
-        return price;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getCreatetime() {
@@ -116,30 +116,5 @@ public class Product {
         this.extend = extend;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"proid\":\"")
-                .append(proid).append('\"');
-        sb.append(",\"proname\":\"")
-                .append(proname).append('\"');
-        sb.append(",\"prodescribe\":\"")
-                .append(prodescribe).append('\"');
-        sb.append(",\"imgs\":\"")
-                .append(imgs).append('\"');
-        sb.append(",\"price\":")
-                .append(price);
-        sb.append(",\"createtime\":\"")
-                .append(createtime).append('\"');
-        sb.append(",\"prostatus\":")
-                .append(prostatus);
-        sb.append(",\"protype\":")
-                .append(protype);
-        sb.append(",\"discount\":")
-                .append(discount);
-        sb.append(",\"extend\":\"")
-                .append(extend).append('\"');
-        sb.append('}');
-        return sb.toString();
-    }
+
 }
