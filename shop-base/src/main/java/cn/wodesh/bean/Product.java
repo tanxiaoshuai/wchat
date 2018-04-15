@@ -6,6 +6,8 @@ import cn.wodesh.dao.annotation.TableName;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by TS on 2018/4/12.
  */
@@ -35,6 +37,8 @@ public class Product {
     private Integer discount;
     @Column
     private String extend;
+
+    private List<ProductField> fieldList;
 
     public String getProid() {
         return proid;
@@ -116,5 +120,40 @@ public class Product {
         this.extend = extend;
     }
 
+    public List<ProductField> getFieldList() {
+        return fieldList;
+    }
 
+    public void setFieldList(List<ProductField> fieldList) {
+        this.fieldList = fieldList;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"proid\":\"")
+                .append(proid).append('\"');
+        sb.append(",\"proname\":\"")
+                .append(proname).append('\"');
+        sb.append(",\"prodescribe\":\"")
+                .append(prodescribe).append('\"');
+        sb.append(",\"imgs\":\"")
+                .append(imgs).append('\"');
+        sb.append(",\"createtime\":\"")
+                .append(createtime).append('\"');
+        sb.append(",\"keywords\":\"")
+                .append(keywords).append('\"');
+        sb.append(",\"prostatus\":")
+                .append(prostatus);
+        sb.append(",\"protype\":")
+                .append(protype);
+        sb.append(",\"discount\":")
+                .append(discount);
+        sb.append(",\"extend\":\"")
+                .append(extend).append('\"');
+        sb.append(",\"fieldList\":")
+                .append(fieldList);
+        sb.append('}');
+        return sb.toString();
+    }
 }

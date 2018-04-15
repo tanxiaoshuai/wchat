@@ -22,7 +22,7 @@ public class TokenUtil {
      */
     public static String createToken(String userid , String mac){
         StringBuffer s = new StringBuffer();
-        s.append(userid).append("&");
+        s.append(KeyUtil.tokenKey(userid)).append("&");
         s.append(System.currentTimeMillis());
         s.append("&").append(mac);
         return Base64Utils.encodeToString(s.toString().getBytes());
@@ -58,6 +58,13 @@ public class TokenUtil {
                 throw new FinalException(ResultInfo.TOKENCHECKERROR);
         }
         return true;
+    }
+
+    public static String [] tokenToIdAndKey(String token){
+        List list = tokenParam(token);
+        String key = (String)list.get(0);
+        String [] s = key.split("_");
+        return new String[]{s[s.length - 1] , key};
     }
 
     public static void main(String[] args) {

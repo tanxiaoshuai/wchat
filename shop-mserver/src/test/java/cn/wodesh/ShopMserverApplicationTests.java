@@ -1,10 +1,15 @@
 package cn.wodesh;
 
 import cn.wodesh.bean.Product;
+import cn.wodesh.bean.ProductField;
 import cn.wodesh.dao.ProductDao;
+import cn.wodesh.dao.ProductFieldDao;
+import cn.wodesh.dao.sql.TemplateSQL;
+import cn.wodesh.dao.util.SqlKeyVal;
 import cn.wodesh.util.BeanFactoryUtil;
 import cn.wodesh.util.DateUtil;
 import cn.wodesh.util.KeyUtil;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,9 @@ public class ShopMserverApplicationTests {
 
 	@Autowired
 	private ProductDao productDao;
+
+	@Autowired
+	private ProductFieldDao productFieldDao;
 
 	@Test
 	public void contextLoads() throws Exception {
@@ -31,7 +39,12 @@ public class ShopMserverApplicationTests {
 //		product.setStatus(1);
 //		product.setType(0);
 //		productDao.save(product);
-		System.out.println(productDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , Product.class));
+		Product product = productDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , Product.class);
+		product.setFieldList(productFieldDao.findBySQLRequireToList(SqlKeyVal.field("pa_proid" , product.getProid()), ProductField.class));
+		System.out.println(product);
+//		System.out.println(productFieldDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , ProductField.class));
+//		System.out.println(productDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , Product.class));
+
 	}
 
 }

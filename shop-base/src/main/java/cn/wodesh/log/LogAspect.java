@@ -19,7 +19,7 @@ public class LogAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(* com.sobey.controller.*.*(..))")
+    @Pointcut("execution(* cn.wodesh.controller.*.*(..))")
     public void webLog() {}
 
     @Before("webLog()")

@@ -6,6 +6,7 @@ import cn.wodesh.util.HttpClientUtil;
 public class Test {
 
     public static void main(String[] args) throws Exception {
-        System.out.println(HttpClientUtil.getHttps(WchatConfig.WX_TOKEN_URL , null));
+//        System.out.println(HttpClientUtil.getHttps(WchatConfig.WX_TOKEN_URL , null));
+        System.out.println(String.format("%.1f", 1.07432));
     }
 }

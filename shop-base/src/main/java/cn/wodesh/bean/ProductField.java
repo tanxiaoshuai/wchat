@@ -115,4 +115,31 @@ public class ProductField {
     public void setExtend(String extend) {
         this.extend = extend;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"fieldid\":\"")
+                .append(fieldid).append('\"');
+        sb.append(",\"proid\":\"")
+                .append(proid).append('\"');
+        sb.append(",\"fieldkey\":\"")
+                .append(fieldkey).append('\"');
+        sb.append(",\"field\":\"")
+                .append(field).append('\"');
+        sb.append(",\"speckey\":\"")
+                .append(speckey).append('\"');
+        sb.append(",\"spec\":\"")
+                .append(spec).append('\"');
+        sb.append(",\"price\":")
+                .append(price);
+        sb.append(",\"stock\":")
+                .append(stock);
+        sb.append(",\"img\":\"")
+                .append(img).append('\"');
+        sb.append(",\"extend\":\"")
+                .append(extend).append('\"');
+        sb.append('}');
+        return sb.toString();
+    }
 }

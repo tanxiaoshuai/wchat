@@ -1,9 +1,15 @@
 package cn.wodesh.util;
 
 import cn.wodesh.config.WchatConfig;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by TS on 2018/4/11.
@@ -69,7 +75,64 @@ public class WchatUtil {
         return object.getString("access_token");
     }
 
-    public static void main(String[] args) {
-        System.out.println("owF-Kw_dNmnrDON7ZGz8VDP3p7k4".length());
+    /**
+     * 金额换算
+     * @param price
+     * @return
+     */
+    public static String priceFormat(Integer price ,  Integer discount){
+        Double d = price * discount / 100D / 100D;
+        return String.format("%.1f" , d);
+    }
+
+    /**
+     * 金额换算
+     * @param price
+     * @return
+     */
+    public static String priceFormat(Integer price){
+        Double d = price  / 100D;
+        return String.format("%.1f" , d);
+    }
+
+    public static String priceFormat(List<String> price){
+        String p = null;
+        if(price.size() > 0){
+            HashSet set = new HashSet(price);
+            price.clear();
+            price.addAll(set);
+        }
+        if(price.size()== 1)
+            p = price.get(0);
+        if(price.size() > 1){
+            StringBuffer prices = new StringBuffer();
+            minAndMax(price);
+            prices.append(price.get(0));
+            prices.append("-");
+            prices.append(price.get(1));
+            p = prices.toString();
+        }
+        return p;
+    }
+
+    /**
+     * 取出数组最值
+     * @param price
+     * @return
+     */
+    public static List<String> minAndMax(List<String> price){
+        Double min,max;
+        min=max= Double.parseDouble(price.get(0));
+        for(int i=0;i<price.size();i++){
+            Double s = Double.parseDouble(price.get(i));
+            if(s>max)   // 判断最大值
+                max=s;
+            if(s<min)   // 判断最小值
+                min=s;
+        }
+        price.clear();
+        price.add(min.toString());
+        price.add(max.toString());
+        return price;
     }
 }

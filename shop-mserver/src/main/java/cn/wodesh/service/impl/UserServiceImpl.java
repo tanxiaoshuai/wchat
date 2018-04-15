@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService{
             user = use;
         }
         user.setToken(TokenUtil.createToken(user.getUserid() , mac));
-        redisUtil.set(user.getUserid() , user , AppConfig.REDIS_TOKEN_OUT_TIME);
+        redisUtil.set(KeyUtil.tokenKey(user.getUserid()) , user , AppConfig.REDIS_TOKEN_OUT_TIME);
         return ResultUtil.success(user);
     }
 }
