@@ -33,7 +33,7 @@ public class ProductServiceImpl implements IProductService {
 
 
     @Override
-//    @Cacheable(key ="#p0")
+    @Cacheable(key ="#p0")
     public Object findById(String proid) throws Exception {
         Product product = productDao.findById(proid , Product.class);
         product.setFieldList(productFieldDao.findBySQLRequireToList(SqlKeyVal.field("pa_proid" , proid) , ProductField.class));

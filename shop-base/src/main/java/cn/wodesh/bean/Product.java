@@ -31,10 +31,14 @@ public class Product {
     private String keywords;
     @Column(name = "p_status")
     private Integer prostatus;
+    @Column(name = "p_freight")
+    private Integer freight;
     @Column(name = "p_type")
     private Integer protype;
     @Column(name = "p_discount")
     private Integer discount;
+    @Column(name = "p_info")
+    private String info;
     @Column
     private String extend;
 
@@ -112,6 +116,14 @@ public class Product {
         this.discount = discount;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public String getExtend() {
         return extend;
     }
@@ -126,6 +138,14 @@ public class Product {
 
     public void setFieldList(List<ProductField> fieldList) {
         this.fieldList = fieldList;
+    }
+
+    public Integer getFreight() {
+        return freight;
+    }
+
+    public void setFreight(Integer freight) {
+        this.freight = freight;
     }
 
     @Override
@@ -145,10 +165,14 @@ public class Product {
                 .append(keywords).append('\"');
         sb.append(",\"prostatus\":")
                 .append(prostatus);
+        sb.append(",\"freight\":")
+                .append(freight);
         sb.append(",\"protype\":")
                 .append(protype);
         sb.append(",\"discount\":")
                 .append(discount);
+        sb.append(",\"info\":\"")
+                .append(info).append('\"');
         sb.append(",\"extend\":\"")
                 .append(extend).append('\"');
         sb.append(",\"fieldList\":")
