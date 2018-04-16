@@ -4,6 +4,7 @@ import cn.wodesh.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,5 +19,10 @@ public class ProductController {
     @GetMapping("/rest/product/{proid}")
     public Object findById(@PathVariable String proid) throws Exception{
         return productService.findById(proid);
+    }
+
+    @GetMapping("/rest/product/search")
+    public Object findByCutProduct(@RequestParam Integer page , @RequestParam Integer size) throws Exception{
+        return productService.findByCutProduct(page , size);
     }
 }

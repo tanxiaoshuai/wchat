@@ -10,6 +10,7 @@ import cn.wodesh.util.ResultUtil;
 import cn.wodesh.util.WchatUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/14.
@@ -67,5 +69,12 @@ public class ProductServiceImpl implements IProductService {
         object.put("showprice" , WchatUtil.priceFormat(showprice));
         object.put("showoldprice" , WchatUtil.priceFormat(showoldprice));
         return ResultUtil.success(object);
+    }
+
+    @Override
+        public Object findByCutProduct(Integer page, Integer size) throws Exception {
+        List<Map> list = productDao.findByCutProduct((page - 1) * size , size);
+        System.out.println(JSONArray.toJSONString(list, SerializerFeature.WriteMapNullValue));
+        return ResultUtil.success(list);
     }
 }

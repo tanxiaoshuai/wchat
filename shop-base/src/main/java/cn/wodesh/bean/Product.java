@@ -39,7 +39,7 @@ public class Product {
     private Integer discount;
     @Column(name = "p_info")
     private String info;
-    @Column
+    @Column(name = "p_extend")
     private String extend;
 
     private List<ProductField> fieldList;
