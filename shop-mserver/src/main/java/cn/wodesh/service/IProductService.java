@@ -7,5 +7,5 @@ public interface IProductService {
 
     public Object findById(String proid) throws Exception;
 
-    public Object findByCutProduct(Integer page , Integer size) throws Exception;
+    public Object findByCutProduct(String page , String size) throws Exception;
 }

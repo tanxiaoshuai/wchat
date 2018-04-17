@@ -10,12 +10,10 @@ import cn.wodesh.util.ResultUtil;
 import cn.wodesh.util.WchatUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,9 +70,15 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-        public Object findByCutProduct(Integer page, Integer size) throws Exception {
-        List<Map> list = productDao.findByCutProduct((page - 1) * size , size);
-        System.out.println(JSONArray.toJSONString(list, SerializerFeature.WriteMapNullValue));
+    @Cacheable(key ="#p0")
+    public Object findByCutProduct(String page, String size) throws Exception {
+        List<Map> list = productDao.findByCutProduct((Long.parseLong(page) - 1) * Integer.parseInt(size) , Integer.parseInt(size));
+        System.out.println(JSONArray.toJSONString(list));
+        for(Map m : list){
+            Integer price = Integer.parseInt(m.get("showprice").toString());
+            m.put("showprice" , WchatUtil.priceFormat(price , Integer.parseInt(m.get("discount").toString())));
+            m.put("showoldprice" , WchatUtil.priceFormat(price));
+        }
         return ResultUtil.success(list);
     }
 }

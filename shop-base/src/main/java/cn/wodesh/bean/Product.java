@@ -37,6 +37,12 @@ public class Product {
     private Integer protype;
     @Column(name = "p_discount")
     private Integer discount;
+    @Column(name = "p_clicks")
+    private Long clicks;
+    @Column(name = "p_remarks")
+    private String remarks;
+    @Column(name = "p_solds")
+    private Long solds;
     @Column(name = "p_info")
     private String info;
     @Column(name = "p_extend")
@@ -148,6 +154,30 @@ public class Product {
         this.freight = freight;
     }
 
+    public Long getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(Long clicks) {
+        this.clicks = clicks;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Long getSolds() {
+        return solds;
+    }
+
+    public void setSolds(Long solds) {
+        this.solds = solds;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -171,6 +201,12 @@ public class Product {
                 .append(protype);
         sb.append(",\"discount\":")
                 .append(discount);
+        sb.append(",\"clicks\":")
+                .append(clicks);
+        sb.append(",\"remarks\":\"")
+                .append(remarks).append('\"');
+        sb.append(",\"solds\":")
+                .append(solds);
         sb.append(",\"info\":\"")
                 .append(info).append('\"');
         sb.append(",\"extend\":\"")

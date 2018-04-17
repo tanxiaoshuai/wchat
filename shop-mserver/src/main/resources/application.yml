@@ -33,7 +33,7 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     filters: stat,wall,log4j
 
-
+mybatis.configuration.call-setters-on-nulls: true #mybatis 返回Map 显示null
 default:
   redirect_url: https://www.wodesh.cn:8088/pay.html
   wchat_token_open: false

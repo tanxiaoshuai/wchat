@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/rest/product/search")
-    public Object findByCutProduct(@RequestParam Integer page , @RequestParam Integer size) throws Exception{
+    public Object findByCutProduct(@RequestParam String page , @RequestParam String size) throws Exception{
         return productService.findByCutProduct(page , size);
     }
 }
