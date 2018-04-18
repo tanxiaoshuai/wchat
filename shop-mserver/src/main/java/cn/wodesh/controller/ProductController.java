@@ -2,10 +2,9 @@ package cn.wodesh.controller;
 
 import cn.wodesh.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/14.
@@ -21,8 +20,8 @@ public class ProductController {
         return productService.findById(proid);
     }
 
-    @GetMapping("/rest/product/search")
-    public Object findByCutProduct(@RequestParam String page , @RequestParam String size) throws Exception{
-        return productService.findByCutProduct(page , size);
+    @PostMapping("/rest/product/search")
+    public Object findByCutProduct(@RequestBody Map condition) throws Exception{
+        return productService.findByCutProduct(condition);
     }
 }

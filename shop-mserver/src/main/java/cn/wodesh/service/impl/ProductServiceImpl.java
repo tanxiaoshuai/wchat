@@ -70,9 +70,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    @Cacheable(key="#root.targetClass + #root.methodName")
-    public Object findByCutProduct(String page, String size) throws Exception {
-        List<Map> list = productDao.findByCutProduct((Long.parseLong(page) - 1) * Integer.parseInt(size) , Integer.parseInt(size));
+//    @Cacheable(key="#root.targetClass + #root.methodName")
+    public Object findByCutProduct(Map condition) throws Exception {
+        Long startpage = (Long.parseLong(condition.get("page").toString()) - 1 ) * Long.parseLong(condition.get("size").toString());
+        condition.put("startpage" , startpage);
+        List<Map> list = productDao.findByCutProduct(condition);
         System.out.println(JSONArray.toJSONString(list));
         for(Map m : list){
             Integer price = Integer.parseInt(m.get("showprice").toString());

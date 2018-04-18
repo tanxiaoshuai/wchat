@@ -34,7 +34,9 @@ public class Product {
     @Column(name = "p_freight")
     private Integer freight;
     @Column(name = "p_type")
-    private Integer protype;
+    private String protype;
+    @Column(name = "p_typechild")
+    private String protypechild;
     @Column(name = "p_discount")
     private Integer discount;
     @Column(name = "p_clicks")
@@ -106,12 +108,20 @@ public class Product {
         this.prostatus = prostatus;
     }
 
-    public Integer getProtype() {
+    public String getProtype() {
         return protype;
     }
 
-    public void setProtype(Integer protype) {
+    public void setProtype(String protype) {
         this.protype = protype;
+    }
+
+    public String getProtypechild() {
+        return protypechild;
+    }
+
+    public void setProtypechild(String protypechild) {
+        this.protypechild = protypechild;
     }
 
     public Integer getDiscount() {
@@ -197,8 +207,10 @@ public class Product {
                 .append(prostatus);
         sb.append(",\"freight\":")
                 .append(freight);
-        sb.append(",\"protype\":")
-                .append(protype);
+        sb.append(",\"protype\":\"")
+                .append(protype).append('\"');
+        sb.append(",\"protypechild\":\"")
+                .append(protypechild).append('\"');
         sb.append(",\"discount\":")
                 .append(discount);
         sb.append(",\"clicks\":")

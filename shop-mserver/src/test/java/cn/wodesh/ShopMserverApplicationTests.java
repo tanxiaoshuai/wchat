@@ -2,13 +2,18 @@ package cn.wodesh;
 
 import cn.wodesh.bean.Product;
 import cn.wodesh.bean.ProductField;
+import cn.wodesh.bean.ProductTpye;
+import cn.wodesh.bean.TypeChild;
 import cn.wodesh.dao.ProductDao;
 import cn.wodesh.dao.ProductFieldDao;
+import cn.wodesh.dao.ProductTpyeDao;
+import cn.wodesh.dao.TypeChildDao;
 import cn.wodesh.dao.sql.TemplateSQL;
 import cn.wodesh.dao.util.SqlKeyVal;
 import cn.wodesh.util.BeanFactoryUtil;
 import cn.wodesh.util.DateUtil;
 import cn.wodesh.util.KeyUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +31,12 @@ public class ShopMserverApplicationTests {
 	@Autowired
 	private ProductFieldDao productFieldDao;
 
+	@Autowired
+	private ProductTpyeDao productTpyeDao;
+
+	@Autowired
+	private TypeChildDao typeChildDao;
+
 	@Test
 	public void contextLoads() throws Exception {
 //		Product product = BeanFactoryUtil.getBeanByClass(Product.class);
@@ -39,11 +50,14 @@ public class ShopMserverApplicationTests {
 //		product.setStatus(1);
 //		product.setType(0);
 //		productDao.save(product);
-		Product product = productDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , Product.class);
-		product.setFieldList(productFieldDao.findBySQLRequireToList(SqlKeyVal.field("pa_proid" , product.getProid()), ProductField.class));
-		System.out.println(product);
+//		Product product = productDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , Product.class);
+//		product.setFieldList(productFieldDao.findBySQLRequireToList(SqlKeyVal.field("pa_proid" , product.getProid()), ProductField.class));
+//		System.out.println(product);
 //		System.out.println(productFieldDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , ProductField.class));
 //		System.out.println(productDao.findById("e9bc9367392c4b2a9743fd0dc96d13cf" , Product.class));
+
+//		System.out.println(JSONArray.toJSONString(productTpyeDao.findByProductTypeList(ProductTpye.class)));
+//		System.out.println(JSONArray.toJSONString(typeChildDao.findByTypeChildList("24d7c5873842d689d7d977a3a3c4e432")));
 
 	}
 
