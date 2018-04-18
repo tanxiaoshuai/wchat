@@ -70,7 +70,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    @Cacheable(key ="#p0")
+    @Cacheable(key="#root.targetClass + #root.methodName")
     public Object findByCutProduct(String page, String size) throws Exception {
         List<Map> list = productDao.findByCutProduct((Long.parseLong(page) - 1) * Integer.parseInt(size) , Integer.parseInt(size));
         System.out.println(JSONArray.toJSONString(list));
