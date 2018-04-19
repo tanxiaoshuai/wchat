@@ -55,8 +55,11 @@ public class ProductServiceImpl implements IProductService {
             ob.put("price" , price);
             ob.remove("proid");
             String field = ob.getString("field");
+            String fieldkey = ob.getString("fieldkey");
+            String img = ob.getString("img");
             ob.remove("field");
             ob.remove("fieldkey");
+            ob.remove("img");
             JSONObject o = null;
             if(relationList != null && relationList.size() > 0){
                 int count = 0;
@@ -68,11 +71,12 @@ public class ProductServiceImpl implements IProductService {
                         break;
                     }
                 }
-                if(count == relationList.size()){
+                if(count == 0){
                     o = new JSONObject();
                     JSONArray arr = new JSONArray();
                     o.put("field" , field);
-                    o.put("fieldkey" , ob.getString("fieldkey"));
+                    o.put("fieldkey" , fieldkey);
+                    o.put("img" , img);
                     arr.add(ob);
                     o.put("speclist" , arr);
                     relationList.add(o);
@@ -81,7 +85,8 @@ public class ProductServiceImpl implements IProductService {
                 o = new JSONObject();
                 JSONArray arr = new JSONArray();
                 o.put("field" , field);
-                o.put("fieldkey" , ob.getString("fieldkey"));
+                o.put("fieldkey" , fieldkey);
+                o.put("img" , img);
                 arr.add(ob);
                 o.put("speclist" , arr);
                 relationList.add(o);
