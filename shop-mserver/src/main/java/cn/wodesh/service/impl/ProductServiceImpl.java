@@ -61,32 +61,21 @@ public class ProductServiceImpl implements IProductService {
             ob.remove("fieldkey");
             ob.remove("img");
             JSONObject o = null;
-            if(relationList != null && relationList.size() > 0){
-                int count = 0;
-                for(int c = 0; c < relationList.size() ; c++){
-                    JSONObject obj = relationList.getJSONObject(c);
-                    if(field.equals(obj.getString("field"))){
-                        obj.getJSONArray("speclist" ).add(ob);
-                        count++;
-                        break;
-                    }
+            int count = 0;
+            for(int c = 0; c < relationList.size() ; c++){
+                JSONObject obj = relationList.getJSONObject(c);
+                if(field.equals(obj.getString("field"))){
+                    obj.getJSONArray("speclist" ).add(ob);
+                    count++;
+                    break;
                 }
-                if(count == 0){
-                    o = new JSONObject();
-                    JSONArray arr = new JSONArray();
-                    o.put("field" , field);
-                    o.put("fieldkey" , fieldkey);
-                    o.put("img" , img);
-                    arr.add(ob);
-                    o.put("speclist" , arr);
-                    relationList.add(o);
-                }
-            }else {
+            }
+            if(count == 0){
                 o = new JSONObject();
-                JSONArray arr = new JSONArray();
                 o.put("field" , field);
                 o.put("fieldkey" , fieldkey);
                 o.put("img" , img);
+                JSONArray arr =  new JSONArray();
                 arr.add(ob);
                 o.put("speclist" , arr);
                 relationList.add(o);
