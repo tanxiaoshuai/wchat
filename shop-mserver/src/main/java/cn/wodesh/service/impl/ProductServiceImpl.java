@@ -1,5 +1,4 @@
 package cn.wodesh.service.impl;
-
 import cn.wodesh.bean.Product;
 import cn.wodesh.bean.ProductField;
 import cn.wodesh.dao.ProductDao;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 /**
  * Created by TS on 2018/4/14.
  */
@@ -42,7 +40,6 @@ public class ProductServiceImpl implements IProductService {
             return ResultUtil.success(product);
         product.setFieldList(null);
         JSONObject object = (JSONObject) JSONObject.toJSON(product);
-        JSONObject attribute = new JSONObject();
         JSONArray value = new JSONArray();
         JSONArray relationList = new JSONArray();
         List<String> showprice = new ArrayList<>();
@@ -57,12 +54,39 @@ public class ProductServiceImpl implements IProductService {
             showprice.add(price);
             ob.put("price" , price);
             ob.remove("proid");
+            String field = ob.getString("field");
+            ob.remove("field");
             ob.remove("fieldkey");
-            relationList.add(ob);
+            JSONObject o = null;
+            if(relationList != null && relationList.size() > 0){
+                int count = 0;
+                for(int c = 0; c < relationList.size() ; c++){
+                    JSONObject obj = relationList.getJSONObject(c);
+                    if(field.equals(obj.getString("field"))){
+                        obj.getJSONArray("speclist" ).add(ob);
+                        count++;
+                        break;
+                    }
+                }
+                if(count == relationList.size()){
+                    o = new JSONObject();
+                    JSONArray arr = new JSONArray();
+                    o.put("field" , field);
+                    o.put("fieldkey" , ob.getString("fieldkey"));
+                    arr.add(ob);
+                    o.put("speclist" , arr);
+                    relationList.add(o);
+                }
+            }else {
+                o = new JSONObject();
+                JSONArray arr = new JSONArray();
+                o.put("field" , field);
+                o.put("fieldkey" , ob.getString("fieldkey"));
+                arr.add(ob);
+                o.put("speclist" , arr);
+                relationList.add(o);
+            }
         }
-        attribute.put("value" , value);
-        attribute.put("key" , list.get(0).getFieldkey());
-        object.put("attribute" , attribute);
         object.put("fieldList" , relationList);
         object.put("showprice" , WchatUtil.priceFormat(showprice));
         object.put("showoldprice" , WchatUtil.priceFormat(showoldprice));

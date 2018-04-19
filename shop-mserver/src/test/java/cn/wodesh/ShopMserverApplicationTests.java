@@ -58,7 +58,8 @@ public class ShopMserverApplicationTests {
 
 //		System.out.println(JSONArray.toJSONString(productTpyeDao.findByProductTypeList(ProductTpye.class)));
 //		System.out.println(JSONArray.toJSONString(typeChildDao.findByTypeChildList("24d7c5873842d689d7d977a3a3c4e432")));
-
+//		int a = productDao.updateProductClick();
+//		System.out.println(a);
 	}
 
 }
