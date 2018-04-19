@@ -57,31 +57,21 @@ public class ProductServiceImpl implements IProductService {
             String field = ob.getString("field");
             String fieldkey = ob.getString("fieldkey");
             String img = ob.getString("img");
+            ob.put("choice" , ob.getInteger("stock") == 0 ? false : true);
             ob.remove("field");
             ob.remove("fieldkey");
             ob.remove("img");
             JSONObject o = null;
-            if(relationList != null && relationList.size() > 0){
-                int count = 0;
-                for(int c = 0; c < relationList.size() ; c++){
-                    JSONObject obj = relationList.getJSONObject(c);
-                    if(field.equals(obj.getString("field"))){
-                        obj.getJSONArray("speclist" ).add(ob);
-                        count++;
-                        break;
-                    }
+            int count = 0;
+            for(int c = 0; c < relationList.size() ; c++){
+                JSONObject obj = relationList.getJSONObject(c);
+                if(field.equals(obj.getString("field"))){
+                    obj.getJSONArray("speclist" ).add(ob);
+                    count++;
+                    break;
                 }
-                if(count == 0){
-                    o = new JSONObject();
-                    JSONArray arr = new JSONArray();
-                    o.put("field" , field);
-                    o.put("fieldkey" , fieldkey);
-                    o.put("img" , img);
-                    arr.add(ob);
-                    o.put("speclist" , arr);
-                    relationList.add(o);
-                }
-            }else {
+            }
+            if(count == 0){
                 o = new JSONObject();
                 JSONArray arr = new JSONArray();
                 o.put("field" , field);
@@ -92,6 +82,7 @@ public class ProductServiceImpl implements IProductService {
                 relationList.add(o);
             }
         }
+
         object.put("fieldList" , relationList);
         object.put("showprice" , WchatUtil.priceFormat(showprice));
         object.put("showoldprice" , WchatUtil.priceFormat(showoldprice));

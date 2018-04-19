@@ -8,10 +8,11 @@ import java.util.Map;
  */
 public class StatusConfig {
 
+    public static Map<Integer , String> PRODUCTSTATUS = new HashMap<Integer , String>();
     static {
-        Map<Integer , String> PRODUCTSTATUS = new HashMap<Integer , String>();
         PRODUCTSTATUS.put(1 , "上架");
         PRODUCTSTATUS.put(2 , "下架");
+        PRODUCTSTATUS.put(3 , "售完");
     }
 
 }
