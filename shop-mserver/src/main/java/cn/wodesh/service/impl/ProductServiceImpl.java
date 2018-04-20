@@ -57,6 +57,7 @@ public class ProductServiceImpl implements IProductService {
             String field = ob.getString("field");
             String fieldkey = ob.getString("fieldkey");
             String img = ob.getString("img");
+            ob.put("choice" , ob.getInteger("stock") == 0 ? false : true);
             ob.remove("field");
             ob.remove("fieldkey");
             ob.remove("img");
@@ -81,6 +82,7 @@ public class ProductServiceImpl implements IProductService {
                 relationList.add(o);
             }
         }
+
         object.put("fieldList" , relationList);
         object.put("showprice" , WchatUtil.priceFormat(showprice));
         object.put("showoldprice" , WchatUtil.priceFormat(showoldprice));

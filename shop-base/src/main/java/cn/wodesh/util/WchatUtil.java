@@ -82,7 +82,7 @@ public class WchatUtil {
      */
     public static String priceFormat(Integer price ,  Integer discount){
         Double d = price * discount / 100D / 100D;
-        return String.format("%.1f" , d);
+        return String.format("%.2f" , d);
     }
 
     /**
@@ -92,7 +92,7 @@ public class WchatUtil {
      */
     public static String priceFormat(Integer price){
         Double d = price  / 100D;
-        return String.format("%.1f" , d);
+        return String.format("%.2f" , d);
     }
 
     public static String priceFormat(List<String> price){

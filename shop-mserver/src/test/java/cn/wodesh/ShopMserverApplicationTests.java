@@ -4,10 +4,7 @@ import cn.wodesh.bean.Product;
 import cn.wodesh.bean.ProductField;
 import cn.wodesh.bean.ProductTpye;
 import cn.wodesh.bean.TypeChild;
-import cn.wodesh.dao.ProductDao;
-import cn.wodesh.dao.ProductFieldDao;
-import cn.wodesh.dao.ProductTpyeDao;
-import cn.wodesh.dao.TypeChildDao;
+import cn.wodesh.dao.*;
 import cn.wodesh.dao.sql.TemplateSQL;
 import cn.wodesh.dao.util.SqlKeyVal;
 import cn.wodesh.util.BeanFactoryUtil;
@@ -37,6 +34,9 @@ public class ShopMserverApplicationTests {
 	@Autowired
 	private TypeChildDao typeChildDao;
 
+	@Autowired
+	private ShopCarDao shopCarDao;
+
 	@Test
 	public void contextLoads() throws Exception {
 //		Product product = BeanFactoryUtil.getBeanByClass(Product.class);
@@ -60,6 +60,8 @@ public class ShopMserverApplicationTests {
 //		System.out.println(JSONArray.toJSONString(typeChildDao.findByTypeChildList("24d7c5873842d689d7d977a3a3c4e432")));
 //		int a = productDao.updateProductClick();
 //		System.out.println(a);
+
+//		System.out.println(JSONArray.toJSONString(shopCarDao.findShopCarList("758d320555094e438dd374e7febc33e9")));
 	}
 
 }
