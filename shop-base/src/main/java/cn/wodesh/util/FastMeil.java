@@ -1,16 +1,11 @@
 package cn.wodesh.util;
+import cn.wodesh.config.AppConfig;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.util.Base64Utils;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 public class FastMeil {
-	//电商ID(快递)
-	public static final String EBusinessID="1280517";
-	//电商加密私钥，快递鸟提供，注意保管，不要泄漏(快递)
-	public static final String AppKey="b5719362-fe0a-4fb2-a2be-5698b6c6559d";
-	//请求url(快递)
-	public static final String ReqURL="http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx";
 
 	/**
      * Json方式 查询订单物流轨迹
@@ -21,13 +16,14 @@ public class FastMeil {
 				fluentPut("ShipperCode" , expCode).fluentPut("LogisticCode" , expNo).toJSONString();
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("RequestData", URLEncoder.encode(requestData, "UTF-8"));
-		params.put("EBusinessID", EBusinessID);
+		params.put("EBusinessID", AppConfig.EBUSINESSID);
 		params.put("RequestType", "1002");
-		String dataSign = Base64Utils.encodeToString(MD5Util.MD5(requestData+AppKey).toLowerCase().getBytes());
+		String dataSign = Base64Utils.encodeToString(MD5Util.MD5(new StringBuffer().
+				append(requestData).append(AppConfig.APPKEY).toString()).toLowerCase().getBytes());
 		params.put("DataSign", URLEncoder.encode(dataSign, "UTF-8"));
 		params.put("DataType", "2");
 		String result=HttpClientUtil.postHeader("",new StringBuffer().
-				append(ReqURL).append("?").append(getParams(params)).toString(),null );
+				append(AppConfig.FAST_MAILE_URL).append("?").append(getParams(params)).toString(),null );
 		return result;
 	}
 

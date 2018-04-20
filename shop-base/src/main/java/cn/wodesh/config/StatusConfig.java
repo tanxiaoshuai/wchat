@@ -13,6 +13,7 @@ public class StatusConfig {
         PRODUCTSTATUS.put(1 , "上架");
         PRODUCTSTATUS.put(2 , "下架");
         PRODUCTSTATUS.put(3 , "售完");
+        PRODUCTSTATUS.put(4 , "超出库存");
     }
 
 }
