@@ -85,6 +85,7 @@ public class WchatUtil {
         return String.format("%.2f" , d);
     }
 
+
     /**
      * 金额换算
      * @param price
@@ -95,6 +96,15 @@ public class WchatUtil {
         return String.format("%.2f" , d);
     }
 
+    /**
+     * 金额换算
+     * @param o
+     * @return
+     */
+    public static String StrFormat(Object o){
+        return String.format("%.2f" , o);
+    }
+
     public static String priceFormat(List<String> price){
         String p = null;
         if(price.size() > 0){
@@ -102,7 +112,7 @@ public class WchatUtil {
             price.clear();
             price.addAll(set);
         }
-        if(price.size()== 1)
+        if(price.size() == 1)
             p = price.get(0);
         if(price.size() > 1){
             StringBuffer prices = new StringBuffer();
@@ -131,8 +141,8 @@ public class WchatUtil {
                 min=s;
         }
         price.clear();
-        price.add(min.toString());
-        price.add(max.toString());
+        price.add(StrFormat(min));
+        price.add(StrFormat(max));
         return price;
     }
 }

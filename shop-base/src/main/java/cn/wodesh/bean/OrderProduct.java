@@ -1,18 +1,9 @@
 package cn.wodesh.bean;
 
-import cn.wodesh.config.StatusConfig;
-import cn.wodesh.util.WchatUtil;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-
 /**
- * Created by TS on 2018/4/19.
+ * Created by TS on 2018/4/20.
  */
-@Component
-@Scope("prototype")
-public class ShopCar {
+public class OrderProduct {
 
     private String proid;
 
@@ -22,8 +13,6 @@ public class ShopCar {
 
     private String price;
 
-    private Integer prostatus;
-
     private String freight;
 
     private String discount;
@@ -32,11 +21,8 @@ public class ShopCar {
 
     private String spec;
 
-    private Integer stock;
-
-    private String statusinfo;
-
     private Integer number;
+
 
     public String getProid() {
         return proid;
@@ -68,14 +54,6 @@ public class ShopCar {
 
     public void setPrice(String price) {
         this.price = price;
-    }
-
-    public Integer getProstatus() {
-        return prostatus;
-    }
-
-    public void setProstatus(Integer prostatus) {
-        this.prostatus = prostatus;
     }
 
     public String getFreight() {
@@ -110,44 +88,12 @@ public class ShopCar {
         this.spec = spec;
     }
 
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public String getStatusinfo() {
-        return statusinfo;
-    }
-
-    public void setStatusinfo(String statusinfo) {
-        this.statusinfo = statusinfo;
-    }
-
     public Integer getNumber() {
         return number;
     }
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public void shopCatFormat(ShopCar s){
-        s.setPrice(WchatUtil.priceFormat(
-                Integer.parseInt(s.getPrice()) , Integer.parseInt(s.getDiscount())));
-        s.setDiscount(WchatUtil.priceFormat(Integer.parseInt(s.getDiscount())));
-        s.setFreight(WchatUtil.priceFormat(Integer.parseInt(s.getFreight())));
-        if(s.getProstatus() == 1 && s.getStock() == 0) {
-            s.setProstatus(3);
-            s.setStatusinfo(StatusConfig.PRODUCTSTATUS.get(s.getProstatus()));
-        }else if (s.getProstatus() == 1 && s.getStock() < s.getNumber()) {
-            s.setProstatus(4);
-            s.setStatusinfo(StatusConfig.PRODUCTSTATUS.get(s.getProstatus()));
-        }
-        else
-            s.setStatusinfo(StatusConfig.PRODUCTSTATUS.get(s.getProstatus()));
     }
 
     @Override
@@ -161,8 +107,6 @@ public class ShopCar {
                 .append(prodescribe).append('\"');
         sb.append(",\"price\":\"")
                 .append(price).append('\"');
-        sb.append(",\"prostatus\":")
-                .append(prostatus);
         sb.append(",\"freight\":\"")
                 .append(freight).append('\"');
         sb.append(",\"discount\":\"")
@@ -171,10 +115,6 @@ public class ShopCar {
                 .append(profield).append('\"');
         sb.append(",\"spec\":\"")
                 .append(spec).append('\"');
-        sb.append(",\"stock\":")
-                .append(stock);
-        sb.append(",\"statusinfo\":\"")
-                .append(statusinfo).append('\"');
         sb.append(",\"number\":")
                 .append(number);
         sb.append('}');

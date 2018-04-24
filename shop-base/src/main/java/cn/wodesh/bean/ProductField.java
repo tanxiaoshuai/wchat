@@ -28,7 +28,7 @@ public class ProductField {
     @Column(name = "pa_spec")
     private String spec;
     @Column(name = "pa_price")
-    private Integer price;
+    private String price;
     @Column(name = "pa_stock")
     private Integer stock;
     @Column(name = "pa_img")
@@ -84,11 +84,11 @@ public class ProductField {
         this.spec = spec;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

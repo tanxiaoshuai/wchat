@@ -3,6 +3,7 @@ package cn.wodesh.bean;
 import cn.wodesh.dao.annotation.Column;
 import cn.wodesh.dao.annotation.ID;
 import cn.wodesh.dao.annotation.TableName;
+import cn.wodesh.util.WchatUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -32,13 +33,13 @@ public class Product {
     @Column(name = "p_status")
     private Integer prostatus;
     @Column(name = "p_freight")
-    private Integer freight;
+    private String freight;
     @Column(name = "p_type")
     private String protype;
     @Column(name = "p_typechild")
     private String protypechild;
     @Column(name = "p_discount")
-    private Integer discount;
+    private String discount;
     @Column(name = "p_clicks")
     private Long clicks;
     @Column(name = "p_remarks")
@@ -124,11 +125,11 @@ public class Product {
         this.protypechild = protypechild;
     }
 
-    public Integer getDiscount() {
+    public String getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(String discount) {
         this.discount = discount;
     }
 
@@ -156,11 +157,11 @@ public class Product {
         this.fieldList = fieldList;
     }
 
-    public Integer getFreight() {
+    public String getFreight() {
         return freight;
     }
 
-    public void setFreight(Integer freight) {
+    public void setFreight(String freight) {
         this.freight = freight;
     }
 
@@ -186,6 +187,13 @@ public class Product {
 
     public void setSolds(Long solds) {
         this.solds = solds;
+    }
+
+    public void productFormat(Product product){
+        product.setDiscount(WchatUtil.
+                priceFormat(Integer.parseInt(product.getDiscount())));
+        product.setFreight(WchatUtil.
+                priceFormat(Integer.parseInt(product.getFreight())));
     }
 
     @Override

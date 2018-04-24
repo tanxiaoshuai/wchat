@@ -1,9 +1,6 @@
 package cn.wodesh;
 
-import cn.wodesh.bean.Product;
-import cn.wodesh.bean.ProductField;
-import cn.wodesh.bean.ProductTpye;
-import cn.wodesh.bean.TypeChild;
+import cn.wodesh.bean.*;
 import cn.wodesh.dao.*;
 import cn.wodesh.dao.sql.TemplateSQL;
 import cn.wodesh.dao.util.SqlKeyVal;
@@ -37,6 +34,9 @@ public class ShopMserverApplicationTests {
 	@Autowired
 	private ShopCarDao shopCarDao;
 
+	@Autowired
+	private OrderDao orderDao;
+
 	@Test
 	public void contextLoads() throws Exception {
 //		Product product = BeanFactoryUtil.getBeanByClass(Product.class);
@@ -62,6 +62,25 @@ public class ShopMserverApplicationTests {
 //		System.out.println(a);
 
 //		System.out.println(JSONArray.toJSONString(shopCarDao.findShopCarList("758d320555094e438dd374e7febc33e9")));
+
+//		System.out.println(orderDao.findByOrderId("2018042001549322756"));
+//		System.out.println(orderDao.findById("2018042001549322756" , Order.class));
+		String str = "{\n" +
+				"  \"orderid\": \"2018042001549322757\",\n" +
+				"  \"createtime\": \"2018-04-20 23:13:23\",\n" +
+				"  \"paytime\": \"2018-04-20 23:15:24\",\n" +
+				"  \"address\": \"四川成都新都区保利紫荆话语\",\n" +
+				"  \"tel\": \"18080283924\",\n" +
+				"  \"receivename\": \"谭帅\",\n" +
+				"  \"paytype\": \"1\",\n" +
+				"  \"userid\": \"758d320555094e438dd374e7febc33e9\",\n" +
+				"  \"cash\": 1600,\n" +
+				"  \"freight\": 0,\n" +
+				"  \"status\": 5,\n" +
+				"  \"statusinfo\": \"交易关闭\"\n" +
+				"}";
+		Order order = JSONObject.parseObject(str , Order.class);
+		orderDao.save(order);
 	}
 
 }

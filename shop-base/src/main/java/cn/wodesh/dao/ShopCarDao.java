@@ -24,6 +24,7 @@ public interface ShopCarDao extends TemplateDao<ShopCar>{
 
     @Update("<script>update t_shopcar set sp_number = sp_number + #{number} " +
             "where sp_userid = #{userid} and sp_paid = #{fieldid} " +
-            "<if test=\"number == -1\"> and sp_number > 1 </if> </script>")
-    public void changeNumber (@Param("number") Integer number , @Param("userid") String userid , @Param("fieldid") String fieldid) throws Exception;
+            "<if test=\"number == -1\"> and sp_number > 1 </if> " +
+            "<if test=\"number == 1\"> and sp_number <![CDATA[ < ]]> 99 </if> </script>")
+    public Integer changeNumber (@Param("number") Integer number , @Param("userid") String userid , @Param("fieldid") String fieldid) throws Exception;
 }

@@ -28,21 +28,8 @@ public class ShopCarServiceImpl implements IShopCarService{
         ParamValidateUtil.notNull(size , "分页size不能为空");
         List<ShopCar> list = shopCarDao.
                 findShopCarList(userid , (page - 1) * size , size);
-        for(ShopCar s : list){
-            s.setPrice(WchatUtil.priceFormat(
-                    Integer.parseInt(s.getPrice()) , Integer.parseInt(s.getDiscount())));
-            s.setDiscount(WchatUtil.priceFormat(Integer.parseInt(s.getDiscount())));
-            s.setFreight(WchatUtil.priceFormat(Integer.parseInt(s.getFreight())));
-                if(s.getProstatus() == 1 && s.getStock() == 0) {
-                    s.setProstatus(3);
-                    s.setStatusinfo(StatusConfig.PRODUCTSTATUS.get(s.getProstatus()));
-                }else if (s.getProstatus() == 1 && s.getStock() < s.getNumber()) {
-                    s.setProstatus(4);
-                    s.setStatusinfo(StatusConfig.PRODUCTSTATUS.get(s.getProstatus()));
-                }
-                else
-                    s.setStatusinfo(StatusConfig.PRODUCTSTATUS.get(s.getProstatus()));
-        }
+        for(ShopCar s : list)
+            s.shopCatFormat(s);
         return ResultUtil.success(list);
     }
 

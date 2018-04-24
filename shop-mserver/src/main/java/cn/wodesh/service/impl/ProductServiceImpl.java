@@ -34,22 +34,22 @@ public class ProductServiceImpl implements IProductService {
     @Cacheable(key ="#p0")
     public Object findById(String proid) throws Exception {
         Product product = productDao.findById(proid , Product.class);
+        Integer discount = Integer.parseInt(product.getDiscount());
+        product.productFormat(product);
         product.setFieldList(productFieldDao.findBySQLRequireToList(SqlKeyVal.field("pa_proid" , proid) , ProductField.class));
         List<ProductField> list = product.getFieldList();
         if(list != null && list.size() == 0)
             return ResultUtil.success(product);
         product.setFieldList(null);
         JSONObject object = (JSONObject) JSONObject.toJSON(product);
-        JSONArray value = new JSONArray();
         JSONArray relationList = new JSONArray();
         List<String> showprice = new ArrayList<>();
         List<String> showoldprice = new ArrayList<>();
         for(int i = 0 ; i < list.size() ; i++){
             ProductField pf = list.get(i);
-            value.add(pf.getField());
             JSONObject ob = (JSONObject) JSONObject.toJSON(pf);
             Integer oldPrice = ob.getInteger("price");
-            String price = WchatUtil.priceFormat( oldPrice , product.getDiscount());
+            String price = WchatUtil.priceFormat( oldPrice , discount);
             showoldprice.add(WchatUtil.priceFormat(oldPrice));
             showprice.add(price);
             ob.put("price" , price);
@@ -95,11 +95,11 @@ public class ProductServiceImpl implements IProductService {
         Long startpage = (Long.parseLong(condition.get("page").toString()) - 1 ) * Long.parseLong(condition.get("size").toString());
         condition.put("startpage" , startpage);
         List<Map> list = productDao.findByCutProduct(condition);
-        System.out.println(JSONArray.toJSONString(list));
         for(Map m : list){
             Integer price = Integer.parseInt(m.get("showprice").toString());
             m.put("showprice" , WchatUtil.priceFormat(price , Integer.parseInt(m.get("discount").toString())));
             m.put("showoldprice" , WchatUtil.priceFormat(price));
+            m.put("discount" , WchatUtil.priceFormat(Integer.parseInt(m.get("discount")+"")));
         }
         return ResultUtil.success(list);
     }
