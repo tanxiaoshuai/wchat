@@ -18,6 +18,4 @@ public class ProductTypeController {
     public Object findByProductType () throws Exception{
         return productTypeService.findByProductType();
     }
-
-
 }

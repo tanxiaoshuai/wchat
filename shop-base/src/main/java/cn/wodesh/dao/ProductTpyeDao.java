@@ -19,6 +19,7 @@ public interface ProductTpyeDao extends TemplateDao<ProductTpye>{
     @Results({
         @Result(id=true,property="ptid",column="pt_id"),
         @Result(property="ptname",column="pt_name"),
+        @Result(property="status",column="pt_status"),
         @Result(column="pt_id",property="typeChildList",javaType=List.class,
                 many=@Many(select="cn.wodesh.dao.TypeChildDao.findByTypeChildList"))
     })

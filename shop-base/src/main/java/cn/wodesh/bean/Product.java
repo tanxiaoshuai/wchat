@@ -24,6 +24,8 @@ public class Product {
     private String proname;
     @Column(name = "p_describe")
     private String prodescribe;
+    @Column(name = "p_keyfrom")
+    private String keyfrom;
     @Column(name = "p_imgs")
     private String imgs;
     @Column(name = "p_createtime")
@@ -189,6 +191,14 @@ public class Product {
         this.solds = solds;
     }
 
+    public String getKeyfrom() {
+        return keyfrom;
+    }
+
+    public void setKeyfrom(String keyfrom) {
+        this.keyfrom = keyfrom;
+    }
+
     public void productFormat(Product product){
         product.setDiscount(WchatUtil.
                 priceFormat(Integer.parseInt(product.getDiscount())));
@@ -205,6 +215,8 @@ public class Product {
                 .append(proname).append('\"');
         sb.append(",\"prodescribe\":\"")
                 .append(prodescribe).append('\"');
+        sb.append(",\"keyfrom\":\"")
+                .append(keyfrom).append('\"');
         sb.append(",\"imgs\":\"")
                 .append(imgs).append('\"');
         sb.append(",\"createtime\":\"")
@@ -213,14 +225,14 @@ public class Product {
                 .append(keywords).append('\"');
         sb.append(",\"prostatus\":")
                 .append(prostatus);
-        sb.append(",\"freight\":")
-                .append(freight);
+        sb.append(",\"freight\":\"")
+                .append(freight).append('\"');
         sb.append(",\"protype\":\"")
                 .append(protype).append('\"');
         sb.append(",\"protypechild\":\"")
                 .append(protypechild).append('\"');
-        sb.append(",\"discount\":")
-                .append(discount);
+        sb.append(",\"discount\":\"")
+                .append(discount).append('\"');
         sb.append(",\"clicks\":")
                 .append(clicks);
         sb.append(",\"remarks\":\"")

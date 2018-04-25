@@ -23,6 +23,9 @@ public class ProductTpye {
     @Column(name = "pt_name")
     private String ptname;
 
+    @Column(name = "pt_status")
+    private Integer status;
+
     private List<TypeChild> typeChildList;
 
     public String getPtid() {
@@ -47,5 +50,28 @@ public class ProductTpye {
 
     public void setTypeChildList(List<TypeChild> typeChildList) {
         this.typeChildList = typeChildList;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"ptid\":\"")
+                .append(ptid).append('\"');
+        sb.append(",\"ptname\":\"")
+                .append(ptname).append('\"');
+        sb.append(",\"status\":")
+                .append(status);
+        sb.append(",\"typeChildList\":")
+                .append(typeChildList);
+        sb.append('}');
+        return sb.toString();
     }
 }
