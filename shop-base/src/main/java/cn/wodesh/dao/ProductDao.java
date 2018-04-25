@@ -25,4 +25,12 @@ public interface ProductDao extends TemplateDao<Product>{
             "</where> group by pr.p_id limit #{startpage} , #{size} </script>")
     public List<Map> findByCutProduct(Map condition) throws Exception;
 
+    @Select("SELECT p.p_id proid,p.p_name proname,p.p_describe prodescribe,p.p_keyfrom keyfrom,p.p_imgs imgs," +
+            "p.p_createtime createtime,p.p_keywords keywords,p.p_status prostatus,p.p_freight freight,p.p_type protype," +
+            "p.p_typechild protypechild,p.p_discount discount,p.p_clicks clicks,p.p_remarks remarks,p.p_solds solds," +
+            "p.p_info info,p.p_extend extend , MIN(pa.pa_price) showprice FROM t_index_product_info ip JOIN t_product p " +
+            "ON ip.in_proid = p.p_id JOIN t_product_field pa ON p.p_id = pa.pa_proid " +
+            "WHERE ip.in_status = 1 AND p.p_status = 1 AND  ip.in_ipid = #{ipid} GROUP BY p.p_id")
+    public List<Map> findProductList(@Param("ip_id") String ipid) throws Exception;
+
 }

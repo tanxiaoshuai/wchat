@@ -37,6 +37,9 @@ public class ShopMserverApplicationTests {
 	@Autowired
 	private OrderDao orderDao;
 
+	@Autowired
+	private IndexProductDao indexProductDao;
+
 	@Test
 	public void contextLoads() throws Exception {
 //		Product product = BeanFactoryUtil.getBeanByClass(Product.class);
@@ -65,22 +68,23 @@ public class ShopMserverApplicationTests {
 
 //		System.out.println(orderDao.findByOrderId("2018042001549322756"));
 //		System.out.println(orderDao.findById("2018042001549322756" , Order.class));
-		String str = "{\n" +
-				"  \"orderid\": \"2018042001549322757\",\n" +
-				"  \"createtime\": \"2018-04-20 23:13:23\",\n" +
-				"  \"paytime\": \"2018-04-20 23:15:24\",\n" +
-				"  \"address\": \"四川成都新都区保利紫荆话语\",\n" +
-				"  \"tel\": \"18080283924\",\n" +
-				"  \"receivename\": \"谭帅\",\n" +
-				"  \"paytype\": \"1\",\n" +
-				"  \"userid\": \"758d320555094e438dd374e7febc33e9\",\n" +
-				"  \"cash\": 1600,\n" +
-				"  \"freight\": 0,\n" +
-				"  \"status\": 5,\n" +
-				"  \"statusinfo\": \"交易关闭\"\n" +
-				"}";
-		Order order = JSONObject.parseObject(str , Order.class);
-		orderDao.save(order);
+//		String str = "{\n" +
+//				"  \"orderid\": \"2018042001549322757\",\n" +
+//				"  \"createtime\": \"2018-04-20 23:13:23\",\n" +
+//				"  \"paytime\": \"2018-04-20 23:15:24\",\n" +
+//				"  \"address\": \"四川成都新都区保利紫荆话语\",\n" +
+//				"  \"tel\": \"18080283924\",\n" +
+//				"  \"receivename\": \"谭帅\",\n" +
+//				"  \"paytype\": \"1\",\n" +
+//				"  \"userid\": \"758d320555094e438dd374e7febc33e9\",\n" +
+//				"  \"cash\": 1600,\n" +
+//				"  \"freight\": 0,\n" +
+//				"  \"status\": 5,\n" +
+//				"  \"statusinfo\": \"交易关闭\"\n" +
+//				"}";
+//		Order order = JSONObject.parseObject(str , Order.class);
+//		orderDao.save(order);
+		System.out.println(indexProductDao.findIndexProductList());
 	}
 
 }
