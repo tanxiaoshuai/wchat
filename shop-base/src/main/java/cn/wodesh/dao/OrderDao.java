@@ -27,8 +27,6 @@ public interface OrderDao extends TemplateDao<Order>{
             @Result(property = "status", column = "o_status"),
             @Result(property = "remarks", column = "o_remarks"),
             @Result(property = "orderid", column = "o_id"),
-            @Result(column = "o_id", property = "orderProducts", javaType = List.class,
-                    many = @Many(select = "cn.wodesh.dao.OrderProductDao.findOrderProductList"))
     })
     public Order findByOrderId(@Param("orderid") String orderid) throws Exception;
 }

@@ -26,8 +26,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     @Transactional
-    public Object login(String code , String token , String mac) throws Exception {
-        ParamValidateUtil.notNull(mac , "手机mac地址不能为空");
+    public Object login(String code , String token) throws Exception {
         User user = null;
         if (RegexUtil.isNotNull(token))
             user = (User) redisUtil.get((String) TokenUtil.tokenParam(token).get(0));
@@ -37,18 +36,16 @@ public class UserServiceImpl implements IUserService{
         String us = WchatUtil.getWchatUser(openid , TokenThread.access_token);
         user = JSONObject.parseObject(us , User.class);
         user.setUserid(KeyUtil.uuid());
-        user.setMac(mac);
         User use = userDao.findBySQLRequireToBean("openid='"+openid+"'" , User.class);
         if(use == null){
             userDao.save(user);
         } else {
             use.setHeadimgurl(user.getHeadimgurl());
             use.setNickname(user.getNickname());
-            use.setMac(mac);
             userDao.updateById(use);
             user = use;
         }
-        user.setToken(TokenUtil.createToken(user.getUserid() , mac));
+        user.setToken(TokenUtil.createToken(user.getUserid()));
         redisUtil.set(KeyUtil.tokenKey(user.getUserid()) , user , AppConfig.REDIS_TOKEN_OUT_TIME);
         return ResultUtil.success(user);
     }

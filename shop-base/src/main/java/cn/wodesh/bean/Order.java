@@ -46,8 +46,6 @@ public class Order {
 
     private String remarks;
 
-    private List<OrderProduct> orderProducts;
-
     public String getOrderid() {
         return orderid;
     }
@@ -144,14 +142,6 @@ public class Order {
         this.statusinfo = statusinfo;
     }
 
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
     public String getRemarks() {
         return remarks;
     }
@@ -164,12 +154,6 @@ public class Order {
         order.setFreight(WchatUtil.priceFormat(Integer.parseInt(order.getFreight())));
         order.setCash(WchatUtil.priceFormat(Integer.parseInt(order.getCash())));
         order.setStatusinfo(StatusConfig.ORDERSTATUS.get(order.getStatus()));
-        for(OrderProduct or : orderProducts){
-            or.setPrice(WchatUtil.priceFormat(
-                    Integer.parseInt(or.getPrice()) , Integer.parseInt(or.getDiscount())));
-            or.setDiscount(WchatUtil.priceFormat(Integer.parseInt(or.getDiscount())));
-            or.setFreight(WchatUtil.priceFormat(Integer.parseInt(or.getFreight())));
-        }
     }
 
     @Override
@@ -201,8 +185,6 @@ public class Order {
                 .append(statusinfo).append('\"');
         sb.append(",\"remarks\":\"")
                 .append(remarks).append('\"');
-        sb.append(",\"orderProducts\":")
-                .append(orderProducts);
         sb.append('}');
         return sb.toString();
     }

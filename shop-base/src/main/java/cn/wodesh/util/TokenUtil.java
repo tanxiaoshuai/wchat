@@ -6,6 +6,8 @@ import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.util.Base64Utils;
+
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +19,12 @@ public class TokenUtil {
     /**
      * 创建token
      * @param userid
-     * @param mac
      * @return
      */
-    public static String createToken(String userid , String mac){
+    public static String createToken(String userid){
         StringBuffer s = new StringBuffer();
         s.append(KeyUtil.tokenKey(userid)).append("&");
         s.append(System.currentTimeMillis());
-        s.append("&").append(mac);
         return Base64Utils.encodeToString(s.toString().getBytes());
     }
 
@@ -47,29 +47,18 @@ public class TokenUtil {
     public static boolean checkToken(String token){
         List list = tokenParam(token);
         RedisUtil redisUtil = BeanFactoryUtil.getBeanByClass(RedisUtil.class);
-        redisUtil.setExpire((String) list.get(0), AppConfig.REDIS_TOKEN_OUT_TIME);
         if(!redisUtil.exists((String) list.get(0)))
             throw new FinalException(ResultInfo.LOGINOUTTIME);
         User user = (User) redisUtil.get((String) list.get(0));
         if(!user.getToken().equals(token)){
-            if (!user.getMac().equals(list.get(2)))
-                throw new FinalException(ResultInfo.ANOTHERdDEVICELOGIN);
-            else
                 throw new FinalException(ResultInfo.TOKENCHECKERROR);
         }
+        redisUtil.setExpire((String) list.get(0), AppConfig.REDIS_TOKEN_OUT_TIME);
         return true;
-    }
-
-    public static String [] tokenToIdAndKey(String token){
-        List list = tokenParam(token);
-        String key = (String)list.get(0);
-        String [] s = key.split("_");
-        return new String[]{s[s.length - 1] , key};
     }
 
     public static void main(String[] args) {
         System.out.println(JSONArray.toJSON(tokenParam("5Zu05q60JjE1MjM0NTY4NjEzNzkmNzc=")));
     }
-
 
 }

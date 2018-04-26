@@ -16,8 +16,8 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping("/rest/user/login")
-    public Object login(@RequestParam String code , @RequestParam String token , @RequestParam String mac) throws Exception{
-        return userService.login(code , token , mac);
+    public Object login(@RequestParam String code , @RequestParam String token) throws Exception{
+        return userService.login(code , token);
     }
 
 
