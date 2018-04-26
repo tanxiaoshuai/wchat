@@ -19,8 +19,9 @@ public class URLInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        String token = httpServletRequest.getHeader("token");
-        return TokenUtil.checkToken(token);
+//        String token = httpServletRequest.getHeader("token");
+//        return TokenUtil.checkToken(token);
+        return true;
     }
 
     //请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）

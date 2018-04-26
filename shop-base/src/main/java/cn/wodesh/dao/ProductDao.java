@@ -12,7 +12,7 @@ import java.util.Map;
 @Mapper
 public interface ProductDao extends TemplateDao<Product>{
 
-    @Select("<script> SELECT pr.p_id proid,pr.p_name proname,pr.p_describe prodescribe," +
+    @Select("<script> SELECT pr.p_id proid,pr.p_name proname,pr.p_describe prodescribe,pr.p_keyfrom keyfrom," +
             "pr.p_imgs imgs,pr.p_createtime createtime,pr.p_keywords keywords,pr.p_solds solds," +
             "pr.p_status prostatus,pr.p_freight freight,pr.p_type protype,p_typechild protypechild" +
             ",pr.p_clicks clicks,pr.p_remarks remarks," +
