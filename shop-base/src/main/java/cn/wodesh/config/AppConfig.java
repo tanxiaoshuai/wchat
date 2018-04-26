@@ -5,7 +5,7 @@ public class AppConfig {
     public final static String TOKEN_PREFIX = "APP_TOKEN_";
     public final static String INDEX_PAGE_STAYLE_KEY = "INDEX_PAGE_STAYLE_KEY_PHONE";
     public final static String PRODUCT_TYPE_LIST_KEY = "PRODUCT_TYPE_LIST_KEY_PHONE";
-    public final static Long REDIS_TOKEN_OUT_TIME = 5 * 60L;
+    public final static Long REDIS_TOKEN_OUT_TIME = 30 * 60L;
 
 
     /********************************************************快递配置*************************************************/
