@@ -44,6 +44,12 @@ public class TokenUtil {
         return list;
     }
 
+    public static String tokenForUserId(String token){
+        String s = (String) tokenParam(token).get(0);
+        String arr[] = s.split("_");
+        return arr[arr.length - 1];
+    }
+
     public static boolean checkToken(String token){
         List list = tokenParam(token);
         RedisUtil redisUtil = BeanFactoryUtil.getBeanByClass(RedisUtil.class);

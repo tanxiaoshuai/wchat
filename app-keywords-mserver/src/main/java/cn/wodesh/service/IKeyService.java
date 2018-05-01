@@ -10,6 +10,6 @@ public interface IKeyService {
 
     public Object save(KeyWords keyWords) throws Exception;
 
-    public Object findByHotWords(Integer size) throws Exception;
+    public Object findByHotWords() throws Exception;
 
 }

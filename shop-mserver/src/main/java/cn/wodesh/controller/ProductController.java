@@ -4,6 +4,7 @@ import cn.wodesh.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -21,7 +22,7 @@ public class ProductController {
     }
 
     @PostMapping("/rest/product/search")
-    public Object findByCutProduct(@RequestBody Map condition) throws Exception{
-        return productService.findByCutProduct(condition);
+    public Object findByCutProduct(@RequestBody Map condition , HttpServletRequest request) throws Exception{
+        return productService.findByCutProduct(condition , request);
     }
 }

@@ -1,5 +1,6 @@
 package cn.wodesh.service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -9,5 +10,5 @@ public interface IProductService {
 
     public Object findById(String proid) throws Exception;
 
-    public Object findByCutProduct(Map condition) throws Exception;
+    public Object findByCutProduct(Map condition , HttpServletRequest request) throws Exception;
 }

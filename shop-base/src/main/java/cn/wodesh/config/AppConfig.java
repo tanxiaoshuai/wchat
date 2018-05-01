@@ -13,4 +13,8 @@ public class AppConfig {
     public static final String APPKEY = "b5719362-fe0a-4fb2-a2be-5698b6c6559d";
     public static final String FAST_MAILE_URL = "http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx";
 
+    /*******************************************************自己服务调用**********************************************/
+    public static final String KEYWORDS_SAVE ="/app-keywords-mserver/rest/keywords/save"; //添加搜索关键词
+    public static final String KEYWORDS_SEARCH = "/app-keywords-mserver/rest/keywords/search/hot/"; //查询热词
+
 }

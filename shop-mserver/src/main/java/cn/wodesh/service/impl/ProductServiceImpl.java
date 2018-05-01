@@ -4,8 +4,11 @@ import cn.wodesh.bean.ProductField;
 import cn.wodesh.dao.ProductDao;
 import cn.wodesh.dao.ProductFieldDao;
 import cn.wodesh.dao.util.SqlKeyVal;
+import cn.wodesh.service.IKeyWordService;
 import cn.wodesh.service.IProductService;
+import cn.wodesh.util.RegexUtil;
 import cn.wodesh.util.ResultUtil;
+import cn.wodesh.util.TokenUtil;
 import cn.wodesh.util.WchatUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +33,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private ProductFieldDao productFieldDao;
+
+    @Autowired
+    private IKeyWordService keyWordService;
 
 
     @Override
@@ -91,9 +99,16 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
 //    @Cacheable(key="#root.targetClass + #root.methodName")
-    public Object findByCutProduct(Map condition) throws Exception {
+    public Object findByCutProduct(Map condition, HttpServletRequest request) throws Exception {
         Long startpage = (Long.parseLong(condition.get("page").toString()) - 1 ) * Long.parseLong(condition.get("size").toString());
         condition.put("startpage" , startpage);
+        String keywords = condition.get("keywords").toString();
+        if(RegexUtil.isNotNull(keywords)){
+            keyWordService.save(new JSONObject().
+                    fluentPut("userid" , TokenUtil.
+                            tokenForUserId(request.getHeader("token"))).
+                    fluentPut("keyname" , keywords).toString());
+        }
         List<Map> list = productDao.findByCutProduct(condition);
         for(Map m : list){
             Integer price = Integer.parseInt(m.get("showprice").toString());

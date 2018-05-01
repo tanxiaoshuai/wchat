@@ -35,3 +35,5 @@ spring:
 
 mybatis.configuration.call-setters-on-nulls: true #mybatis 返回Map 显示null
 hotwords_limit_time: 30 #(获取*天内的热词)
+search_hotwords_size: 6 #(查询搜索热词条数)
+

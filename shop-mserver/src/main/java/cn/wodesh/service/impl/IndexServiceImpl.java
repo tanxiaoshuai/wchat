@@ -5,13 +5,18 @@ import cn.wodesh.bean.ProductTpye;
 import cn.wodesh.config.AppConfig;
 import cn.wodesh.dao.IndexBannerDao;
 import cn.wodesh.dao.IndexProductDao;
+import cn.wodesh.dao.ProductDao;
 import cn.wodesh.dao.ProductTpyeDao;
 import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IIndexService;
+import cn.wodesh.util.ParamValidateUtil;
 import cn.wodesh.util.ResultUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/25.
@@ -29,6 +34,9 @@ public class IndexServiceImpl implements IIndexService{
     private ProductTpyeDao productTpyeDao;
 
     @Autowired
+    private ProductDao productDao;
+
+    @Autowired
     private RedisUtil redisUtil;
 
     @Override
@@ -44,5 +52,19 @@ public class IndexServiceImpl implements IIndexService{
         index.put("productList" , indexProductDao.findIndexProductList());
         redisUtil.set(AppConfig.INDEX_PAGE_STAYLE_KEY , index.toJSONString());
         return ResultUtil.success(index);
+    }
+
+    @Override
+    public Object findProductIndexCutpage(Map map) throws Exception {
+        String size = map.get("size")+"";
+        String page = map.get("page")+"";
+        String type = map.get("typeid")+"";
+        ParamValidateUtil.notNull(type , "板块分类类型不能为空");
+        map.clear();
+        map.put("ipid" , type);
+        map.put("startpage" , (Long.parseLong(page) - 1) * Long.parseLong(size));
+        map.put("size" , Integer.parseInt(size));
+        List<Map> list = productDao.findProductListCutPage(map);
+        return ResultUtil.success(list);
     }
 }

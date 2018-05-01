@@ -21,7 +21,7 @@ public class KeyWordsController {
     }
 
     @GetMapping("/keywords/search/hot")
-    public Object findByHotWords(Integer size) throws Exception {
-        return keyService.findByHotWords(size);
+    public Object findByHotWords() throws Exception {
+        return keyService.findByHotWords();
     }
 }
