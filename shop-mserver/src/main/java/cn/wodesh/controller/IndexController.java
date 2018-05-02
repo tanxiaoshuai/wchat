@@ -35,7 +35,7 @@ public class IndexController {
         return index_url.toString();
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/message")
     @ResponseBody
     public String wchatChack(@RequestParam String signature,
                              @RequestParam String timestamp,
@@ -44,7 +44,7 @@ public class IndexController {
         return WchatChackUtil.chackSigner(signature,timestamp,nonce) ? echostr : null;
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/message")
     @ResponseBody
     public String service(HttpServletRequest request) throws Exception {
         LOGGER.info("微信：" + IoUtil.IoToString(request.getReader()));
