@@ -11,6 +11,7 @@ import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IIndexService;
 import cn.wodesh.util.ParamValidateUtil;
 import cn.wodesh.util.ResultUtil;
+import cn.wodesh.util.WchatUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,12 @@ public class IndexServiceImpl implements IIndexService{
         map.put("startpage" , (Long.parseLong(page) - 1) * Long.parseLong(size));
         map.put("size" , Integer.parseInt(size));
         List<Map> list = productDao.findProductListCutPage(map);
+        for(Map m : list){
+            Integer price = Integer.parseInt(m.get("showprice").toString());
+            m.put("showprice" , WchatUtil.priceFormat(price , Integer.parseInt(m.get("discount").toString())));
+            m.put("showoldprice" , WchatUtil.priceFormat(price));
+            m.put("discount" , WchatUtil.priceFormat(Integer.parseInt(m.get("discount")+"")));
+        }
         return ResultUtil.success(list);
     }
 }

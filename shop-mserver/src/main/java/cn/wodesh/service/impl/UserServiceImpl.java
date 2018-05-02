@@ -49,4 +49,17 @@ public class UserServiceImpl implements IUserService{
         redisUtil.set(KeyUtil.tokenKey(user.getUserid()) , user , AppConfig.REDIS_TOKEN_OUT_TIME);
         return ResultUtil.success(user);
     }
+
+    @Override
+    public Object loginTest(String code, String token) throws Exception {
+        User user = null;
+        if (RegexUtil.isNotNull(token))
+            user = (User) redisUtil.get((String) TokenUtil.tokenParam(token).get(0));
+        if (user != null && token != null && token.equals(user.getToken()))
+            return ResultUtil.success(user);
+        user = userDao.findBySQLRequireToBean("openid='owF-Kw_dNmnrDON7ZGz8VDP3p7k4'" , User.class);
+        user.setToken(TokenUtil.createToken(user.getUserid()));
+        redisUtil.set(KeyUtil.tokenKey(user.getUserid()) , user , AppConfig.REDIS_TOKEN_OUT_TIME);
+        return ResultUtil.success(user);
+    }
 }
