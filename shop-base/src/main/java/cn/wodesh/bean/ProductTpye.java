@@ -23,6 +23,9 @@ public class ProductTpye {
     @Column(name = "pt_name")
     private String ptname;
 
+    @Column(name = "pt_url")
+    private String url;
+
     @Column(name = "pt_status")
     private Integer status;
 
@@ -60,6 +63,14 @@ public class ProductTpye {
         this.status = status;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -67,6 +78,8 @@ public class ProductTpye {
                 .append(ptid).append('\"');
         sb.append(",\"ptname\":\"")
                 .append(ptname).append('\"');
+        sb.append(",\"url\":\"")
+                .append(url).append('\"');
         sb.append(",\"status\":")
                 .append(status);
         sb.append(",\"typeChildList\":")

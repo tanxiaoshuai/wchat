@@ -21,6 +21,9 @@ public class TypeChild {
     @Column(name = "tc_name")
     private String tcname;
 
+    @Column(name = "tc_url")
+    private String url;
+
     public String getTcid() {
         return tcid;
     }
@@ -35,5 +38,26 @@ public class TypeChild {
 
     public void setTcname(String tcname) {
         this.tcname = tcname;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"tcid\":\"")
+                .append(tcid).append('\"');
+        sb.append(",\"tcname\":\"")
+                .append(tcname).append('\"');
+        sb.append(",\"url\":\"")
+                .append(url).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 }
