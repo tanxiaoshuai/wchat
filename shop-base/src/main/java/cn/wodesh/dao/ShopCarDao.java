@@ -1,13 +1,11 @@
 package cn.wodesh.dao;
 
 import cn.wodesh.bean.ShopCar;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/19.
@@ -27,4 +25,14 @@ public interface ShopCarDao extends TemplateDao<ShopCar>{
             "<if test=\"number == -1\"> and sp_number > 1 </if> " +
             "<if test=\"number == 1\"> and sp_number <![CDATA[ < ]]> 99 </if> </script>")
     public Integer changeNumber (@Param("number") Integer number , @Param("userid") String userid , @Param("fieldid") String fieldid) throws Exception;
+
+    @Insert("insert into t_shopcar (sp_userid , sp_paid , sp_number) values (#{userid} , #{fieldid} , #{number})")
+    public void add(Map map)throws Exception;
+
+    @Select("select sp_number from t_shopcar where sp_userid = #{userid} and sp_paid = #{fieldid}")
+    public Integer findShopCarProductNumber(Map map) throws Exception;
+
+    @Update("update t_shopcar set sp_number = sp_number + #{number} where sp_userid = #{userid} and sp_paid = #{fieldid}")
+    public Integer updateNumber (Map map) throws Exception;
+
 }

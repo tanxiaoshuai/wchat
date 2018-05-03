@@ -4,13 +4,13 @@ import cn.wodesh.bean.ShopCar;
 import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.ShopCarDao;
 import cn.wodesh.service.IShopCarService;
-import cn.wodesh.util.ParamValidateUtil;
-import cn.wodesh.util.ResultUtil;
-import cn.wodesh.util.WchatUtil;
+import cn.wodesh.util.*;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/19.
@@ -36,6 +36,22 @@ public class ShopCarServiceImpl implements IShopCarService{
     @Override
     public Object changeNumber(Integer number, String userid , String fieldid) throws Exception {
         shopCarDao.changeNumber(number , userid , fieldid);
+        return ResultUtil.success();
+    }
+
+    @Override
+    public Object save(Map map) throws Exception {
+        map.put("userid" , TokenUtil.
+                tokenForUserId(RequestUtil.getHeader("token")));
+        Integer number = shopCarDao.findShopCarProductNumber(map);
+        if(number == null){
+            shopCarDao.add(map);
+            return ResultUtil.success();
+        }
+        int number_ = Integer.parseInt(map.get("number")+"");
+        if(99 - number < number_)
+            map.put("number" , 99 - number);
+        shopCarDao.updateNumber(map);
         return ResultUtil.success();
     }
 }
