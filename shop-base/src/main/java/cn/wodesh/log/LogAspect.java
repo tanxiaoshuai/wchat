@@ -35,6 +35,7 @@ public class LogAspect {
 
     @AfterReturning(returning = "o" , pointcut = "webLog()")
     public void doAfterReturning(Object o) {
+        if(o != null)
         logger.info("response={}",o.toString());
     }
 }

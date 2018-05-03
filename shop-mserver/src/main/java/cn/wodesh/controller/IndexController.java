@@ -1,15 +1,16 @@
 package cn.wodesh.controller;
 import cn.wodesh.service.IIndexService;
 import cn.wodesh.service.IUserService;
-import cn.wodesh.util.IoUtil;
-import cn.wodesh.util.WchatChackUtil;
+import cn.wodesh.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
@@ -44,11 +45,21 @@ public class IndexController {
         return WchatChackUtil.chackSigner(signature,timestamp,nonce) ? echostr : null;
     }
 
-    @PostMapping(value = "/message")
+    @PostMapping(value = "message", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public String service(HttpServletRequest request) throws Exception {
-        LOGGER.info("微信：" + IoUtil.IoToString(request.getReader()));
-        return null;
+        String reqxml = IoUtil.IoToString(request.getReader());
+        LOGGER.info("微信：" + reqxml);
+        JSONObject object = XML.toJSONObject(reqxml);
+        System.out.println(object);
+        JSONObject objxml = object.getJSONObject("xml");
+        String FromUserName = objxml.getString("FromUserName");
+        String ToUserName = objxml.getString("ToUserName");
+        objxml.put("FromUserName" , ToUserName);
+        objxml.put("ToUserName" , FromUserName);
+        String str = XmlUtil.JsonToXml(object.toString());
+        System.out.println(str);
+        return str;
     }
 
     @GetMapping("/rest/index/search")
