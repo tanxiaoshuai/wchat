@@ -1,14 +1,15 @@
 package cn.wodesh.controller;
 import cn.wodesh.service.IIndexService;
 import cn.wodesh.service.IUserService;
+import cn.wodesh.util.IoUtil;
+import cn.wodesh.util.WchatChackUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
@@ -32,6 +33,22 @@ public class IndexController {
         index_url.append("redirect:").append(redirect_url);
         index_url.append("?code=").append(code);
         return index_url.toString();
+    }
+
+    @GetMapping(value = "/message")
+    @ResponseBody
+    public String wchatChack(@RequestParam String signature,
+                             @RequestParam String timestamp,
+                             @RequestParam String nonce,
+                             String echostr) throws Exception {
+        return WchatChackUtil.chackSigner(signature,timestamp,nonce) ? echostr : null;
+    }
+
+    @PostMapping(value = "/message")
+    @ResponseBody
+    public String service(HttpServletRequest request) throws Exception {
+        LOGGER.info("微信：" + IoUtil.IoToString(request.getReader()));
+        return null;
     }
 
     @GetMapping("/rest/index/search")
