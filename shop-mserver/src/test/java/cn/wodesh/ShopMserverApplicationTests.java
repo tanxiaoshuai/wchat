@@ -4,6 +4,7 @@ import cn.wodesh.bean.*;
 import cn.wodesh.dao.*;
 import cn.wodesh.dao.sql.TemplateSQL;
 import cn.wodesh.dao.util.SqlKeyVal;
+import cn.wodesh.rabbitmq.RabbitMqSender;
 import cn.wodesh.util.BeanFactoryUtil;
 import cn.wodesh.util.DateUtil;
 import cn.wodesh.util.KeyUtil;
@@ -39,6 +40,9 @@ public class ShopMserverApplicationTests {
 
 	@Autowired
 	private IndexProductDao indexProductDao;
+
+	@Autowired
+	private RabbitMqSender rabbitMqSender;
 
 	@Test
 	public void contextLoads() throws Exception {
@@ -84,7 +88,7 @@ public class ShopMserverApplicationTests {
 //				"}";
 //		Order order = JSONObject.parseObject(str , Order.class);
 //		orderDao.save(order);
-		System.out.println(indexProductDao.findIndexProductList());
+//		System.out.println(indexProductDao.findIndexProductList());
 	}
 
 }
