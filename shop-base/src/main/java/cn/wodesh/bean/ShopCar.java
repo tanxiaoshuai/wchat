@@ -38,6 +38,8 @@ public class ShopCar {
 
     private Integer number;
 
+    private String keyfrom;
+
     public String getProid() {
         return proid;
     }
@@ -134,6 +136,14 @@ public class ShopCar {
         this.number = number;
     }
 
+    public String getKeyfrom() {
+        return keyfrom;
+    }
+
+    public void setKeyfrom(String keyfrom) {
+        this.keyfrom = keyfrom;
+    }
+
     public void shopCatFormat(ShopCar s){
         s.setPrice(WchatUtil.priceFormat(
                 Integer.parseInt(s.getPrice()) , Integer.parseInt(s.getDiscount())));
@@ -177,6 +187,8 @@ public class ShopCar {
                 .append(statusinfo).append('\"');
         sb.append(",\"number\":")
                 .append(number);
+        sb.append(",\"keyfrom\":\"")
+                .append(keyfrom).append('\"');
         sb.append('}');
         return sb.toString();
     }

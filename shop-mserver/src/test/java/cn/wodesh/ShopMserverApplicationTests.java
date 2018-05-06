@@ -8,6 +8,7 @@ import cn.wodesh.rabbitmq.RabbitMqSender;
 import cn.wodesh.util.BeanFactoryUtil;
 import cn.wodesh.util.DateUtil;
 import cn.wodesh.util.KeyUtil;
+import cn.wodesh.util.PayUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
@@ -43,6 +44,9 @@ public class ShopMserverApplicationTests {
 
 	@Autowired
 	private RabbitMqSender rabbitMqSender;
+
+	@Autowired
+	private PayUtil payUtil;
 
 	@Test
 	public void contextLoads() throws Exception {
@@ -89,6 +93,16 @@ public class ShopMserverApplicationTests {
 //		Order order = JSONObject.parseObject(str , Order.class);
 //		orderDao.save(order);
 //		System.out.println(indexProductDao.findIndexProductList());
+	}
+
+	@Test
+	public void payTest() throws Exception {
+//		System.out.println(payUtil.Pay("owF-Kw_dNmnrDON7ZGz8VDP3p7k4" , "1" , KeyUtil.uuid()));
+//		System.out.println(productFieldDao.updateStock("1aa57704ddad449caacb265fcba52290" , 1));
+//		System.out.println(shopCarDao.findShopCarBean("4d325c102ff8ba5dd3d95ae703e4ce52"));
+		AddressDao addressDao = BeanFactoryUtil.getBeanByClass(AddressDao.class);
+		System.out.println(addressDao.findUserToDefualtAddress("758d320555094e438dd374e7febc33e9" , 1));
+
 	}
 
 }

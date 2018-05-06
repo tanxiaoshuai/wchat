@@ -98,6 +98,16 @@ public class WchatUtil {
 
     /**
      * 金额换算
+     * @param price
+     * @return
+     */
+    public static String priceFormat(Long price){
+        Double d = price  / 100D;
+        return String.format("%.2f" , d);
+    }
+
+    /**
+     * 金额换算
      * @param o
      * @return
      */

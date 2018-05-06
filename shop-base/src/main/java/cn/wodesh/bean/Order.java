@@ -21,29 +21,59 @@ public class Order {
     @ID(increment = false)
     @Column(name = "o_id")
     private String orderid;
+
     @Column(name = "o_createtime")
     private String createtime;
+
     @Column(name = "o_paytime")
     private String paytime;
+
     @Column(name = "o_address")
     private String address;
+
     @Column(name = "o_tel")
     private String tel;
+
     @Column(name = "o_receivename")
     private String receivename;
+
     @Column(name = "o_paytype")
     private String paytype;
+
     @Column(name = "o_userid")
     private String userid;
-    @Column(name = "o_cash")
-    private String cash;
+
     @Column(name = "o_freight")
     private String freight;
+
+    @Column(name = "o_paycash")
+    private String paycash;
+
+    @Column(name = "o_price")
+    private String price;
+
     @Column(name = "o_status")
     private Integer status;
 
-    private String statusinfo;
+    @Column(name = "o_number")
+    private Integer number;
 
+    @Column(name = "o_expcode")
+    private String expcode;
+
+    @Column(name = "o_expnumber")
+    private String expnumber;
+
+    @Column(name = "o_expname")
+    private String expname;
+
+    @Column(name = "o_payid")
+    private String payid;
+
+    @Column(name = "o_paid")
+    private String paid;
+
+    @Column(name = "o_remarks")
     private String remarks;
 
     public String getOrderid() {
@@ -110,20 +140,28 @@ public class Order {
         this.userid = userid;
     }
 
-    public String getCash() {
-        return cash;
-    }
-
-    public void setCash(String cash) {
-        this.cash = cash;
-    }
-
     public String getFreight() {
         return freight;
     }
 
     public void setFreight(String freight) {
         this.freight = freight;
+    }
+
+    public String getPaycash() {
+        return paycash;
+    }
+
+    public void setPaycash(String paycash) {
+        this.paycash = paycash;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public Integer getStatus() {
@@ -134,12 +172,52 @@ public class Order {
         this.status = status;
     }
 
-    public String getStatusinfo() {
-        return statusinfo;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setStatusinfo(String statusinfo) {
-        this.statusinfo = statusinfo;
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public String getExpcode() {
+        return expcode;
+    }
+
+    public void setExpcode(String expcode) {
+        this.expcode = expcode;
+    }
+
+    public String getExpnumber() {
+        return expnumber;
+    }
+
+    public void setExpnumber(String expnumber) {
+        this.expnumber = expnumber;
+    }
+
+    public String getExpname() {
+        return expname;
+    }
+
+    public void setExpname(String expname) {
+        this.expname = expname;
+    }
+
+    public String getPayid() {
+        return payid;
+    }
+
+    public void setPayid(String payid) {
+        this.payid = payid;
+    }
+
+    public String getPaid() {
+        return paid;
+    }
+
+    public void setPaid(String paid) {
+        this.paid = paid;
     }
 
     public String getRemarks() {
@@ -150,11 +228,6 @@ public class Order {
         this.remarks = remarks;
     }
 
-    public void orderFormat(Order order){
-        order.setFreight(WchatUtil.priceFormat(Integer.parseInt(order.getFreight())));
-        order.setCash(WchatUtil.priceFormat(Integer.parseInt(order.getCash())));
-        order.setStatusinfo(StatusConfig.ORDERSTATUS.get(order.getStatus()));
-    }
 
     @Override
     public String toString() {
@@ -175,14 +248,26 @@ public class Order {
                 .append(paytype).append('\"');
         sb.append(",\"userid\":\"")
                 .append(userid).append('\"');
-        sb.append(",\"cash\":\"")
-                .append(cash).append('\"');
         sb.append(",\"freight\":\"")
                 .append(freight).append('\"');
+        sb.append(",\"paycash\":\"")
+                .append(paycash).append('\"');
+        sb.append(",\"price\":\"")
+                .append(price).append('\"');
         sb.append(",\"status\":")
                 .append(status);
-        sb.append(",\"statusinfo\":\"")
-                .append(statusinfo).append('\"');
+        sb.append(",\"number\":")
+                .append(number);
+        sb.append(",\"expcode\":\"")
+                .append(expcode).append('\"');
+        sb.append(",\"expnumber\":\"")
+                .append(expnumber).append('\"');
+        sb.append(",\"expname\":\"")
+                .append(expname).append('\"');
+        sb.append(",\"payid\":\"")
+                .append(payid).append('\"');
+        sb.append(",\"paid\":\"")
+                .append(paid).append('\"');
         sb.append(",\"remarks\":\"")
                 .append(remarks).append('\"');
         sb.append('}');

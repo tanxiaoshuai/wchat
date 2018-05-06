@@ -19,7 +19,7 @@ public class OrderServiceImpl implements IOrderService{
     @Override
     public Object findByOrderId(String orderid) throws Exception {
         Order order = orderDao.findByOrderId(orderid);
-        order.orderFormat(order);
         return ResultUtil.success(order);
     }
+
 }

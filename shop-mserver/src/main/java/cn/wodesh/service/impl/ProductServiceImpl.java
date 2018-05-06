@@ -4,7 +4,7 @@ import cn.wodesh.bean.ProductField;
 import cn.wodesh.dao.ProductDao;
 import cn.wodesh.dao.ProductFieldDao;
 import cn.wodesh.dao.util.SqlKeyVal;
-import cn.wodesh.service.IKeyWordService;
+import cn.wodesh.rabbitmq.RabbitMqSender;
 import cn.wodesh.service.IProductService;
 import cn.wodesh.util.RegexUtil;
 import cn.wodesh.util.ResultUtil;
@@ -35,7 +35,7 @@ public class ProductServiceImpl implements IProductService {
     private ProductFieldDao productFieldDao;
 
     @Autowired
-    private IKeyWordService keyWordService;
+    private RabbitMqSender rabbitMqSender;
 
 
     @Override
@@ -98,16 +98,15 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-//    @Cacheable(key="#root.targetClass + #root.methodName")
     public Object findByCutProduct(Map condition, HttpServletRequest request) throws Exception {
         Long startpage = (Long.parseLong(condition.get("page").toString()) - 1 ) * Long.parseLong(condition.get("size").toString());
         condition.put("startpage" , startpage);
         String keywords = condition.get("keywords").toString();
         if(RegexUtil.isNotNull(keywords)){
-            keyWordService.save(new JSONObject().
+            rabbitMqSender.send(new JSONObject().
                     fluentPut("userid" , TokenUtil.
                             tokenForUserId(request.getHeader("token"))).
-                    fluentPut("keyname" , keywords).toString());
+                    fluentPut("keyname" , keywords));
         }
         List<Map> list = productDao.findByCutProduct(condition);
         for(Map m : list){

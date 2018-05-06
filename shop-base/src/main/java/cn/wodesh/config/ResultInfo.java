@@ -10,14 +10,13 @@ public enum ResultInfo {
     EXCEPTION("0002","系统异常"),
     NOAUTHORIZE("0003" , "未授权"),
     LOGINOUTTIME("0004" , "登录超时"),
-    ANOTHERdDEVICELOGIN("0005" , "用户在其他设备上登录"),
-    USER_ISNULL("0006" , "用户不存在"),
-    PHONE_ISNOTNULL("0007" , "手机号已注册"),
-    PASSWORDERROR("0008" , "密码错误"),
-    TOKENCHECKERROR("0009" , "认证失败"),
-    NICKNAME_ISNOTNULL("0010" , "用户名已存在"),
-    AL_SMS_MESSAGE_ERROR("0011" , "短信验证码获取失败"),
-    UPDATE_PHONE_ISTHIS("0012" , "修改的手机号不能与当前手机号相同"),
+    TOKENCHECKERROR("0005" , "认证失败"),
+    PAY_CALLBACK_ERROR("0006" , "微信支付回调验签失败"),
+    PAY_ORDER_ERROR("0007" , "微信预付订单失败"),
+    PAY_ORDER_SIGN_ERROR("0008" , "微信预付订单验签失败"),
+    SHOPCAR_CHOICE_ERROR("0009" , "你选择的商品含有售完、下架或超出库存等商品，请重新选择"),
+
+
 
     ;
 

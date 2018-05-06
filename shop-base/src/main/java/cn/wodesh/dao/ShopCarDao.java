@@ -14,11 +14,18 @@ import java.util.Map;
 @Mapper
 public interface ShopCarDao extends TemplateDao<ShopCar>{
     @Select("SELECT p.p_id AS proid , p.p_describe AS prodescribe , p.p_status AS prostatus , p.p_freight AS freight ," +
-            " p.p_discount AS discount , pf.pa_field AS profield , pf.pa_price AS price ," +
+            " p.p_discount AS discount , pf.pa_field AS profield , pf.pa_price AS price , p.p_keyfrom AS keyfrom , " +
             " pf.pa_spec AS spec, pf.pa_stock AS stock , sp.sp_paid AS fieldid , sp.sp_number AS number " +
             "FROM t_shopcar sp JOIN t_product_field pf ON sp.sp_paid = pf.pa_id " +
             "JOIN t_product p ON pf.pa_proid = p.p_id WHERE sp.sp_userid = #{userid} limit #{startpage} , #{size}")
     public List<ShopCar> findShopCarList(@Param("userid") String userid , @Param("startpage") Integer startpage , @Param("size") Integer size) throws Exception;
+
+    @Select("SELECT p.p_id AS proid , p.p_describe AS prodescribe , p.p_status AS prostatus , p.p_freight AS freight ," +
+            " p.p_discount AS discount , pf.pa_field AS profield , pf.pa_price AS price , p.p_keyfrom AS keyfrom , " +
+            " pf.pa_spec AS spec, pf.pa_stock AS stock , sp.sp_paid AS fieldid , sp.sp_number AS number " +
+            "FROM t_shopcar sp JOIN t_product_field pf ON sp.sp_paid = pf.pa_id " +
+            "JOIN t_product p ON pf.pa_proid = p.p_id WHERE sp.sp_paid = #{fieldid}")
+    public ShopCar findShopCarBean(@Param("fieldid") String fieldid) throws Exception;
 
     @Update("<script>update t_shopcar set sp_number = sp_number + #{number} " +
             "where sp_userid = #{userid} and sp_paid = #{fieldid} " +

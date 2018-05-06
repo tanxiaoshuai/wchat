@@ -46,8 +46,8 @@ public class IndexController {
 
     @PostMapping(value = "/message", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
-    public String service(HttpServletRequest request) throws Exception {
-        return WchatMessage.message(request);
+    public String service(@RequestBody String body) throws Exception {
+        return WchatMessage.message(body);
     }
 
     @GetMapping("/rest/index/search")

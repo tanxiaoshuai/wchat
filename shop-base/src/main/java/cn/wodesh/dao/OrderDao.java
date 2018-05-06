@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/20.
@@ -29,4 +30,5 @@ public interface OrderDao extends TemplateDao<Order>{
             @Result(property = "orderid", column = "o_id"),
     })
     public Order findByOrderId(@Param("orderid") String orderid) throws Exception;
+
 }

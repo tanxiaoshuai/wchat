@@ -35,7 +35,31 @@ public class HttpClientUtil {
             entity.setContentType("application/json");
             httpPost.setEntity(entity);
             result = httpClient.execute(httpPost);
-            return EntityUtils.toString(result.getEntity());
+            return EntityUtils.toString(result.getEntity(),"utf8");
+        }
+
+        /**
+         * post请求（添加header）
+         * @param body
+         * @param url
+         * @param map
+         * @return
+         */
+        public static String postHeaderXml(String body , String url , Map<String , String> map) throws Exception {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url);
+            HttpResponse result;
+            if(!ObjectUtils.isEmpty(map)){
+                for(String key : map.keySet()){
+                    httpPost.setHeader(key, map.get(key));
+                }
+            }
+            StringEntity entity = new StringEntity(body, "utf-8");// 解决中文乱码问题
+            entity.setContentEncoding("UTF-8");
+            entity.setContentType("text/xml");
+            httpPost.setEntity(entity);
+            result = httpClient.execute(httpPost);
+            return EntityUtils.toString(result.getEntity() , "utf8");
         }
 
         /**
@@ -60,7 +84,7 @@ public class HttpClientUtil {
             entity.setContentType("application/json");
             httpPut.setEntity(entity);
             result = httpClient.execute(httpPut);
-            return EntityUtils.toString(result.getEntity());
+            return EntityUtils.toString(result.getEntity(),"utf8");
         }
 
         /**

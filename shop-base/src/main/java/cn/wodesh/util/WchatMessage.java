@@ -1,18 +1,16 @@
 package cn.wodesh.util;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.alibaba.fastjson.JSONObject;
 /**
  * Created by TS on 2018/5/3.
  */
 public class WchatMessage {
 
-    public static String message(HttpServletRequest request) throws Exception {
-        String reqxml = IoUtil.IoToString(request.getReader());
-        JSONObject object = XML.toJSONObject(reqxml);
+    public static String message(String xml) throws Exception {
+        JSONObject object = JSONObject.parseObject(XML.toJSONObject(xml).toString());
         JSONObject objxml = object.getJSONObject("xml");
-        System.out.println(objxml.getString("Event"));
-        if(!"subscribe".equals(objxml.getString("Event"))){
+        String Event = objxml.getString("Event");
+        System.out.println(Event);
+        if(Event !=null && !"subscribe".equals(Event)){
             return "";
         }
 
@@ -21,6 +19,7 @@ public class WchatMessage {
         objxml.put("FromUserName" , ToUserName);
         objxml.put("ToUserName" , FromUserName);
         objxml.put("Content" , "你好");
+        object.put("xml" , objxml);
         return XmlUtil.JsonToXml(object.toString());
     }
 }

@@ -63,8 +63,10 @@ public class TokenUtil {
         return true;
     }
 
-    public static void main(String[] args) {
-        System.out.println(JSONArray.toJSON(tokenParam("5Zu05q60JjE1MjM0NTY4NjEzNzkmNzc=")));
+    public static User tokenGetUser(){
+        String userid = (String) tokenParam(RequestUtil.getHeader("token")).get(0);
+        RedisUtil redisUtil = BeanFactoryUtil.getBeanByClass(RedisUtil.class);
+        return (User) redisUtil.get(userid);
     }
 
 }

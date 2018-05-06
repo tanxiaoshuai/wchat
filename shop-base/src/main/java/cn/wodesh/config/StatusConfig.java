@@ -10,6 +10,8 @@ public class StatusConfig {
 
     public static Map<Integer , String> PRODUCTSTATUS = new HashMap<>();
     public static Map<Integer , String> ORDERSTATUS = new HashMap<>();
+    public static Integer ADDRES_DEFUALT = 1;
+    public static Integer ADDRES_NO_DEFUALT = 0;
     static {
         PRODUCTSTATUS.put(1 , "上架");
         PRODUCTSTATUS.put(2 , "下架");

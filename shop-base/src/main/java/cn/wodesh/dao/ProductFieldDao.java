@@ -11,5 +11,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface ProductFieldDao extends TemplateDao<ProductField>{
 
+    @Update("update t_product_field set pa_stock = pa_stock - #{number} where pa_id = #{fieldid} and pa_stock >= #{number}")
+    public int updateStock(@Param("fieldid") String fieldid , @Param("number") Integer number) throws Exception;
 
 }
