@@ -22,4 +22,9 @@ public class OrderServiceImpl implements IOrderService{
         return ResultUtil.success(order);
     }
 
+    @Override
+    public Object addOrder(String outtradeno) throws Exception {
+        return null;
+    }
+
 }
