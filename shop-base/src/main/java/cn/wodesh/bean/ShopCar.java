@@ -1,6 +1,9 @@
 package cn.wodesh.bean;
 
 import cn.wodesh.config.StatusConfig;
+import cn.wodesh.dao.annotation.Column;
+import cn.wodesh.dao.annotation.ID;
+import cn.wodesh.dao.annotation.TableName;
 import cn.wodesh.util.WchatUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,11 +15,20 @@ import java.util.List;
  */
 @Component
 @Scope("prototype")
+@TableName(name = "t_shopcar")
 public class ShopCar {
 
-    private String proid;
+    @ID(increment = false)
+    @Column(name = "sp_id")
+    private String shopcarid;
 
+    @Column(name = "sp_number")
+    private Integer number;
+
+    @Column(name = "sp_paid")
     private String fieldid;
+
+    private String proid;
 
     private String prodescribe;
 
@@ -35,8 +47,6 @@ public class ShopCar {
     private Integer stock;
 
     private String statusinfo;
-
-    private Integer number;
 
     private String keyfrom;
 
@@ -144,6 +154,14 @@ public class ShopCar {
         this.keyfrom = keyfrom;
     }
 
+    public String getShopcarid() {
+        return shopcarid;
+    }
+
+    public void setShopcarid(String shopcarid) {
+        this.shopcarid = shopcarid;
+    }
+
     public void shopCatFormat(ShopCar s){
         s.setPrice(WchatUtil.priceFormat(
                 Integer.parseInt(s.getPrice()) , Integer.parseInt(s.getDiscount())));
@@ -163,7 +181,9 @@ public class ShopCar {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"proid\":\"")
+        sb.append("\"shopcarid\":\"")
+                .append(shopcarid).append('\"');
+        sb.append(",\"proid\":\"")
                 .append(proid).append('\"');
         sb.append(",\"fieldid\":\"")
                 .append(fieldid).append('\"');

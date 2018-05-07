@@ -2,6 +2,7 @@ package cn.wodesh.service.impl;
 
 import cn.wodesh.bean.Address;
 import cn.wodesh.bean.ShopCar;
+import cn.wodesh.config.AppConfig;
 import cn.wodesh.config.ResultInfo;
 import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.AddressDao;
@@ -41,12 +42,11 @@ public class ShopCarServiceImpl implements IShopCarService{
 
 
     @Override
-    public Object findShopCarList(String userid, Integer page, Integer size) throws Exception {
-        ParamValidateUtil.notNull(userid , "用户id不能为空");
+    public Object findShopCarList(Integer page, Integer size) throws Exception {
         ParamValidateUtil.notNull(page , "页码不能为空");
         ParamValidateUtil.notNull(size , "分页size不能为空");
         List<ShopCar> list = shopCarDao.
-                findShopCarList(userid , (page - 1) * size , size);
+                findShopCarList(TokenUtil.tokenGetUser().getUserid() , (page - 1) * size , size);
         for(ShopCar s : list)
             s.shopCatFormat(s);
         return ResultUtil.success(list);
@@ -54,22 +54,27 @@ public class ShopCarServiceImpl implements IShopCarService{
 
     @Override
     public Object changeNumber(Integer number, String userid , String fieldid) throws Exception {
-        shopCarDao.changeNumber(number , userid , fieldid);
+
         return ResultUtil.success();
     }
 
     @Override
     public Object save(Map map) throws Exception {
-        map.put("userid" , TokenUtil.
-                tokenForUserId(RequestUtil.getHeader("token")));
-        Integer number = shopCarDao.findShopCarProductNumber(map);
-        if(number == null){
+        map.put("userid" , TokenUtil.tokenGetUser().getUserid());
+        Map m = shopCarDao.findShopCarProductNumberOrshopCarId(map);
+        Integer num =  map.get("number") != null && !"".equals(map.get("number").toString())  ? Integer.parseInt(map.get("number")+"") : null;
+        ParamValidateUtil.notNull(num , "数量不能为空");
+        ParamValidateUtil.IntegrCheck(num , 99 ,"数量不能超过99");
+        if(m == null){
+            map.put("shopcarid" , KeyUtil.uuid());
             shopCarDao.add(map);
             return ResultUtil.success();
         }
         int number_ = Integer.parseInt(map.get("number")+"");
+        int number = Integer.parseInt(m.get("number")+"");
         if(99 - number < number_)
             map.put("number" , 99 - number);
+        map.put("shopcarid" , m.get("shopcarid"));
         shopCarDao.updateNumber(map);
         return ResultUtil.success();
     }
@@ -80,13 +85,8 @@ public class ShopCarServiceImpl implements IShopCarService{
         List<ShopCar> shopCars = new ArrayList<>();
         Long cashCount = 0L;
         Map<String , Object> map = new HashMap<>();
-            for(String fieldid : list){
-            ShopCar shopCar = shopCarDao.findShopCarBean(fieldid);
-            int a = fieldDao.updateStock(fieldid ,
-                    shopCar.getNumber());
-            if(a == 0){
-                throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR);
-            }
+            for(String shopcarid : list){
+            ShopCar shopCar = shopCarDao.findShopCarBean(shopcarid);
             cashCount += shopCar.getNumber()
                     * Long.parseLong(shopCar.getDiscount())
                     * Long.parseLong(shopCar.getPrice()) / 100L + Long.parseLong(shopCar.getFreight());
@@ -99,7 +99,7 @@ public class ShopCarServiceImpl implements IShopCarService{
         map.put("address" , address);
         map.put("cashCount" , WchatUtil.priceFormat(cashCount));
         map.put("out_trade_no" , out_trade_no);
-        redisUtil.set(KeyUtil.outTradeNoKey(out_trade_no) , map);
+        redisUtil.set(KeyUtil.outTradeNoKey(out_trade_no) , map , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);
         return ResultUtil.success(map);
     }
 }

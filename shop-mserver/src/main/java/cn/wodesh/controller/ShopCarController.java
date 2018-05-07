@@ -18,10 +18,9 @@ public class ShopCarController {
     private IShopCarService shopCarService;
 
     @GetMapping("/rest/shopcar/search")
-    public Object findShopCarList(@RequestParam String userid,
-                                  @RequestParam Integer page,
+    public Object findShopCarList(@RequestParam Integer page,
                                   @RequestParam Integer size) throws Exception{
-        return shopCarService.findShopCarList(userid , page , size);
+        return shopCarService.findShopCarList(page , size);
     }
 
     @GetMapping("/rest/shopcar/updatenumber")

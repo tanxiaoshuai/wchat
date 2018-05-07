@@ -1,14 +1,9 @@
 package cn.wodesh.bean;
-
-import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.annotation.Column;
 import cn.wodesh.dao.annotation.ID;
 import cn.wodesh.dao.annotation.TableName;
-import cn.wodesh.util.WchatUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by TS on 2018/4/20.
@@ -38,7 +33,7 @@ public class Order {
     private String receivename;
 
     @Column(name = "o_paytype")
-    private String paytype;
+    private Integer paytype;
 
     @Column(name = "o_userid")
     private String userid;
@@ -124,11 +119,11 @@ public class Order {
         this.receivename = receivename;
     }
 
-    public String getPaytype() {
+    public Integer getPaytype() {
         return paytype;
     }
 
-    public void setPaytype(String paytype) {
+    public void setPaytype(Integer paytype) {
         this.paytype = paytype;
     }
 

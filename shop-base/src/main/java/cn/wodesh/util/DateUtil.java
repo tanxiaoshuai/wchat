@@ -14,6 +14,12 @@ public class DateUtil {
         return format.format(date).toString();
     }
 
+    public static String currentTime(String mat){
+        SimpleDateFormat format = new SimpleDateFormat(mat);
+        Date date = new Date(System.currentTimeMillis());
+        return format.format(date).toString();
+    }
+
     /**
      * 将时间模板   转化为毫秒"yyyy-MM-dd HH:mm:ss"
      * @param time

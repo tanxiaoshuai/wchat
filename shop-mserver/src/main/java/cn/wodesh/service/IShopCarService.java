@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public interface IShopCarService {
 
-    public Object findShopCarList(String userid , Integer page , Integer size) throws Exception;
+    public Object findShopCarList( Integer page , Integer size) throws Exception;
 
     public Object changeNumber(Integer number, String userid , String fieldid) throws Exception;
 

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public final class OrderId {
 
-    public static String getOrderIdByUUId() {
+    public synchronized static String getOrderIdByUUId() {
         Date date=new Date();
         DateFormat format = new SimpleDateFormat("yyyyMMdd");
         String time = format.format(date);

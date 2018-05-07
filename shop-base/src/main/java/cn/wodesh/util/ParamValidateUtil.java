@@ -20,6 +20,11 @@ public class ParamValidateUtil {
             throw new FinalException(ResultInfo.ERROR_PARAM.setMsg(msg));
     }
 
+    public static void IntegrCheck(Integer i , int max , String msg){
+        if(i > max)
+            throw new FinalException(ResultInfo.ERROR_PARAM.setMsg(msg));
+    }
+
     public static void length(int min , long max , String param , String msg){
         long len = param.length();
         if (len < min || len > max)

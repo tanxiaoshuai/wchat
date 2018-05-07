@@ -115,6 +115,10 @@ public class WchatUtil {
         return String.format("%.2f" , o);
     }
 
+    public static Integer CashFormatInt (String cash){
+        return (int) (Double.parseDouble(cash) * 100);
+    }
+
     public static String priceFormat(List<String> price){
         String p = null;
         if(price.size() > 0){
@@ -154,5 +158,9 @@ public class WchatUtil {
         price.add(StrFormat(min));
         price.add(StrFormat(max));
         return price;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(CashFormatInt("68.12"));
     }
 }

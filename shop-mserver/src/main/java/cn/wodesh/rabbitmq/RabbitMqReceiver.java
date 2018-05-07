@@ -23,6 +23,7 @@ public class RabbitMqReceiver {
     @RabbitListener(queues = RabbitConfig.APP_KEYWORDS)
     public void process(JSONObject object) throws Exception {
         LOGGER.info("接受关键字队列参数：" + object);
-        keyWordService.save(object.toString());
+        System.out.println("---->接受关键字队列参数：" + object);
+//        keyWordService.save(object.toString());
     }
 }

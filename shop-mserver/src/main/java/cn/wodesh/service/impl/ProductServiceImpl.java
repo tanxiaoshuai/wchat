@@ -101,7 +101,7 @@ public class ProductServiceImpl implements IProductService {
     public Object findByCutProduct(Map condition, HttpServletRequest request) throws Exception {
         Long startpage = (Long.parseLong(condition.get("page").toString()) - 1 ) * Long.parseLong(condition.get("size").toString());
         condition.put("startpage" , startpage);
-        String keywords = condition.get("keywords").toString();
+        String keywords = (String) condition.get("keywords");
         if(RegexUtil.isNotNull(keywords)){
             rabbitMqSender.send(new JSONObject().
                     fluentPut("userid" , TokenUtil.
