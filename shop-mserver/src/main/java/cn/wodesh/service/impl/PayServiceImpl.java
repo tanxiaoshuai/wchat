@@ -20,7 +20,7 @@ public class PayServiceImpl implements IPayService{
     @Override
     public Object pay(Map map) throws Exception {
         String paysrt = payUtil.Pay(map.get("openid")+"" ,
-                map.get("cash")+"", map.get("orderid")+"");
+                map.get("cash")+"", map.get("orderid")+"" , "1");
         return ResultUtil.success(JSONObject.parseObject(paysrt));
     }
 

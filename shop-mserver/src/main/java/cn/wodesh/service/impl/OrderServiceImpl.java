@@ -52,6 +52,8 @@ public class OrderServiceImpl implements IOrderService{
         String outtradeno = (String) body.get("out_trade_no");
         outtradeno = KeyUtil.outTradeNoKey(outtradeno);
         JSONObject address = (JSONObject) JSONObject.toJSON(body.get("address"));
+        String payEntrance = (String) body.get("payentrance");
+        ParamValidateUtil.notNull(payEntrance, "支付了入口类型不能为空");
         if(!redisUtil.exists(outtradeno))
             throw new FinalException(ResultInfo.SHOPCAR_BY_ORDER_OUT_TIME);
         Map map = (Map) redisUtil.get(outtradeno);
@@ -89,8 +91,10 @@ public class OrderServiceImpl implements IOrderService{
             orderDao.save(order);
             shopCarDao.deleteById(s.getShopcarid() , ShopCar.class);
         }
-        payUtil.Pay(user.getOpenid() , WchatUtil.CashFormatInt(map.get("cashCount").toString())+"" , payid);
-        return null;
+
+        String res = payUtil.Pay(user.getOpenid() ,
+                WchatUtil.CashFormatInt(map.get("cashCount").toString())+"" , payid , payEntrance);
+        return ResultUtil.success(JSONObject.parseObject(res));
     }
 
 }

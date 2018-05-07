@@ -1,5 +1,6 @@
 package cn.wodesh.controller;
 
+import cn.wodesh.bean.ShopCar;
 import cn.wodesh.service.IShopCarService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,9 @@ public class ShopCarController {
         return shopCarService.findShopCarList(page , size);
     }
 
-    @GetMapping("/rest/shopcar/updatenumber")
-    public Object changeNumber(@RequestParam Integer number,
-                                  @RequestParam String userid,
-                                  @RequestParam String fieldid) throws Exception{
-        return shopCarService.changeNumber(number , userid , fieldid);
+    @PostMapping("/rest/shopcar/updatenumber")
+    public Object changeNumber(@RequestBody List<ShopCar> shopCars) throws Exception{
+        return shopCarService.changeNumber(shopCars);
     }
 
     @PostMapping("/rest/shopcar/add")

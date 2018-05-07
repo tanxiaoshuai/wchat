@@ -18,7 +18,7 @@ public class PayUtil {
     @Value("${default.pay_callback}")
     private String pay_callback;
 
-    public String Pay(String openId , String cash , String orderId) throws Exception{
+    public String Pay(String openId , String cash , String orderId , String paytype) throws Exception{
         JSONObject object = new JSONObject();
         object.put("appid", WchatConfig.APPID);
         object.put("mch_id", WchatConfig.MCH_ID);
@@ -30,6 +30,7 @@ public class PayUtil {
         object.put("notify_url", pay_callback);
         object.put("trade_type", "JSAPI");
         object.put("openid", openId);
+        object.put("attach" , paytype);
         object.put("sign" , paySign(object));
         String xml = getXmlToCDATA(object);
         System.out.println(xml);
@@ -106,6 +107,7 @@ public class PayUtil {
     public String callback(String xml){
         JSONObject body = JSONObject.parseObject(XML.toJSONObject(xml).toString());
         body = body.getJSONObject("xml");
+        System.out.println(body);
         String sign = body.getString("sign");
         body.remove("sign");
         String sign_ = paySign(body);

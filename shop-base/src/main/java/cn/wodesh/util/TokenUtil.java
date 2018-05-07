@@ -65,8 +65,6 @@ public class TokenUtil {
 
     public static User tokenGetUser(){
         String token =RequestUtil.getHeader("token");
-        if(RegexUtil.isNull(token))
-            throw new FinalException(ResultInfo.NOAUTHORIZE);
         String userid = (String) tokenParam(token).get(0);
         RedisUtil redisUtil = BeanFactoryUtil.getBeanByClass(RedisUtil.class);
         return (User) redisUtil.get(userid);

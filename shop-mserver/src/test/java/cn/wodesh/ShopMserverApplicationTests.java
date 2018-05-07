@@ -102,7 +102,7 @@ public class ShopMserverApplicationTests {
 //		System.out.println(shopCarDao.findShopCarBean("4d325c102ff8ba5dd3d95ae703e4ce52"));
 //		AddressDao addressDao = BeanFactoryUtil.getBeanByClass(AddressDao.class);
 //		System.out.println(addressDao.findUserToDefualtAddress("758d320555094e438dd374e7febc33e9" , 1));
-		rabbitMqSender.send(new JSONObject().fluentPut("key" , "妈妈，哪个男生为什么有小鸡鸡呀"));
+//		rabbitMqSender.send(new JSONObject().fluentPut("key" , "妈妈，哪个男生为什么有小鸡鸡呀"));
 	}
 
 }

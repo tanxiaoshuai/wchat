@@ -32,9 +32,6 @@ public class ShopCarServiceImpl implements IShopCarService{
     private ShopCarDao shopCarDao;
 
     @Autowired
-    private ProductFieldDao fieldDao;
-
-    @Autowired
     private AddressDao addressDao;
 
     @Autowired
@@ -53,12 +50,15 @@ public class ShopCarServiceImpl implements IShopCarService{
     }
 
     @Override
-    public Object changeNumber(Integer number, String userid , String fieldid) throws Exception {
-
+    @Transactional
+    public Object changeNumber(List<ShopCar> shopCars) throws Exception {
+        for(ShopCar s : shopCars)
+            shopCarDao.updateById(s);
         return ResultUtil.success();
     }
 
     @Override
+    @Transactional
     public Object save(Map map) throws Exception {
         map.put("userid" , TokenUtil.tokenGetUser().getUserid());
         Map m = shopCarDao.findShopCarProductNumberOrshopCarId(map);
@@ -80,13 +80,13 @@ public class ShopCarServiceImpl implements IShopCarService{
     }
 
     @Override
-    @Transactional
     public Object checkProduct(List<String> list) throws Exception {
         List<ShopCar> shopCars = new ArrayList<>();
         Long cashCount = 0L;
         Map<String , Object> map = new HashMap<>();
             for(String shopcarid : list){
             ShopCar shopCar = shopCarDao.findShopCarBean(shopcarid);
+                System.out.println(shopCar);
             cashCount += shopCar.getNumber()
                     * Long.parseLong(shopCar.getDiscount())
                     * Long.parseLong(shopCar.getPrice()) / 100L + Long.parseLong(shopCar.getFreight());
