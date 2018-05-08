@@ -108,7 +108,7 @@ public class ShopMserverApplicationTests {
 //		AddressDao addressDao = BeanFactoryUtil.getBeanByClass(AddressDao.class);
 //		System.out.println(addressDao.findUserToDefualtAddress("758d320555094e438dd374e7febc33e9" , 1));
 //		rabbitMqSender.send(new JSONObject().fluentPut("key" , "妈妈，哪个男生为什么有小鸡鸡呀"));
-//		redisUtil.set(KeyUtil.orderNoPayKey("27c2e984cdc84ec685e3ffcfbb303dc6"), null , AppConfig.ORDER_NO_PAY_OUT_TIME);
+		redisUtil.set(KeyUtil.orderNoPayKey("27c2e984cdc84ec685e3ffcfbb303dc6"), null , AppConfig.ORDER_NO_PAY_OUT_TIME);
 
 	}
 

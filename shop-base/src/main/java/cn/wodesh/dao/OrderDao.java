@@ -31,4 +31,7 @@ public interface OrderDao extends TemplateDao<Order>{
     })
     public Order findByOrderId(@Param("orderid") String orderid) throws Exception;
 
+    @Select("select o_paid as fieldid , o_number as number from t_order where o_payid = #{payid} and o_status= #{status}")
+    public List<Map> findByOrderIdAndNumber(@Param("payid") String payid , @Param("status") Integer status) throws Exception;
+
 }
