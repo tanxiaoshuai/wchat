@@ -15,9 +15,13 @@ public class KeyUtil {
         return new StringBuffer().append(AppConfig.OUT_TRADE_NO).append(uuid).toString();
     }
 
-    public static String getOutTradeNo(String key){
+    public static String getKeyToId(String key){
         String[] arr = key.split("_");
         return arr[arr.length - 1];
+    }
+
+    public static String orderNoPayKey(String uuid){
+        return new StringBuffer().append(AppConfig.ORDER_NO_PAY_KEY).append(uuid).toString();
     }
 
 

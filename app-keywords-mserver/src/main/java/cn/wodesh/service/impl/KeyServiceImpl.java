@@ -13,7 +13,7 @@ import java.util.List;
  * Created by TS on 2018/4/28.
  */
 @Service
-public class keyServiceImpl implements IKeyService{
+public class KeyServiceImpl implements IKeyService{
 
 
     @Autowired

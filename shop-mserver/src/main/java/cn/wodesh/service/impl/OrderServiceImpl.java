@@ -3,6 +3,7 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Order;
 import cn.wodesh.bean.ShopCar;
 import cn.wodesh.bean.User;
+import cn.wodesh.config.AppConfig;
 import cn.wodesh.config.ResultInfo;
 import cn.wodesh.dao.OrderDao;
 import cn.wodesh.dao.ProductFieldDao;
@@ -91,9 +92,9 @@ public class OrderServiceImpl implements IOrderService{
             orderDao.save(order);
             shopCarDao.deleteById(s.getShopcarid() , ShopCar.class);
         }
-
         String res = payUtil.Pay(user.getOpenid() ,
                 WchatUtil.CashFormatInt(map.get("cashCount").toString())+"" , payid , payEntrance);
+        redisUtil.set(KeyUtil.orderNoPayKey(payid), null , AppConfig.ORDER_NO_PAY_OUT_TIME);
         return ResultUtil.success(JSONObject.parseObject(res));
     }
 
