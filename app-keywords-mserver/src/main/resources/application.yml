@@ -32,11 +32,6 @@ spring:
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
     filters: stat,wall,log4j
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
 mybatis.configuration.call-setters-on-nulls: true #mybatis 返回Map 显示null
 hotwords_limit_time: 30 #(获取*天内的热词)

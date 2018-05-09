@@ -1,18 +1,11 @@
 package cn.wodesh;
 
-import cn.wodesh.bean.*;
 import cn.wodesh.config.AppConfig;
 import cn.wodesh.dao.*;
-import cn.wodesh.dao.sql.TemplateSQL;
-import cn.wodesh.dao.util.SqlKeyVal;
 import cn.wodesh.rabbitmq.RabbitMqSender;
 import cn.wodesh.redis.RedisUtil;
-import cn.wodesh.util.BeanFactoryUtil;
-import cn.wodesh.util.DateUtil;
 import cn.wodesh.util.KeyUtil;
 import cn.wodesh.util.PayUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

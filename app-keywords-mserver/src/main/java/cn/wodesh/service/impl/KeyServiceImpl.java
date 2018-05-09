@@ -2,6 +2,7 @@ package cn.wodesh.service.impl;
 
 import cn.wodesh.bean.KeyWords;
 import cn.wodesh.dao.KeyWordsDao;
+import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IKeyService;
 import cn.wodesh.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
