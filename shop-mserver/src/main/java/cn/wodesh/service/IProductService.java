@@ -11,4 +11,6 @@ public interface IProductService {
     public Object findById(String proid) throws Exception;
 
     public Object findByCutProduct(Map condition , HttpServletRequest request) throws Exception;
+
+    public void updateClicks(String proid) throws Exception;
 }

@@ -38,4 +38,9 @@ public class ShopCarController {
     public Object checkProduct(@RequestBody List<String> list) throws Exception{
         return shopCarService.checkProduct(list);
     }
+
+    @GetMapping("/rest/shopcar/orderInfo/{outid}")
+    public Object orderInfo(@PathVariable String outid) throws Exception{
+        return shopCarService.ShopCarToOderInfo(outid);
+    }
 }

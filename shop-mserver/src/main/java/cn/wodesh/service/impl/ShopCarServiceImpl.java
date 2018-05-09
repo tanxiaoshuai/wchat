@@ -3,16 +3,12 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Address;
 import cn.wodesh.bean.ShopCar;
 import cn.wodesh.config.AppConfig;
-import cn.wodesh.config.ResultInfo;
 import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.AddressDao;
-import cn.wodesh.dao.ProductFieldDao;
 import cn.wodesh.dao.ShopCarDao;
-import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IShopCarService;
 import cn.wodesh.util.*;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,6 +96,15 @@ public class ShopCarServiceImpl implements IShopCarService{
         map.put("cashCount" , WchatUtil.priceFormat(cashCount));
         map.put("out_trade_no" , out_trade_no);
         redisUtil.set(KeyUtil.outTradeNoKey(out_trade_no) , map , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);
+        map.clear();
+        map.put("out_trade_no" , out_trade_no);
+        return ResultUtil.success(map);
+    }
+
+    @Override
+    public Object ShopCarToOderInfo(String out_trade_no) throws Exception {
+        Map map = (Map) redisUtil.get(KeyUtil.outTradeNoKey(out_trade_no));
+        redisUtil.setExpire(out_trade_no , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);
         return ResultUtil.success(map);
     }
 }

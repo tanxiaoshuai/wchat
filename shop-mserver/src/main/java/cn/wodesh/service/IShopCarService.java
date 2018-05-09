@@ -17,4 +17,6 @@ public interface IShopCarService {
     public Object save(Map map) throws Exception;
 
     public Object checkProduct(List<String> list) throws Exception;
+
+    public Object ShopCarToOderInfo(String out_trade_no) throws Exception;
 }

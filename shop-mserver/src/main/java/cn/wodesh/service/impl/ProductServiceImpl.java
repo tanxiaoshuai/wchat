@@ -94,6 +94,7 @@ public class ProductServiceImpl implements IProductService {
         object.put("fieldList" , relationList);
         object.put("showprice" , WchatUtil.priceFormat(showprice));
         object.put("showoldprice" , WchatUtil.priceFormat(showoldprice));
+        rabbitMqSender.send_product_clicks(proid);
         return ResultUtil.success(object);
     }
 
@@ -116,6 +117,13 @@ public class ProductServiceImpl implements IProductService {
             m.put("discount" , WchatUtil.priceFormat(Integer.parseInt(m.get("discount")+"")));
         }
         return ResultUtil.success(list);
+    }
+
+    @Override
+    public void updateClicks(String proid) throws Exception {
+        productDao.updateBySQLRequire(new StringBuffer().append("p_clicks=").
+                append("p_clicks + 1 where p_id='").append(proid).
+                append("'").toString() , Product.class);
     }
 
 }

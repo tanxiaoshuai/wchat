@@ -14,4 +14,8 @@ public class RabbitMqSender {
     public void send(JSONObject object){
         this.rabbitTemplate.convertAndSend(RabbitConfig.APP_KEYWORDS, object);
     }
+
+    public void send_product_clicks(String proid){
+        this.rabbitTemplate.convertAndSend(RabbitConfig.PRODUCT_CLICKS, proid);
+    }
 }
