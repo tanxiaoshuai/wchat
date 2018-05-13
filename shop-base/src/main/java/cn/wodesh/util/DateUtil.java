@@ -7,6 +7,7 @@ import java.util.Date;
 public class DateUtil {
 
     public final static String YEARTOSS = "yyyy-MM-dd HH:mm:ss";
+    public final static String MMSS = "mm:ss";
 
     public static String longForTime(long s , String mat){
         SimpleDateFormat format = new SimpleDateFormat(mat);

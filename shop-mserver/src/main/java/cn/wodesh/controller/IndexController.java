@@ -26,6 +26,9 @@ public class IndexController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private WchatMessage wchatMessage;
+
     @RequestMapping("/rest/index")
     public String index(@RequestParam String code) throws Exception{
         LOGGER.info("获取openid的code:["+code+"]" );
@@ -47,7 +50,7 @@ public class IndexController {
     @PostMapping(value = "/message", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public String service(@RequestBody String body) throws Exception {
-        return WchatMessage.message(body);
+        return wchatMessage.message(body);
     }
 
     @GetMapping("/rest/index/search")

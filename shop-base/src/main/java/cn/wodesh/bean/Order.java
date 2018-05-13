@@ -2,6 +2,7 @@ package cn.wodesh.bean;
 import cn.wodesh.dao.annotation.Column;
 import cn.wodesh.dao.annotation.ID;
 import cn.wodesh.dao.annotation.TableName;
+import cn.wodesh.util.WchatUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -70,6 +71,11 @@ public class Order {
 
     @Column(name = "o_remarks")
     private String remarks;
+
+    private String statusinfo;
+
+    private String orderlimittime;
+
 
     public String getOrderid() {
         return orderid;
@@ -223,6 +229,30 @@ public class Order {
         this.remarks = remarks;
     }
 
+    public String getStatusinfo() {
+        return statusinfo;
+    }
+
+    public void setStatusinfo(String statusinfo) {
+        this.statusinfo = statusinfo;
+    }
+
+    public String getOrderlimittime() {
+        return orderlimittime;
+    }
+
+    public void setOrderlimittime(String orderlimittime) {
+        this.orderlimittime = orderlimittime;
+    }
+
+    public void orderFormat(Order order){
+        order.setFreight(WchatUtil.
+                priceFormat(Integer.parseInt(order.getFreight())));
+        order.setPrice(WchatUtil.
+                priceFormat(Integer.parseInt(order.getPrice())));
+        order.setPaycash(WchatUtil.
+                priceFormat(Integer.parseInt(order.getPaycash())));
+    }
 
     @Override
     public String toString() {
@@ -239,8 +269,8 @@ public class Order {
                 .append(tel).append('\"');
         sb.append(",\"receivename\":\"")
                 .append(receivename).append('\"');
-        sb.append(",\"paytype\":\"")
-                .append(paytype).append('\"');
+        sb.append(",\"paytype\":")
+                .append(paytype);
         sb.append(",\"userid\":\"")
                 .append(userid).append('\"');
         sb.append(",\"freight\":\"")
@@ -265,6 +295,10 @@ public class Order {
                 .append(paid).append('\"');
         sb.append(",\"remarks\":\"")
                 .append(remarks).append('\"');
+        sb.append(",\"statusinfo\":\"")
+                .append(statusinfo).append('\"');
+        sb.append(",\"orderlimittime\":\"")
+                .append(orderlimittime).append('\"');
         sb.append('}');
         return sb.toString();
     }

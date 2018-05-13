@@ -12,4 +12,6 @@ public interface IOrderService {
 
     public Object addOrder(Map body)throws Exception;
 
+    public Object findByOrderCutPage(Map body) throws Exception;
+
 }

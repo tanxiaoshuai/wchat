@@ -25,4 +25,9 @@ public class OrderController {
         return orderService.addOrder(map);
     }
 
+    @PostMapping("/rest/order/cutpage")
+    public Object findByOrderCut(@RequestBody Map map) throws Exception{
+        return orderService.findByOrderCutPage(map);
+    }
+
 }

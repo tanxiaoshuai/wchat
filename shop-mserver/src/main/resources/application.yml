@@ -46,3 +46,5 @@ default:
   redirect_url: https://www.wodesh.cn:8088/pay.html
   wchat_token_open: false
   pay_callback: http://wodesh.cn/shop-mserver/rest/pay/callback
+  wchat_sendmessage_user: owF-Kw_dNmnrDON7ZGz8VDP3p7k4
+  wchat_sendmessage_token: 每日推送

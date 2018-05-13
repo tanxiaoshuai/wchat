@@ -5,6 +5,7 @@ import cn.wodesh.bean.ShopCar;
 import cn.wodesh.bean.User;
 import cn.wodesh.config.AppConfig;
 import cn.wodesh.config.ResultInfo;
+import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.OrderDao;
 import cn.wodesh.dao.ProductFieldDao;
 import cn.wodesh.dao.ShopCarDao;
@@ -12,6 +13,7 @@ import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IOrderService;
 import cn.wodesh.util.*;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,6 +98,31 @@ public class OrderServiceImpl implements IOrderService{
                 WchatUtil.CashFormatInt(map.get("cashCount").toString())+"" , payid , payEntrance);
         redisUtil.set(KeyUtil.orderNoPayKey(payid), null , AppConfig.ORDER_NO_PAY_OUT_TIME);
         return ResultUtil.success(JSONObject.parseObject(res));
+    }
+
+    @Override
+    public Object findByOrderCutPage(Map body) throws Exception {
+        JSONObject object = (JSONObject) JSON.toJSON(body);
+        Long page = object.getLong("page");
+        Long size = object.getLong("size");
+        String status = object.getString("status");
+        StringBuffer sql = new StringBuffer()
+                .append(" o_userid = '").append(TokenUtil.tokenGetUser().getUserid())
+                .append("' ");
+        if(RegexUtil.isNotNull(status))
+            sql.append(" and o_status = ").append(status);
+                sql.append(" order by o_createtime ").append("limit ").append((page - 1) * size)
+                .append(" , ").append(size);
+        List<Order> list = orderDao.findBySQLRequireToList(sql.toString() , Order.class);
+        for(Order o : list){
+            String orderNoPayId = KeyUtil.orderNoPayKey(o.getPayid());
+            o.setStatusinfo(StatusConfig.ORDERSTATUS.get(o.getStatus()));
+            Long time = redisUtil.getExpire(orderNoPayId);
+            o.orderFormat(o);
+            if(time > 0)
+                o.setOrderlimittime(DateUtil.longForTime(time * 1000L , DateUtil.MMSS));
+        }
+        return ResultUtil.success(list);
     }
 
 
