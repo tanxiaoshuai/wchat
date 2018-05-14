@@ -106,4 +106,12 @@ public class ShopCarServiceImpl implements IShopCarService{
         redisUtil.setExpire(out_trade_no , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);
         return ResultUtil.success(map);
     }
+
+    @Override
+    @Transactional
+    public Object deleteid(List<String> shopcarids) throws Exception {
+        for(String s: shopcarids)
+            shopCarDao.deleteById(s , ShopCar.class);
+        return ResultUtil.success();
+    }
 }

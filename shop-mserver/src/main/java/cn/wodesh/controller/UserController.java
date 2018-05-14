@@ -20,7 +20,7 @@ public class UserController {
     private boolean login_test;
 
     @GetMapping("/rest/user/login")
-    public Object login(@RequestParam String code , @RequestParam String token) throws Exception{
+    public Object login(@RequestParam String code , String token) throws Exception{
         return login_test ? userService.loginTest(code , token) : userService.login(code , token);
     }
 

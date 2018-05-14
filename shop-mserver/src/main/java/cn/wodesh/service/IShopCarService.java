@@ -19,4 +19,6 @@ public interface IShopCarService {
     public Object checkProduct(List<String> list) throws Exception;
 
     public Object ShopCarToOderInfo(String out_trade_no) throws Exception;
+
+    public Object deleteid(List<String> shopcarids) throws Exception;
 }

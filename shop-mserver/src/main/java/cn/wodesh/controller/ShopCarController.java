@@ -43,4 +43,9 @@ public class ShopCarController {
     public Object orderInfo(@PathVariable String outid) throws Exception{
         return shopCarService.ShopCarToOderInfo(outid);
     }
+
+    @PostMapping("/rest/shopcar/delete")
+    public Object delete(@RequestBody List<String> list) throws Exception{
+        return shopCarService.deleteid(list);
+    }
 }
