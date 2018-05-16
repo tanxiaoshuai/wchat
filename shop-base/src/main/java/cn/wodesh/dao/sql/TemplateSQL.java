@@ -219,7 +219,6 @@ public class TemplateSQL {
         sb.append(" = '");
         sb.append(idval);
         sb.append("'");
-        System.out.println(sb.toString());
         return sb.toString();
     }
 
