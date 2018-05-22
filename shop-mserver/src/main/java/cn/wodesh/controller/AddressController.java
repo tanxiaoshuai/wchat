@@ -34,4 +34,9 @@ public class AddressController {
         return addressService.deleteAddress(addressid);
     }
 
+    @PostMapping("/rest/address/save")
+    public Object save(@RequestBody Address address) throws Exception{
+        return addressService.save(address);
+    }
+
 }

@@ -3,11 +3,14 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Address;
 import cn.wodesh.dao.AddressDao;
 import cn.wodesh.service.IAddressService;
+import cn.wodesh.util.KeyUtil;
 import cn.wodesh.util.ParamValidateUtil;
 import cn.wodesh.util.ResultUtil;
 import cn.wodesh.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.Key;
 import java.util.List;
 
 /**
@@ -43,6 +46,15 @@ public class AddressServiceImpl implements IAddressService{
     public Object deleteAddress(String addressid) throws Exception {
         ParamValidateUtil.notNull(addressid , "地址id不能为空");
         addressDao.deleteById(addressid , Address.class);
+        return ResultUtil.success();
+    }
+
+    @Override
+    public Object save(Address address) throws Exception {
+        address.setAddressid(KeyUtil.uuid());
+        address.setUserid(TokenUtil.tokenGetUser().getUserid());
+        address.setStatus(0);
+        addressDao.save(address);
         return ResultUtil.success();
     }
 

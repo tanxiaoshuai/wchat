@@ -15,4 +15,6 @@ public interface IAddressService {
 
     public Object deleteAddress(String addressid)throws Exception;
 
+    public Object save(Address address)throws Exception;
+
 }
