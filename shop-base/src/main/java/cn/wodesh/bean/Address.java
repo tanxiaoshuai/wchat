@@ -33,6 +33,8 @@ public class Address {
     private Integer status;
     @Column(name = "a_userid")
     private String userid;
+    @Column(name = "a_area")
+    private String area;
 
     public String getAddressid() {
         return addressid;
@@ -106,6 +108,14 @@ public class Address {
         this.userid = userid;
     }
 
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -127,6 +137,8 @@ public class Address {
                 .append(status);
         sb.append(",\"userid\":\"")
                 .append(userid).append('\"');
+        sb.append(",\"area\":\"")
+                .append(area).append('\"');
         sb.append('}');
         return sb.toString();
     }
