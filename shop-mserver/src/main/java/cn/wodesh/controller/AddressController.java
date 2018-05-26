@@ -5,6 +5,8 @@ import cn.wodesh.service.IAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * Created by TS on 2018/4/24.
  */
@@ -37,6 +39,11 @@ public class AddressController {
     @PostMapping("/rest/address/save")
     public Object save(@RequestBody Address address) throws Exception{
         return addressService.save(address);
+    }
+
+    @PostMapping("/rest/address/update/status")
+    public Object updatestatus(@RequestBody Map map) throws Exception{
+        return addressService.updateAddressStatus(map);
     }
 
 }

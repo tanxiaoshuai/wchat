@@ -3,7 +3,10 @@ package cn.wodesh.config;
 import cn.wodesh.filter.CorsFilter;
 import cn.wodesh.filter.URLInterceptor;
 import cn.wodesh.redis.RedisExpiredListener;
+import com.alibaba.druid.support.http.StatViewServlet;
+import com.alibaba.druid.support.http.WebStatFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -93,6 +96,8 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
     public RequestContextListener requestContextListener(){
         return new RequestContextListener();
     }
+
+
 
 }
 

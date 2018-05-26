@@ -6,6 +6,7 @@ import cn.wodesh.config.AppConfig;
 import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.AddressDao;
 import cn.wodesh.dao.ShopCarDao;
+import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IShopCarService;
 import cn.wodesh.util.*;
@@ -76,6 +77,7 @@ public class ShopCarServiceImpl implements IShopCarService{
 
     @Override
     public Object checkProduct(List<String> list) throws Exception {
+        ParamValidateUtil.notNull(list,"请选择购车商品！");
         List<ShopCar> shopCars = new ArrayList<>();
         Long cashCount = 0L;
         Map<String , Object> map = new HashMap<>();

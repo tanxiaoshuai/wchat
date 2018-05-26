@@ -3,15 +3,14 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Address;
 import cn.wodesh.dao.AddressDao;
 import cn.wodesh.service.IAddressService;
-import cn.wodesh.util.KeyUtil;
-import cn.wodesh.util.ParamValidateUtil;
-import cn.wodesh.util.ResultUtil;
-import cn.wodesh.util.TokenUtil;
+import cn.wodesh.util.*;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Key;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TS on 2018/4/24.
@@ -55,6 +54,24 @@ public class AddressServiceImpl implements IAddressService{
         address.setUserid(TokenUtil.tokenGetUser().getUserid());
         address.setStatus(0);
         addressDao.save(address);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional
+    public Object updateAddressStatus(Map body) throws Exception {
+        JSONObject obj = (JSONObject) JSONObject.toJSON(body);
+        String oldaddressid = obj.getString("oldaddressid");
+        String newaddressid = obj.getString("newaddressid");
+        ParamValidateUtil.notNull(oldaddressid , "oldaddressid参数不能为空");
+        ParamValidateUtil.notNull(newaddressid , "newaddressid参数不能为空");
+        Address address = BeanFactoryUtil.getBeanByClass(Address.class);
+        address.setAddressid(oldaddressid);
+        address.setStatus(0);
+        addressDao.updateById(address);
+        address.setAddressid(newaddressid);
+        address.setStatus(1);
+        addressDao.updateById(address);
         return ResultUtil.success();
     }
 
