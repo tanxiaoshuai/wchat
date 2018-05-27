@@ -3,6 +3,7 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Address;
 import cn.wodesh.bean.ShopCar;
 import cn.wodesh.config.AppConfig;
+import cn.wodesh.config.ResultInfo;
 import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.AddressDao;
 import cn.wodesh.dao.ShopCarDao;
@@ -63,6 +64,7 @@ public class ShopCarServiceImpl implements IShopCarService{
         ParamValidateUtil.IntegrCheck(num , 99 ,"数量不能超过99");
         if(m == null){
             map.put("shopcarid" , KeyUtil.uuid());
+            map.put("createtime" , DateUtil.longForTime(System.currentTimeMillis() , DateUtil.YEARTOSS));
             shopCarDao.add(map);
             return ResultUtil.success();
         }
@@ -83,13 +85,47 @@ public class ShopCarServiceImpl implements IShopCarService{
         Map<String , Object> map = new HashMap<>();
             for(String shopcarid : list){
             ShopCar shopCar = shopCarDao.findShopCarBean(shopcarid);
-                System.out.println(shopCar);
+            if(shopCar == null)
+                continue;
+            if((shopCar.getProstatus() == 1 && shopCar.getStock() == 0)||
+                    (shopCar.getProstatus() == 1 && shopCar.getStock() < shopCar.getNumber())||
+                    shopCar.getProstatus() != 1)
+                throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR);
             cashCount += shopCar.getNumber()
                     * Long.parseLong(shopCar.getDiscount())
                     * Long.parseLong(shopCar.getPrice()) / 100L + Long.parseLong(shopCar.getFreight());
             shopCar.shopCatFormat(shopCar);
             shopCars.add(shopCar);
         }
+        Address address = addressDao.findUserToDefualtAddress(TokenUtil.tokenGetUser().getUserid() , StatusConfig.ADDRES_DEFUALT);
+        String out_trade_no = KeyUtil.uuid();
+        map.put("products" , shopCars);
+        map.put("address" , address);
+        map.put("cashCount" , WchatUtil.priceFormat(cashCount));
+        map.put("out_trade_no" , out_trade_no);
+        redisUtil.set(KeyUtil.outTradeNoKey(out_trade_no) , map , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);
+        map.clear();
+        map.put("out_trade_no" , out_trade_no);
+        return ResultUtil.success(map);
+    }
+
+    @Override
+    public Object checkProduct(Map map) throws Exception {
+        String fieldid = (String) map.get("fieldid");
+        Integer number = (Integer) map.get("number");
+        map.clear();
+        List<ShopCar> shopCars = new ArrayList<>();
+        ShopCar shopCar = shopCarDao.findFieldidBean(fieldid);
+        shopCar.setNumber(number);
+        if((shopCar.getProstatus() == 1 && shopCar.getStock() == 0)||
+                (shopCar.getProstatus() == 1 && shopCar.getStock() < shopCar.getNumber())||
+                shopCar.getProstatus() != 1)
+            throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR);
+        Long cashCount = shopCar.getNumber()
+                * Long.parseLong(shopCar.getDiscount())
+                * Long.parseLong(shopCar.getPrice()) / 100L + Long.parseLong(shopCar.getFreight());
+        shopCar.shopCatFormat(shopCar);
+        shopCars.add(shopCar);
         Address address = addressDao.findUserToDefualtAddress(TokenUtil.tokenGetUser().getUserid() , StatusConfig.ADDRES_DEFUALT);
         String out_trade_no = KeyUtil.uuid();
         map.put("products" , shopCars);

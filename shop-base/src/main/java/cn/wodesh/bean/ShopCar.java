@@ -28,6 +28,9 @@ public class ShopCar {
     @Column(name = "sp_paid")
     private String fieldid;
 
+    @Column(name = "sp_createtime")
+    private String createtime;
+
     private String proid;
 
     private String prodescribe;
@@ -162,6 +165,14 @@ public class ShopCar {
         this.shopcarid = shopcarid;
     }
 
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
     public void shopCatFormat(ShopCar s){
         s.setPrice(WchatUtil.priceFormat(
                 Integer.parseInt(s.getPrice()) , Integer.parseInt(s.getDiscount())));
@@ -183,10 +194,14 @@ public class ShopCar {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("\"shopcarid\":\"")
                 .append(shopcarid).append('\"');
-        sb.append(",\"proid\":\"")
-                .append(proid).append('\"');
+        sb.append(",\"number\":")
+                .append(number);
         sb.append(",\"fieldid\":\"")
                 .append(fieldid).append('\"');
+        sb.append(",\"createtime\":\"")
+                .append(createtime).append('\"');
+        sb.append(",\"proid\":\"")
+                .append(proid).append('\"');
         sb.append(",\"prodescribe\":\"")
                 .append(prodescribe).append('\"');
         sb.append(",\"price\":\"")
@@ -205,8 +220,6 @@ public class ShopCar {
                 .append(stock);
         sb.append(",\"statusinfo\":\"")
                 .append(statusinfo).append('\"');
-        sb.append(",\"number\":")
-                .append(number);
         sb.append(",\"keyfrom\":\"")
                 .append(keyfrom).append('\"');
         sb.append('}');

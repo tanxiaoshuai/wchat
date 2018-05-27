@@ -14,6 +14,8 @@ public class StatusConfig {
     public static Map<Integer , String> PRODUCTSTATUS = new HashMap<>();
     public static Map<Integer , String> ORDERSTATUS = new HashMap<>();
     public static Map<Integer , String> PAY_TYPE = new HashMap<>();
+    /**支付状态*/
+    public static String[] PAY_STATUS = new String[]{"PAY","NOPAY"};
     static {
         PRODUCTSTATUS.put(1 , "上架");
         PRODUCTSTATUS.put(2 , "下架");

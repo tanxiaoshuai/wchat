@@ -14,7 +14,7 @@ public enum ResultInfo {
     PAY_CALLBACK_ERROR("0006" , "微信支付回调验签失败"),
     PAY_ORDER_ERROR("0007" , "微信预付订单失败"),
     PAY_ORDER_SIGN_ERROR("0008" , "微信预付订单验签失败"),
-    SHOPCAR_CHOICE_ERROR("0009" , "你选择的商品含有售完、下架或超出库存等商品，请重新选择"),
+    SHOPCAR_CHOICE_ERROR("0009" , "你选择的商品含有售完、下架或库存不足等商品，请重新选择"),
     SHOPCAR_BY_ORDER_OUT_TIME("0010" , "页面失效，确认返回购物车！"),
 
 

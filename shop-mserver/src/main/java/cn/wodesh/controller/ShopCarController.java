@@ -39,6 +39,11 @@ public class ShopCarController {
         return shopCarService.checkProduct(list);
     }
 
+    @PostMapping("/rest/shopcar/checkproduct")
+    public Object checkProduct_(@RequestBody Map map) throws Exception{
+        return shopCarService.checkProduct(map);
+    }
+
     @GetMapping("/rest/shopcar/orderInfo/{outid}")
     public Object orderInfo(@PathVariable String outid) throws Exception{
         return shopCarService.ShopCarToOderInfo(outid);

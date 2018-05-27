@@ -72,6 +72,9 @@ public class Order {
     @Column(name = "o_remarks")
     private String remarks;
 
+    @Column(name = "o_pay_status")
+    private String paystatus;
+
     private String statusinfo;
 
     private String orderlimittime;
@@ -245,6 +248,14 @@ public class Order {
         this.orderlimittime = orderlimittime;
     }
 
+    public String getPaystatus() {
+        return paystatus;
+    }
+
+    public void setPaystatus(String paystatus) {
+        this.paystatus = paystatus;
+    }
+
     public void orderFormat(Order order){
         order.setFreight(WchatUtil.
                 priceFormat(Integer.parseInt(order.getFreight())));
@@ -295,6 +306,8 @@ public class Order {
                 .append(paid).append('\"');
         sb.append(",\"remarks\":\"")
                 .append(remarks).append('\"');
+        sb.append(",\"paystatus\":\"")
+                .append(paystatus).append('\"');
         sb.append(",\"statusinfo\":\"")
                 .append(statusinfo).append('\"');
         sb.append(",\"orderlimittime\":\"")

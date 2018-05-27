@@ -60,15 +60,18 @@ public class OrderServiceImpl implements IOrderService{
         if(!redisUtil.exists(outtradeno))
             throw new FinalException(ResultInfo.SHOPCAR_BY_ORDER_OUT_TIME);
         Map map = (Map) redisUtil.get(outtradeno);
-        redisUtil.remove(outtradeno);
         List<ShopCar> shopCars = (List<ShopCar>) map.get("products");
-        for(ShopCar sp : shopCars){
+        for(int i = 0 ; i < shopCars.size() ; i++){
+            ShopCar sp = shopCars.get(i);
             int a = productFieldDao.updateStock(sp.getFieldid() ,
                     sp.getNumber());
-            if(a == 0){
-                throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR);
-            }
+            if(a == 0)
+                throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR.setMsg(
+                        new StringBuffer().append("【商品").append(i+1).append("】")
+                        .append("库存不足或已售完，请重新选择").toString()
+                ));
         }
+        redisUtil.remove(outtradeno);
         String addressinfo = address.getString("addressinfo");
         String tel = address.getString("tel");
         String receivename = address.getString("receivename");
@@ -91,6 +94,7 @@ public class OrderServiceImpl implements IOrderService{
             order.setStatus(1);
             order.setPaid(s.getFieldid());
             order.setPayid(payid);
+            order.setPaystatus(StatusConfig.PAY_STATUS[1]);
             orderDao.save(order);
             shopCarDao.deleteById(s.getShopcarid() , ShopCar.class);
         }

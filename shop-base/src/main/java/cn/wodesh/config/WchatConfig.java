@@ -11,4 +11,6 @@ public class WchatConfig {
     public static final String WX_GET_OPENID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+APPSECRET+"&code={code}&grant_type=authorization_code";
     public static final String WX_GETUSER_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={token}&openid={openid}&lang=zh_CN&lang=zh_CN";
     public static final String PAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+    public static final String PAY_ORDER_SEARCH = "https://api.mch.weixin.qq.com/pay/orderquery";
+    public static final String PAY_CALLBACK_RETURN_MSG = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
 }

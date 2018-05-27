@@ -62,7 +62,7 @@ mybatis.configuration.call-setters-on-nulls: true #mybatis 返回Map 显示null
 keywords_api_url: http://localhost:808
 login_test: true
 default:
-  redirect_url: https://www.wodesh.cn:8088/pay.html
+  redirect_url: https://wodesh.cn/pay.html
   wchat_token_open: false
   pay_callback: http://wodesh.cn/shop-mserver/rest/pay/callback
   wchat_sendmessage_user: owF-Kw_dNmnrDON7ZGz8VDP3p7k4

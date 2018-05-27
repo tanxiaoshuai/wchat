@@ -5,6 +5,8 @@ import cn.wodesh.config.ResultInfo;
 import cn.wodesh.config.WchatConfig;
 import cn.wodesh.exception.FinalException;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.*;
@@ -14,6 +16,8 @@ import java.util.*;
  */
 @Component
 public class PayUtil {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PayUtil.class);
 
     @Value("${default.pay_callback}")
     private String pay_callback;
@@ -33,11 +37,10 @@ public class PayUtil {
         object.put("attach" , paytype);
         object.put("sign" , paySign(object));
         String xml = getXmlToCDATA(object);
-        System.out.println(xml);
         String res = HttpClientUtil.postHeaderXml(xml , WchatConfig.PAY_URL , null);
         JSONObject reso = JSONObject.parseObject(XML.toJSONObject(res).toString())
                 .getJSONObject("xml");
-        System.out.println(res);
+        LOGGER.info("微信支付生成预付订单返回参数：{}" , reso);
         if ("FAIL".equals(reso.getString("return_code")))
             throw new FinalException(ResultInfo.PAY_ORDER_ERROR);
         String sign = reso.getString("sign");
@@ -107,14 +110,33 @@ public class PayUtil {
     public String callback(String xml){
         JSONObject body = JSONObject.parseObject(XML.toJSONObject(xml).toString());
         body = body.getJSONObject("xml");
-        System.out.println(body);
+        System.out.println("支付回调：" + body);
         String sign = body.getString("sign");
         body.remove("sign");
         String sign_ = paySign(body);
         if(!sign_.equals(sign))
             throw new FinalException(ResultInfo.PAY_CALLBACK_ERROR);
-        System.out.println(body);
-        return "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
+        return WchatConfig.PAY_CALLBACK_RETURN_MSG;
+    }
+
+    public String paySearchOrderId(String orderid) throws Exception {
+        JSONObject object = new JSONObject();
+        object.fluentPut("appid" , WchatConfig.APPID)
+                .fluentPut("mch_id" , WchatConfig.MCH_ID)
+                .fluentPut("out_trade_no" , orderid)
+                .fluentPut("nonce_str" , KeyUtil.uuid())
+                .fluentPut("sign_type" , "MD5");
+        object.put("sign" , paySign(object));
+        String xml = XmlUtil.JsonToXml(object.toString() , "xml");
+        String res = HttpClientUtil.postHeaderXml(xml , WchatConfig.PAY_ORDER_SEARCH , null);
+        JSONObject obj = JSONObject.parseObject(XML.toJSONObject(res).toString())
+                .getJSONObject("xml");
+        LOGGER.info("微信支付订单查询：{}" , obj);
+        return obj.toString();
+    }
+
+    public static void main(String[] args) throws Exception {
+        new PayUtil().paySearchOrderId("1163a0b942064ec6a5e8375dc9a5e48a");
     }
 
 }
