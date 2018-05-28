@@ -75,6 +75,9 @@ public class Order {
     @Column(name = "o_pay_status")
     private String paystatus;
 
+    @Column(name = "o_pay_confirm_type")
+    private String payconfirmtype;
+
     private String statusinfo;
 
     private String orderlimittime;
@@ -256,6 +259,14 @@ public class Order {
         this.paystatus = paystatus;
     }
 
+    public String getPayconfirmtype() {
+        return payconfirmtype;
+    }
+
+    public void setPayconfirmtype(String payconfirmtype) {
+        this.payconfirmtype = payconfirmtype;
+    }
+
     public void orderFormat(Order order){
         order.setFreight(WchatUtil.
                 priceFormat(Integer.parseInt(order.getFreight())));
@@ -308,6 +319,8 @@ public class Order {
                 .append(remarks).append('\"');
         sb.append(",\"paystatus\":\"")
                 .append(paystatus).append('\"');
+        sb.append(",\"payconfirmtype\":\"")
+                .append(payconfirmtype).append('\"');
         sb.append(",\"statusinfo\":\"")
                 .append(statusinfo).append('\"');
         sb.append(",\"orderlimittime\":\"")

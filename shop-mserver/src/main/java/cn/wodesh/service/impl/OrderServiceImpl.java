@@ -56,7 +56,8 @@ public class OrderServiceImpl implements IOrderService{
         outtradeno = KeyUtil.outTradeNoKey(outtradeno);
         JSONObject address = (JSONObject) JSONObject.toJSON(body.get("address"));
         String payEntrance = (String) body.get("payentrance");
-        ParamValidateUtil.notNull(payEntrance, "支付了入口类型不能为空");
+
+        ParamValidateUtil.notNull(payEntrance, "支付入口类型不能为空");
         if(!redisUtil.exists(outtradeno))
             throw new FinalException(ResultInfo.SHOPCAR_BY_ORDER_OUT_TIME);
         Map map = (Map) redisUtil.get(outtradeno);
@@ -94,7 +95,8 @@ public class OrderServiceImpl implements IOrderService{
             order.setStatus(1);
             order.setPaid(s.getFieldid());
             order.setPayid(payid);
-            order.setPaystatus(StatusConfig.PAY_STATUS[1]);
+            order.setPaystatus(StatusConfig.SENDPAY);
+            order.setPayconfirmtype(StatusConfig.NO_CONFIRM);
             orderDao.save(order);
             shopCarDao.deleteById(s.getShopcarid() , ShopCar.class);
         }

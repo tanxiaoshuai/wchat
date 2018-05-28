@@ -120,7 +120,7 @@ public class ShopCarServiceImpl implements IShopCarService{
         if((shopCar.getProstatus() == 1 && shopCar.getStock() == 0)||
                 (shopCar.getProstatus() == 1 && shopCar.getStock() < shopCar.getNumber())||
                 shopCar.getProstatus() != 1)
-            throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR);
+            throw new FinalException(ResultInfo.SHOPCAR_CHOICE_ERROR.setMsg("该商品库存不足，不能下单"));
         Long cashCount = shopCar.getNumber()
                 * Long.parseLong(shopCar.getDiscount())
                 * Long.parseLong(shopCar.getPrice()) / 100L + Long.parseLong(shopCar.getFreight());
