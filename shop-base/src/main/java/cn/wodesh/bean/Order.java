@@ -6,6 +6,8 @@ import cn.wodesh.util.WchatUtil;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * Created by TS on 2018/4/20.
  */
@@ -77,6 +79,8 @@ public class Order {
 
     @Column(name = "o_pay_confirm_type")
     private String payconfirmtype;
+
+    private Map productinfo;
 
     private String statusinfo;
 
@@ -267,6 +271,14 @@ public class Order {
         this.payconfirmtype = payconfirmtype;
     }
 
+    public Map getProductinfo() {
+        return productinfo;
+    }
+
+    public void setProductinfo(Map productinfo) {
+        this.productinfo = productinfo;
+    }
+
     public void orderFormat(Order order){
         order.setFreight(WchatUtil.
                 priceFormat(Integer.parseInt(order.getFreight())));
@@ -321,6 +333,8 @@ public class Order {
                 .append(paystatus).append('\"');
         sb.append(",\"payconfirmtype\":\"")
                 .append(payconfirmtype).append('\"');
+        sb.append(",\"productinfo\":")
+                .append(productinfo);
         sb.append(",\"statusinfo\":\"")
                 .append(statusinfo).append('\"');
         sb.append(",\"orderlimittime\":\"")

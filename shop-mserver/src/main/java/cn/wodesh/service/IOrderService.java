@@ -14,4 +14,6 @@ public interface IOrderService {
 
     public Object findByOrderCutPage(Map body) throws Exception;
 
+    public Object selectOrderCount() throws Exception;
+
 }

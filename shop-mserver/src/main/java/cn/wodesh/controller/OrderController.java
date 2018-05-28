@@ -30,4 +30,9 @@ public class OrderController {
         return orderService.findByOrderCutPage(map);
     }
 
+    @GetMapping("/rest/order/selectNumber")
+    public Object selectOrderCount() throws Exception{
+        return orderService.selectOrderCount();
+    }
+
 }

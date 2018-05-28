@@ -112,14 +112,12 @@ public class OrderServiceImpl implements IOrderService{
         Long page = object.getLong("page");
         Long size = object.getLong("size");
         String status = object.getString("status");
-        StringBuffer sql = new StringBuffer()
-                .append(" o_userid = '").append(TokenUtil.tokenGetUser().getUserid())
-                .append("' ");
-        if(RegexUtil.isNotNull(status))
-            sql.append(" and o_status = ").append(status);
-                sql.append(" order by o_createtime ").append("limit ").append((page - 1) * size)
-                .append(" , ").append(size);
-        List<Order> list = orderDao.findBySQLRequireToList(sql.toString() , Order.class);
+        body.clear();
+        body.put("size" , size);
+        body.put("startpage" , (page - 1) * size);
+        body.put("status" , status);
+        body.put("userid" , TokenUtil.tokenGetUser().getUserid());
+        List<Order> list = orderDao.findByOrderPage(body);
         for(Order o : list){
             String orderNoPayId = KeyUtil.orderNoPayKey(o.getPayid());
             o.setStatusinfo(StatusConfig.ORDERSTATUS.get(o.getStatus()));
@@ -129,6 +127,21 @@ public class OrderServiceImpl implements IOrderService{
                 o.setOrderlimittime(DateUtil.longForTime(time * 1000L , DateUtil.MMSS));
         }
         return ResultUtil.success(list);
+    }
+
+    @Override
+    public Object selectOrderCount() throws Exception {
+        StringBuffer sql = new StringBuffer();
+        sql.append("o_userid = '").append(TokenUtil.tokenGetUser().getUserid())
+                .append("' and o_status = ");
+        long noPay = orderDao.findBySQLRequireToNumber(new StringBuffer().append(sql).append(1).toString(),Order.class);
+        long noSendProduct = orderDao.findBySQLRequireToNumber(new StringBuffer().append(sql).
+                append(2).toString(),Order.class);
+        long noReceiveProduct = orderDao.findBySQLRequireToNumber(new StringBuffer().
+                append(sql).append(3).toString().toString(),Order.class);
+        return ResultUtil.success(new JSONObject().fluentPut("noPay" , noPay)
+        .fluentPut("noSendProduct" , noSendProduct)
+        .fluentPut("noReceiveProduct" , noReceiveProduct));
     }
 
 
