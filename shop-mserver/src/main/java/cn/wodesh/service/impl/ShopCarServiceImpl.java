@@ -62,7 +62,7 @@ public class ShopCarServiceImpl implements IShopCarService{
     public Object save(Map map) throws Exception {
         map.put("userid" , TokenUtil.tokenGetUser().getUserid());
         long count = shopCarDao.findBySQLRequireToNumber("1=1", ShopCar.class);
-        if(count < config.getShopcarMax())
+        if(count > config.getShopcarMax())
             throw new FinalException(ResultInfo.SHOPCAR_OUT_MAX_LIMIT.
                     setMsg(ResultInfo.SHOPCAR_OUT_MAX_LIMIT.getMsg().replace("{}",config.getShopcarMax().toString())));
         Map m = shopCarDao.findShopCarProductNumberOrshopCarId(map);
