@@ -51,7 +51,7 @@ public interface OrderDao extends TemplateDao<Order>{
     public List<Map> findByOrderIdAndNumber(@Param("payid") String payid , @Param("status") Integer status) throws Exception;
 
 
-    @Select("select * from t_order where o_userid = #{userid} and o_status = #{status} order by o_createtime desc limit #{startpage} , #{size} ")
+    @Select("<script> select * from t_order where o_userid = #{userid} <if test=\"status !=null and status != '' \"> and o_status = #{status} </if> order by o_createtime desc limit #{startpage} , #{size} </script> ")
     @Results({
             @Result(property = "createtime", column = "o_createtime"),
             @Result(property = "paytime", column = "o_paytime"),

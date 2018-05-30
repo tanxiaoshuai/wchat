@@ -3,6 +3,7 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Address;
 import cn.wodesh.bean.ShopCar;
 import cn.wodesh.config.AppConfig;
+import cn.wodesh.config.Config;
 import cn.wodesh.config.ResultInfo;
 import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.AddressDao;
@@ -33,6 +34,8 @@ public class ShopCarServiceImpl implements IShopCarService{
 
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private Config config;
 
 
     @Override
@@ -58,6 +61,10 @@ public class ShopCarServiceImpl implements IShopCarService{
     @Transactional
     public Object save(Map map) throws Exception {
         map.put("userid" , TokenUtil.tokenGetUser().getUserid());
+        long count = shopCarDao.findBySQLRequireToNumber("1=1", ShopCar.class);
+        if(count < config.getShopcarMax())
+            throw new FinalException(ResultInfo.SHOPCAR_OUT_MAX_LIMIT.
+                    setMsg(ResultInfo.SHOPCAR_OUT_MAX_LIMIT.getMsg().replace("{}",config.getShopcarMax().toString())));
         Map m = shopCarDao.findShopCarProductNumberOrshopCarId(map);
         Integer num =  map.get("number") != null && !"".equals(map.get("number").toString())  ? Integer.parseInt(map.get("number")+"") : null;
         ParamValidateUtil.notNull(num , "数量不能为空");

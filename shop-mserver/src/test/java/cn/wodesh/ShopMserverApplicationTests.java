@@ -1,6 +1,8 @@
 package cn.wodesh;
 
+import cn.wodesh.bean.ShopCar;
 import cn.wodesh.config.AppConfig;
+import cn.wodesh.config.Config;
 import cn.wodesh.config.DruidConfiguration;
 import cn.wodesh.dao.*;
 import cn.wodesh.rabbitmq.RabbitMqSender;
@@ -110,7 +112,9 @@ public class ShopMserverApplicationTests {
 //		rabbitMqSender.send(new JSONObject().fluentPut("key" , "妈妈，哪个男生为什么有小鸡鸡呀"));
 //		redisUtil.set(KeyUtil.orderNoPayKey("27c2e984cdc84ec685e3ffcfbb303dc6"), null , AppConfig.ORDER_NO_PAY_OUT_TIME);
 
-		System.out.println(loginUsername);
+//		System.out.println(BeanFactoryUtil.getBeanByClass(Config.class).getShopcarMax());
+
+		System.out.println(shopCarDao.findBySQLRequireToNumber("1=1", ShopCar.class));
 
 	}
 

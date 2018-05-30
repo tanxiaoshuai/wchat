@@ -98,7 +98,8 @@ public class OrderServiceImpl implements IOrderService{
             order.setPaystatus(StatusConfig.SENDPAY);
             order.setPayconfirmtype(StatusConfig.NO_CONFIRM);
             orderDao.save(order);
-            shopCarDao.deleteById(s.getShopcarid() , ShopCar.class);
+            if(s.getShopcarid() != null)
+                shopCarDao.deleteById(s.getShopcarid() , ShopCar.class);
         }
         String res = payUtil.Pay(user.getOpenid() ,
                 WchatUtil.CashFormatInt(map.get("cashCount").toString())+"" , payid , payEntrance);
@@ -110,7 +111,7 @@ public class OrderServiceImpl implements IOrderService{
     public Object findByOrderCutPage(Map body) throws Exception {
         JSONObject object = (JSONObject) JSON.toJSON(body);
         Long page = object.getLong("page");
-        Long size = object.getLong("size");
+        Integer size = object.getInteger("size");
         String status = object.getString("status");
         body.clear();
         body.put("size" , size);
@@ -124,7 +125,7 @@ public class OrderServiceImpl implements IOrderService{
             Long time = redisUtil.getExpire(orderNoPayId);
             o.orderFormat(o);
             if(time > 0)
-                o.setOrderlimittime(DateUtil.longForTime(time * 1000L , DateUtil.MMSS));
+                o.setOrderlimittime(time.toString());
         }
         return ResultUtil.success(list);
     }
