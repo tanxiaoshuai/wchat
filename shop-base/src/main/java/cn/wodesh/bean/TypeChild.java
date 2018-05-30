@@ -24,6 +24,14 @@ public class TypeChild {
     @Column(name = "tc_url")
     private String url;
 
+    @Column(name = "tc_status")
+    private Integer status;
+
+    @Column(name = "tc_ptid")
+    private String ptid;
+
+
+
     public String getTcid() {
         return tcid;
     }
@@ -48,6 +56,22 @@ public class TypeChild {
         this.url = url;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getPtid() {
+        return ptid;
+    }
+
+    public void setPtid(String ptid) {
+        this.ptid = ptid;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -57,6 +81,10 @@ public class TypeChild {
                 .append(tcname).append('\"');
         sb.append(",\"url\":\"")
                 .append(url).append('\"');
+        sb.append(",\"status\":")
+                .append(status);
+        sb.append(",\"ptid\":\"")
+                .append(ptid).append('\"');
         sb.append('}');
         return sb.toString();
     }

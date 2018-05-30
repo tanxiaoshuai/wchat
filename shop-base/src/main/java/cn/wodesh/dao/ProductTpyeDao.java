@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface ProductTpyeDao extends TemplateDao<ProductTpye>{
 
-    @Select("select * from t_product_type ")
+    @Select("select * from t_product_type where pt_status = 1")
     @Results({
         @Result(id=true,property="ptid",column="pt_id"),
         @Result(property="ptname",column="pt_name"),

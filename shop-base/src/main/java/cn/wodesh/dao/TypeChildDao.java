@@ -15,6 +15,6 @@ import java.util.List;
 @Repository
 public interface TypeChildDao extends TemplateDao<TypeChild>{
 
-    @Select("SELECT tc.tc_id as tcid , tc.tc_name as tcname , tc.tc_url as url  FROM t_product_type_child  pt JOIN t_type_child tc ON pt.ptc_tcid = tc.tc_id WHERE pt.ptc_ptid = #{ptid}")
+    @Select("SELECT tc.tc_id AS tcid , tc.tc_name AS tcname , tc.tc_url AS url  FROM  t_type_child tc  WHERE tc.tc_ptid = #{pt_id} and tc.tc_status = 1 ")
     public List<TypeChild> findByTypeChildList(@Param("pt_id") String ptid) throws Exception;
 }
