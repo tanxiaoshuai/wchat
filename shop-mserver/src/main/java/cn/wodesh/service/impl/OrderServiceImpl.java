@@ -145,5 +145,16 @@ public class OrderServiceImpl implements IOrderService{
         .fluentPut("noReceiveProduct" , noReceiveProduct));
     }
 
+    @Override
+    public Object deleteOrderId(String orderid) throws Exception {
+        orderDao.updateStatus(orderid , 0);
+        return ResultUtil.success();
+    }
+
+    @Override
+    public Object receiveProduct(String orderid) throws Exception {
+        orderDao.updateStatus(orderid , 4);
+        return ResultUtil.success();
+    }
 
 }

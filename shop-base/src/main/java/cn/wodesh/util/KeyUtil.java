@@ -24,6 +24,10 @@ public class KeyUtil {
         return new StringBuffer().append(AppConfig.ORDER_NO_PAY_KEY).append(uuid).toString();
     }
 
+    public static String fastMeil(String expnumber , String expcode){
+        return new StringBuffer().append(AppConfig.FASTMEIL_KEY).append(expcode).append("_").append(expnumber).toString();
+    }
+
 
     public static String uuid(){
         return UUID.randomUUID().toString().replace("-" , "");

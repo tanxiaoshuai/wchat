@@ -4,9 +4,7 @@ import cn.wodesh.service.IPayService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,10 +17,9 @@ public class PayController {
     @Autowired
     private IPayService payService;
 
-    @PostMapping("/rest/pay")
-    public Object pay(@RequestBody String body) throws Exception{
-        Map map = JSONObject.parseObject(body , Map.class);
-        return payService.pay(map);
+    @GetMapping("/rest/pay/orderid")
+    public Object pay(@RequestParam String orderid) throws Exception{
+        return payService.pay(orderid);
     }
 
     @PostMapping(value = "/rest/pay/callback" , produces = MediaType.APPLICATION_XML_VALUE)

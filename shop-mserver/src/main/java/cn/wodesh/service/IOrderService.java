@@ -16,4 +16,8 @@ public interface IOrderService {
 
     public Object selectOrderCount() throws Exception;
 
+    public Object deleteOrderId(String orderid) throws Exception;
+
+    public Object receiveProduct(String orderid) throws Exception;
+
 }

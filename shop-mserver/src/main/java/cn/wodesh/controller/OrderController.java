@@ -1,6 +1,7 @@
 package cn.wodesh.controller;
 
 import cn.wodesh.service.IOrderService;
+import cn.wodesh.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,17 @@ public class OrderController {
     @GetMapping("/rest/order/selectNumber")
     public Object selectOrderCount() throws Exception{
         return orderService.selectOrderCount();
+    }
+
+    @GetMapping("/rest/order/deleteOrderId/{orderid}")
+    public Object deleteOrderId(@PathVariable String orderid) throws Exception {
+        return orderService.deleteOrderId(orderid);
+    }
+
+    @GetMapping("/rest/order/receiveProduct/{orderid}")
+    public Object receiveProduct(@PathVariable String orderid) throws Exception {
+        return orderService.receiveProduct(orderid);
+
     }
 
 }
