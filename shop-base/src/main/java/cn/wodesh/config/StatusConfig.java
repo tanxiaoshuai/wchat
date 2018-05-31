@@ -31,11 +31,13 @@ public class StatusConfig {
         PRODUCTSTATUS.put(3 , "售完");
         PRODUCTSTATUS.put(4 , "超出库存");
 
+        ORDERSTATUS.put(0 , "订单删除");
         ORDERSTATUS.put(1 , "待付款");
         ORDERSTATUS.put(2 , "待发货");
         ORDERSTATUS.put(3 , "待收货");
         ORDERSTATUS.put(4 , "交易完成");
         ORDERSTATUS.put(5 , "交易关闭");
+
 
         PAY_TYPE.put(1 , "微信");
 

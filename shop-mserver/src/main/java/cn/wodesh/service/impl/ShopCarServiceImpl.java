@@ -90,7 +90,7 @@ public class ShopCarServiceImpl implements IShopCarService{
         List<ShopCar> shopCars = new ArrayList<>();
         Long cashCount = 0L;
         Map<String , Object> map = new HashMap<>();
-            for(String shopcarid : list){
+        for(String shopcarid : list){
             ShopCar shopCar = shopCarDao.findShopCarBean(shopcarid);
             if(shopCar == null)
                 continue;
