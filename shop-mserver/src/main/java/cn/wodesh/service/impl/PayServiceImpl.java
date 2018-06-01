@@ -3,7 +3,10 @@ package cn.wodesh.service.impl;
 import cn.wodesh.bean.Order;
 import cn.wodesh.bean.User;
 import cn.wodesh.config.AppConfig;
+import cn.wodesh.config.ResultInfo;
+import cn.wodesh.config.StatusConfig;
 import cn.wodesh.dao.OrderDao;
+import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IPayService;
 import cn.wodesh.util.*;
@@ -32,11 +35,13 @@ public class PayServiceImpl implements IPayService{
     public Object pay(String orderid) throws Exception {
         String uuid = KeyUtil.uuid();
         String payid = KeyUtil.orderNoPayKey(uuid);
-        Order o = new Order();
+        Order o = BeanFactoryUtil.getBeanByClass(Order.class);
         o.setOrderid(orderid);
         o.setPayid(uuid);
         orderDao.updateById(o);
         Order order = orderDao.findByOrderId(orderid);
+        if(order.getStatus() != 1)
+            throw new FinalException(ResultInfo.OREDER_STATUS_NO_PAY.setMsg(ResultInfo.OREDER_STATUS_NO_PAY.getMsg().replace("{}", StatusConfig.ORDERSTATUS.get(order.getStatus()))));
         User user = TokenUtil.tokenGetUser();
         String res = payUtil.Pay(user.getOpenid() ,
                 WchatUtil.CashFormatInt(order.getPaycash())+"" , uuid , "1");
