@@ -16,12 +16,7 @@ public class TokenThread {
 
     @Scheduled(fixedRate = 1000*60*58*2)
     public void run() throws Exception {
-        while(token_open){
+        if(token_open)
             access_token = WchatUtil.getToken();
-            if(!StringUtils.isEmpty(access_token)){
-                break;
-            }
-            Thread.sleep(30 * 1000);
-        }
     }
 }
