@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -23,7 +24,7 @@ public class PayController {
     }
 
     @PostMapping(value = "/rest/pay/callback" , produces = MediaType.APPLICATION_XML_VALUE)
-    public Object callback(@RequestBody String body) throws Exception{
-        return payService.payCallback(body);
+    public String callback(@RequestBody String body , HttpServletResponse response) throws Exception{
+        return (String) payService.payCallback(body);
     }
 }

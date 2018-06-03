@@ -12,6 +12,8 @@ import cn.wodesh.exception.FinalException;
 import cn.wodesh.redis.RedisUtil;
 import cn.wodesh.service.IShopCarService;
 import cn.wodesh.util.*;
+import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,7 +109,7 @@ public class ShopCarServiceImpl implements IShopCarService{
         Address address = addressDao.findUserToDefualtAddress(TokenUtil.tokenGetUser().getUserid() , StatusConfig.ADDRES_DEFUALT);
         String out_trade_no = KeyUtil.uuid();
         map.put("products" , shopCars);
-        map.put("address" , address);
+        map.put("address" , address == null ? new JSONObject() : address);
         map.put("cashCount" , WchatUtil.priceFormat(cashCount));
         map.put("out_trade_no" , out_trade_no);
         redisUtil.set(KeyUtil.outTradeNoKey(out_trade_no) , map , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);
@@ -136,7 +138,7 @@ public class ShopCarServiceImpl implements IShopCarService{
         Address address = addressDao.findUserToDefualtAddress(TokenUtil.tokenGetUser().getUserid() , StatusConfig.ADDRES_DEFUALT);
         String out_trade_no = KeyUtil.uuid();
         map.put("products" , shopCars);
-        map.put("address" , address);
+        map.put("address" , address == null ? new JSONObject() : address);
         map.put("cashCount" , WchatUtil.priceFormat(cashCount));
         map.put("out_trade_no" , out_trade_no);
         redisUtil.set(KeyUtil.outTradeNoKey(out_trade_no) , map , AppConfig.REDIS_SHOPCAR_BY_ORDER_OUT_TIME);

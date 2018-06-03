@@ -114,7 +114,8 @@ public class ShopMserverApplicationTests {
 
 //		System.out.println(BeanFactoryUtil.getBeanByClass(Config.class).getShopcarMax());
 
-		System.out.println(shopCarDao.findBySQLRequireToNumber("1=1", ShopCar.class));
+//		System.out.println(shopCarDao.findBySQLRequireToNumber("1=1", ShopCar.class));
+		System.out.println(orderDao.findByPayidToStatus("af341ad496ba42ef9a7f951d5400c7b0"));
 
 	}
 

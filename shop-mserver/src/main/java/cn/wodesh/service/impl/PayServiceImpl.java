@@ -44,7 +44,7 @@ public class PayServiceImpl implements IPayService{
             throw new FinalException(ResultInfo.OREDER_STATUS_NO_PAY.setMsg(ResultInfo.OREDER_STATUS_NO_PAY.getMsg().replace("{}", StatusConfig.ORDERSTATUS.get(order.getStatus()))));
         User user = TokenUtil.tokenGetUser();
         String res = payUtil.Pay(user.getOpenid() ,
-                WchatUtil.CashFormatInt(order.getPaycash())+"" , uuid , "1");
+                order.getPaycash()+"" , uuid , "1");
         redisUtil.set(payid , null , AppConfig.ORDER_NO_PAY_OUT_TIME);
         return ResultUtil.success(JSONObject.parseObject(res));
     }

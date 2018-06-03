@@ -13,6 +13,7 @@ public class FastMeilConfig {
         FASTMEIL_NAME.put("SF" , "顺丰速运");
         FASTMEIL_NAME.put("HTKY" , "百世快递");
         FASTMEIL_NAME.put("ZTO","中通快递");
+        FASTMEIL_NAME.put("YD" , "韵达速递");
 
         FASTMEIL_SATUS.put(2 , "在途中");
         FASTMEIL_SATUS.put(3 , "签收");

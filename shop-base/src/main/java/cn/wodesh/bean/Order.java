@@ -80,6 +80,9 @@ public class Order {
     @Column(name = "o_pay_confirm_type")
     private String payconfirmtype;
 
+    @Column(name = "o_callback_cash")
+    private String callbackcash;
+
     private Map productinfo;
 
     private String statusinfo;
@@ -279,6 +282,14 @@ public class Order {
         this.productinfo = productinfo;
     }
 
+    public String getCallbackcash() {
+        return callbackcash;
+    }
+
+    public void setCallbackcash(String callbackcash) {
+        this.callbackcash = callbackcash;
+    }
+
     public void orderFormat(Order order){
         order.setFreight(WchatUtil.
                 priceFormat(Integer.parseInt(order.getFreight())));
@@ -333,6 +344,8 @@ public class Order {
                 .append(paystatus).append('\"');
         sb.append(",\"payconfirmtype\":\"")
                 .append(payconfirmtype).append('\"');
+        sb.append(",\"callbackcash\":\"")
+                .append(callbackcash).append('\"');
         sb.append(",\"productinfo\":")
                 .append(productinfo);
         sb.append(",\"statusinfo\":\"")

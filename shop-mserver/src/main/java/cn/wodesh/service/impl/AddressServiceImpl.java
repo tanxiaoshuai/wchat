@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -63,11 +64,13 @@ public class AddressServiceImpl implements IAddressService{
         JSONObject obj = (JSONObject) JSONObject.toJSON(body);
         String oldaddressid = obj.getString("oldaddressid");
         String newaddressid = obj.getString("newaddressid");
-        ParamValidateUtil.notNull(oldaddressid , "oldaddressid参数不能为空");
+//        ParamValidateUtil.notNull(oldaddressid , "oldaddressid参数不能为空");
         ParamValidateUtil.notNull(newaddressid , "newaddressid参数不能为空");
         Address address = BeanFactoryUtil.getBeanByClass(Address.class);
-        address.setAddressid(oldaddressid);
-        address.setStatus(0);
+        if(!StringUtils.isEmpty(oldaddressid)){
+            address.setAddressid(oldaddressid);
+            address.setStatus(0);
+        }
         addressDao.updateById(address);
         address.setAddressid(newaddressid);
         address.setStatus(1);

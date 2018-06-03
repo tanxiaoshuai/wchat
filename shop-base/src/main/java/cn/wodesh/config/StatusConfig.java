@@ -18,6 +18,7 @@ public class StatusConfig {
     public static final String SENDPAY = "SENDPAY";
     public static final String PAY = "PAY";
     public static final String NOPAY = "NOPAY";
+    public static final String PAYCASHATYPISM = "PAYCASHATYPISM";
     public static Map<String , String> PAY_STATUS = new HashMap<>();
 
     /**支付回调状态*/
@@ -44,6 +45,7 @@ public class StatusConfig {
         PAY_STATUS.put(SENDPAY,"发起支付");
         PAY_STATUS.put(PAY , "已支付");
         PAY_STATUS.put(NOPAY , "未支付");
+        PAY_STATUS.put(PAYCASHATYPISM , "支付金额不一致");
 
         PAY_CONFIRM_TYPE.put(NO_CONFIRM , "未收到支付确认信息");
         PAY_CONFIRM_TYPE.put(CALL_BACK , "支付回调");

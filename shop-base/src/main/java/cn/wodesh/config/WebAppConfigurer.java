@@ -36,6 +36,7 @@ public class WebAppConfigurer extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new URLInterceptor()).addPathPatterns("/**" , "/*.html")
                 .excludePathPatterns("/rest/index")
                 .excludePathPatterns("/rest/index/search")
+                .excludePathPatterns("/rest/pay/callback")
                 .excludePathPatterns("/rest/user/login");
     }
 

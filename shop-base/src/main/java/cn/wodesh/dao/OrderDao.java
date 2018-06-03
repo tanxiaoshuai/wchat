@@ -82,4 +82,7 @@ public interface OrderDao extends TemplateDao<Order>{
     @Update("update t_order set o_status = #{status} where o_id = #{orderid}")
     public void updateStatus(@Param("orderid") String orderid , @Param("status") Integer status) throws Exception;
 
+    @Select("select o_status from t_order where o_payid = #{payid}")
+    public Integer findByPayidToStatus(String payid) throws Exception;
+
 }

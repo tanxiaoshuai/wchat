@@ -1,8 +1,11 @@
 package cn.wodesh.util;
 
 
+import cn.wodesh.bean.Order;
 import cn.wodesh.config.ResultInfo;
+import cn.wodesh.config.StatusConfig;
 import cn.wodesh.config.WchatConfig;
+import cn.wodesh.dao.OrderDao;
 import cn.wodesh.exception.FinalException;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -107,7 +110,7 @@ public class PayUtil {
         return o;
     }
 
-    public String callback(String xml){
+    public String callback(String xml) throws Exception {
         JSONObject body = JSONObject.parseObject(XML.toJSONObject(xml).toString());
         body = body.getJSONObject("xml");
         System.out.println("支付回调：" + body);
@@ -116,6 +119,20 @@ public class PayUtil {
         String sign_ = paySign(body);
         if(!sign_.equals(sign))
             throw new FinalException(ResultInfo.PAY_CALLBACK_ERROR);
+        String payid = body.getString("out_trade_no");
+        OrderDao orderDao = BeanFactoryUtil.getBeanByClass(OrderDao.class);
+        int status = orderDao.findByPayidToStatus(payid);
+        if (status == 2)
+            return WchatConfig.PAY_CALLBACK_RETURN_MSG;
+        if("SUCCESS".equals(body.getString("return_code"))){
+            StringBuffer sql = new StringBuffer()
+                    .append(" o_status= ").append(2).append(" , o_pay_status = '").append(StatusConfig.PAY)
+                    .append("' , o_pay_confirm_type = '").append(StatusConfig.CALL_BACK).append("' , o_callback_cash = ")
+                    .append(body.getInteger("cash_fee")).append(" , o_paytime = '")
+                    .append(DateUtil.dateFormat(body.getString("time_end") , DateUtil.YMHSS , DateUtil.YEARTOSS))
+                    .append("' where ").append(" o_payid= ").append("'").append(payid).append("'");
+            orderDao.updateBySQLRequire(sql.toString() , Order.class);
+        }
         return WchatConfig.PAY_CALLBACK_RETURN_MSG;
     }
 
