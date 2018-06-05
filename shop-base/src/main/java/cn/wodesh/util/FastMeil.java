@@ -40,7 +40,4 @@ public class FastMeil {
 		return param.toString();
 	}
 
-	public static void main(String[] args) throws Exception {
-		System.out.println(getOrderTracesByJson("YTO" , "812878059023"));
-	}
 }

@@ -152,8 +152,4 @@ public class PayUtil {
         return obj.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        new PayUtil().paySearchOrderId("1163a0b942064ec6a5e8375dc9a5e48a");
-    }
-
 }

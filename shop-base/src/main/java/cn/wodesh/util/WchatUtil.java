@@ -156,8 +156,4 @@ public class WchatUtil {
         price.add(StrFormat(max));
         return price;
     }
-
-    public static void main(String[] args) {
-        System.out.println(CashFormatInt("68.12"));
-    }
 }

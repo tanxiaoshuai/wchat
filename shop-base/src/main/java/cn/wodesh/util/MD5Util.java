@@ -24,8 +24,4 @@ public class MD5Util {
 		return ret.toString();
 	}
 
-	public static void main(String[] args) {
-		System.out.println(MD5("Sobeyhive-2016").toLowerCase());
-	}
-
 }

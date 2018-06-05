@@ -21,9 +21,4 @@ public final class OrderId {
         // d 代表参数为正数型
         return time + String.format("%011d", hashCodeV);
     }
-
-
-    public static void main(String[] args) {
-        System.out.println(getOrderIdByUUId());
-    }
 }

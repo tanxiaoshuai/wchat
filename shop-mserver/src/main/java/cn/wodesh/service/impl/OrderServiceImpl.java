@@ -139,7 +139,7 @@ public class OrderServiceImpl implements IOrderService{
         long noSendProduct = orderDao.findBySQLRequireToNumber(new StringBuffer().append(sql).
                 append(2).toString(),Order.class);
         long noReceiveProduct = orderDao.findBySQLRequireToNumber(new StringBuffer().
-                append(sql).append(3).toString().toString(),Order.class);
+                append(sql).append(3).toString(),Order.class);
         return ResultUtil.success(new JSONObject().fluentPut("noPay" , noPay)
         .fluentPut("noSendProduct" , noSendProduct)
         .fluentPut("noReceiveProduct" , noReceiveProduct));
