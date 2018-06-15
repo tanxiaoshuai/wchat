@@ -1,5 +1,6 @@
 package cn.wodesh;
 
+import cn.wodesh.bean.Address;
 import cn.wodesh.bean.ShopCar;
 import cn.wodesh.config.AppConfig;
 import cn.wodesh.config.Config;
@@ -51,6 +52,9 @@ public class ShopMserverApplicationTests {
 
 	@Autowired
 	private RedisUtil redisUtil;
+
+	@Autowired
+	private AddressDao addressDao;
 
 	@Value("${spring.datasource.loginUsername}")
 	private String loginUsername;
@@ -115,7 +119,7 @@ public class ShopMserverApplicationTests {
 //		System.out.println(BeanFactoryUtil.getBeanByClass(Config.class).getShopcarMax());
 
 //		System.out.println(shopCarDao.findBySQLRequireToNumber("1=1", ShopCar.class));
-		System.out.println(orderDao.findByPayidToStatus("af341ad496ba42ef9a7f951d5400c7b0"));
+		System.out.println(addressDao.findByList(Address.class));
 
 	}
 

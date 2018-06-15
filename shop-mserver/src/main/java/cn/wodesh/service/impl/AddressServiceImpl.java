@@ -51,9 +51,15 @@ public class AddressServiceImpl implements IAddressService{
 
     @Override
     public Object save(Address address) throws Exception {
+        long count = addressDao.findBySQLRequireToNumber(new StringBuffer().append("a_userid = '")
+                .append(TokenUtil.tokenGetUser().getUserid()).append("'").toString(),Address.class);
+        if(count == 0 )
+            address.setStatus(1);
+        else
+            address.setStatus(0);
         address.setAddressid(KeyUtil.uuid());
         address.setUserid(TokenUtil.tokenGetUser().getUserid());
-        address.setStatus(0);
+
         addressDao.save(address);
         return ResultUtil.success();
     }

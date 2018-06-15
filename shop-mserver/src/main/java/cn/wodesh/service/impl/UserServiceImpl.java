@@ -21,6 +21,7 @@ public class UserServiceImpl implements IUserService{
     @Autowired
     private RedisUtil redisUtil;
 
+
     @Autowired
     private UserDao userDao;
 
@@ -53,6 +54,8 @@ public class UserServiceImpl implements IUserService{
     @Override
     public Object loginTest(String code, String token) throws Exception {
         User user = null;
+
+
         if (RegexUtil.isNotNull(token))
             user = (User) redisUtil.get((String) TokenUtil.tokenParam(token).get(0));
         if (user != null && token != null && token.equals(user.getToken()))

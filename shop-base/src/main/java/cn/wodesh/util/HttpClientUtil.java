@@ -1,10 +1,12 @@
 package cn.wodesh.util;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.util.ObjectUtils;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class HttpClientUtil {
          * @return
          */
         public static String postHeader(String body , String url , Map<String , String> map) throws Exception {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpClient httpClient = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(url);
             HttpResponse result;
             if(!ObjectUtils.isEmpty(map)){
@@ -46,7 +48,7 @@ public class HttpClientUtil {
          * @return
          */
         public static String postHeaderXml(String body , String url , Map<String , String> map) throws Exception {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpClient httpClient = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(url);
             HttpResponse result;
             if(!ObjectUtils.isEmpty(map)){
@@ -70,7 +72,7 @@ public class HttpClientUtil {
          * @return
          */
         public static String putHeader(String body , String url , Map<String , String> map) throws IOException , NullPointerException {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpClient httpClient = HttpClients.createDefault();
             HttpPut httpPut = new HttpPut(url);
             HttpResponse result;
             if(!ObjectUtils.isEmpty(map)) {
@@ -94,7 +96,7 @@ public class HttpClientUtil {
          * @return
          */
         public static String getHeader(String url , Map<String , String> map) throws IOException , NullPointerException {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
             HttpResponse httpResponse;
             if(!ObjectUtils.isEmpty(map)){
@@ -115,7 +117,7 @@ public class HttpClientUtil {
      * @throws Exception
      */
         public static String getHttps(String url , Map<String , String> map) throws Exception{
-            DefaultHttpClient httpClient = new SSLClient();
+            HttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
             HttpResponse httpResponse;
             if(!ObjectUtils.isEmpty(map)){
